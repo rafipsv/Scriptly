@@ -4,6 +4,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-flutter%20%7C%20dart%20vm%20%7C%20web-blue.svg)](https://pub.dev/packages/scriptly)
 [![Test Suite](https://img.shields.io/badge/tests-69%20passed%20%7C%20100%25-brightgreen.svg)](test/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github&logoColor=white)](https://rafipsv.github.io/Scriptly)
+
+> 🌐 **Try it Live in your Browser:** **[https://rafipsv.github.io/Scriptly](https://rafipsv.github.io/Scriptly)**
 
 An extensible, high-performance, offline-first multi-language transliteration engine for Flutter and Dart. Converts text seamlessly between **17+ writing systems (scripts)** with **289 auto-pivot conversion paths**, zero cloud dependencies, and sub-millisecond execution.
 
@@ -318,6 +321,9 @@ void main() {
 ---
 
 ## Live Web App Demo & GitHub Pages
+
+Experience Scriptly directly in your browser without installing anything:
+👉 **[https://rafipsv.github.io/Scriptly](https://rafipsv.github.io/Scriptly)**
 
 The `example/` folder contains a full-featured, responsive Flutter Web application ready for GitHub Pages:
 

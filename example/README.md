@@ -1,5 +1,7 @@
 # Scriptly Web Application (Polyglot Transliterator Demo)
 
+> 🌐 **Live Web App:** **[https://rafipsv.github.io/Scriptly](https://rafipsv.github.io/Scriptly)**
+
 An interactive, responsive Flutter Web application demonstrating the capabilities of the `scriptly` package.
 
 Built with **Clean Architecture**, **BLoC** state management, and **Material 3 Design**. Ready for deployment on **GitHub Pages**.
