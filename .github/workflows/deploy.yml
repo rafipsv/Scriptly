@@ -35,6 +35,11 @@ jobs:
           flutter pub get
           cd example && flutter pub get
 
+      - name: Run Quality Gate (Analysis & Tests)
+        run: |
+          flutter analyze
+          flutter test
+
       - name: Build Web application
         run: |
           cd example

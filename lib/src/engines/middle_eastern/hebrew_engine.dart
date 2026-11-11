@@ -97,6 +97,25 @@ class HebrewEngine implements TransliteratorEngine {
         continue;
       }
 
+      // Check if common word matches at this index as a word boundary
+      String? matchedWordKey;
+      for (final key in commonWords.keys) {
+        if (input.toLowerCase().startsWith(key, index)) {
+          final afterIndex = index + key.length;
+          final isAtEnd = afterIndex == len;
+          final isNextNonWord = isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
+          if (isNextNonWord) {
+            matchedWordKey = key;
+            break;
+          }
+        }
+      }
+      if (matchedWordKey != null) {
+        buffer.write(commonWords[matchedWordKey]!);
+        index += matchedWordKey.length;
+        continue;
+      }
+
       final match = _matchLongest(input, index);
       if (match != null) {
         buffer.write(match.value);

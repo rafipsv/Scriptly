@@ -61,9 +61,18 @@ class KoreanEngine implements TransliteratorEngine {
       return commonWords[lower]!;
     }
 
-    // Word by word conversion
+    // Word by word conversion with leading/trailing punctuation preservation
     final words = input.split(' ');
     final convertedWords = words.map((w) {
+      final match = RegExp(r'^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$').firstMatch(w);
+      if (match != null) {
+        final prefix = match.group(1)!;
+        final core = match.group(2)!.toLowerCase();
+        final suffix = match.group(3)!;
+        if (commonWords.containsKey(core)) {
+          return '$prefix${commonWords[core]!}$suffix';
+        }
+      }
       final l = w.toLowerCase();
       return commonWords[l] ?? w;
     });
