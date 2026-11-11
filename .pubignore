@@ -1,0 +1,6 @@
+.dart_tool/
+.idea/
+*.iml
+build/
+polyglot_transliterator_agent_spec.md
+build_web.sh

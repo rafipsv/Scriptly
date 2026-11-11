@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:polyglot_transliterator/polyglot_transliterator.dart';
+import 'package:scriptly/scriptly.dart';
 
 /// Base event class for transliterator operations.
 abstract class TransliteratorEvent extends Equatable {

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polyglot_transliterator/polyglot_transliterator.dart';
+import 'package:scriptly/scriptly.dart';
 
 void main() {
   group('TransliterationTextEditingController Tests', () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polyglot_transliterator/polyglot_transliterator.dart';
+import 'package:scriptly/scriptly.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../bloc/transliterator/transliterator_bloc.dart';

@@ -1,4 +1,4 @@
-import 'package:polyglot_transliterator/polyglot_transliterator.dart';
+import 'package:scriptly/scriptly.dart';
 
 /// Predefined constants and language configurations for the Web App.
 class AppConstants {

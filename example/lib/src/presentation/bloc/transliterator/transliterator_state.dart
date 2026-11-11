@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:polyglot_transliterator/polyglot_transliterator.dart';
+import 'package:scriptly/scriptly.dart';
 
 /// Represents the UI state of the Transliterator view.
 class TransliteratorState extends Equatable {

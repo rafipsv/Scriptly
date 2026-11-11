@@ -171,13 +171,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  polyglot_transliterator:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.2.0"
   provider:
     dependency: transitive
     description:
@@ -186,6 +179,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.5+1"
+  scriptly:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.2.0"
   sky_engine:
     dependency: transitive
     description: flutter

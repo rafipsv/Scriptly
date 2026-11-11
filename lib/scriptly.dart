@@ -1,6 +1,6 @@
-/// Polyglot Transliterator
+/// Scriptly
 ///
-/// An extensible, offline-first transliteration package for Flutter and Dart.
+/// An extensible, offline-first multi-language transliteration engine for Flutter and Dart.
 /// Converts text between scripts across Indic, East Asian, Middle Eastern, and European languages.
 library;
 
