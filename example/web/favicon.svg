@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="50%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+
+    <!-- Inner Glow / Overlay -->
+    <linearGradient id="innerGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Ribbon Gradient -->
+    <linearGradient id="ribbonGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+
+    <linearGradient id="ribbonGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+
+    <!-- Drop Shadow for glyphs -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle / Rounded Container -->
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#bgGrad)"/>
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#innerGlow)" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="4"/>
+
+  <!-- Brand Symbol: Stylized Scriptly Dynamic 'S' / Universal Transliteration Waves -->
+  <g filter="url(#dropShadow)" transform="translate(0, 0)">
+    <!-- Top Arc Flow (Latin 'A' & Script Flow) -->
+    <path d="M 160 180 C 160 130, 220 110, 290 110 C 350 110, 375 140, 375 175 C 375 220, 310 235, 256 256 C 200 277, 137 292, 137 342 C 137 385, 175 402, 225 402 C 295 402, 352 365, 352 365" 
+          fill="none" 
+          stroke="url(#ribbonGrad1)" 
+          stroke-width="44" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+
+    <!-- Dynamic Translation Arrow Point (Top Right) -->
+    <polygon points="395,140 405,185 360,175" fill="#38BDF8"/>
+
+    <!-- Dynamic Translation Arrow Point (Bottom Left) -->
+    <polygon points="117,370 107,325 152,335" fill="#FFFFFF"/>
+
+    <!-- Central Acoustic / Phonetic Bridge Nodes -->
+    <circle cx="195" cy="210" r="14" fill="#38BDF8"/>
+    <circle cx="317" cy="302" r="14" fill="#FFFFFF"/>
+
+    <!-- Phonetic Sparkle / Star (Top Right) -->
+    <path d="M 390 85 Q 390 105 410 105 Q 390 105 390 125 Q 390 105 370 105 Q 390 105 390 85 Z" fill="#FDE047"/>
+  </g>
+</svg>
