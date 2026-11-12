@@ -10,8 +10,8 @@ Built with **Clean Architecture**, **BLoC** state management, and **Material 3 D
 
 ## Features
 
-- **Universal Any-to-Any Transliteration**: Supports live text conversion across 25+ languages and scripts (625 auto-pivot routes).
-- **Searchable Language Picker**: Instant search field modal to filter 25+ languages by name, script code (`kn-Knda`, `vi-Latn`, `ka-Geor`, etc.), or linguistic family.
+- **Universal Any-to-Any Transliteration**: Supports live text conversion across 41 languages and scripts (1,681 auto-pivot routes).
+- **Searchable Language Picker**: Instant search field modal to filter 41 languages by name, script code (`sa-Deva`, `kn-Knda`, `vi-Latn`, `am-Ethi`, etc.), or linguistic family.
 - **Modern Dual Capsule Dropdowns**: Custom dropdown cards displaying script badges (`Latn`, `Beng`, `Deva`, `Jpan`, etc.) and language family categories.
 - **One-Tap Swap**: Instantly switch between Source and Target languages.
 - **Quick Sample Pills**: Single-click testing with curated multi-script sample phrases.

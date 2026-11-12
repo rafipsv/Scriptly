@@ -31,7 +31,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              'v0.2.0',
+              'v0.6.0',
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
