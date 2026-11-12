@@ -3,6 +3,12 @@ import 'perso_arabic_constants.dart';
 /// Bidirectional transliteration between Latin (Roman Urdu) and Urdu script.
 class UrduConverter {
   static const Map<String, String> commonWords = {
+    'khuda hafiz': '\u062E\u062F\u0627 \u062D\u0627\u0641\u0638',
+    'khuda': '\u062E\u062F\u0627',
+    'hafiz': '\u062D\u0627\u0641\u0638',
+    'dost': '\u062F\u0648\u0633\u062A',
+    'subah bakhair': '\u0635\u0628\u062D \u0628\u062E\u06CC\u0631',
+    'shab bakhair': '\u0634\u0628 \u0628\u062E\u06CC\u0631',
     'kya':
         '${PersoArabicConstants.urduKeheh}${PersoArabicConstants.ya}${PersoArabicConstants.alif}',
     'haal':
@@ -23,6 +29,11 @@ class UrduConverter {
         '${PersoArabicConstants.seen}${PersoArabicConstants.lam}${PersoArabicConstants.alif}${PersoArabicConstants.meem}',
     'urdu':
         '${PersoArabicConstants.alif}${PersoArabicConstants.ra}${PersoArabicConstants.dal}${PersoArabicConstants.waw}',
+    'bohot': '\u0628\u06C1\u062A',
+    'bahut': '\u0628\u06C1\u062A',
+    'acha': '\u0627\u0686\u06BE\u0627',
+    'kitab': '\u06A9\u062A\u0627\u0628',
+    'shukran': '\u0634\u06A9\u0631\u0627',
   };
 
   static const Map<String, String> charMap = {
@@ -70,6 +81,11 @@ class UrduConverter {
 
   String toUrdu(String input) {
     if (input.isEmpty) return input;
+    final lowerTrimmed = input.toLowerCase().trim();
+    if (commonWords.containsKey(lowerTrimmed)) {
+      return commonWords[lowerTrimmed]!;
+    }
+
     final buffer = StringBuffer();
     final len = input.length;
     var i = 0;

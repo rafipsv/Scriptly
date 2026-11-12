@@ -125,6 +125,32 @@ class BengaliToLatinConverter {
       final rune = runes[index];
       final char = String.fromCharCode(rune);
 
+      // Check for decomposed Nukta combination: Consonant + Nukta (0x09BC)
+      if (index + 1 < len && runes[index + 1] == 0x09BC) {
+        if (rune == 0x09AF) {
+          // Ya + Nukta -> Yya (য়)
+          buffer.write('y');
+          index += 2;
+          continue;
+        } else if (rune == 0x09A1) {
+          // Dda + Nukta -> Rra (ড়)
+          buffer.write('r');
+          index += 2;
+          continue;
+        } else if (rune == 0x09A2) {
+          // Ddha + Nukta -> Rrha (ঢ়)
+          buffer.write('rh');
+          index += 2;
+          continue;
+        }
+      }
+
+      // Skip stray Nukta
+      if (rune == 0x09BC) {
+        index++;
+        continue;
+      }
+
       // Check for conjunct: Consonant + Hasanta + Consonant
       if (index + 2 < len && runes[index + 1] == 0x09CD) {
         final conjunct =

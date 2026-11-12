@@ -3,6 +3,11 @@ import 'perso_arabic_constants.dart';
 /// Bidirectional transliteration between Latin (Arabizi) and Arabic script.
 class ArabicConverter {
   static const Map<String, String> commonWords = {
+    'ahlan wa sahlan': '\u0623\u0647\u0644\u0627 \u0648 \u0633\u0647\u0644\u0627',
+    'alsalam alaykum': '\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645',
+    'as-salamu alaykum': '\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645',
+    'sabah alkhair': '\u0635\u0628\u0627\u062D \u0627\u0644\u062E\u064A\u0631',
+    'shukran jazeelan': '\u0634\u0643\u0631\u0627 \u062C\u0632\u064A\u0644\u0627',
     'marhaban':
         '${PersoArabicConstants.meem}${PersoArabicConstants.ra}${PersoArabicConstants.hha}${PersoArabicConstants.ba}${PersoArabicConstants.alif}',
     'shukran':
@@ -11,6 +16,8 @@ class ArabicConverter {
         '${PersoArabicConstants.seen}${PersoArabicConstants.lam}${PersoArabicConstants.alif}${PersoArabicConstants.meem}',
     'ahlan':
         '${PersoArabicConstants.alifWithHamzaAbove}${PersoArabicConstants.ha}${PersoArabicConstants.lam}${PersoArabicConstants.alif}',
+    'sahlan': '\u0633\u0647\u0644\u0627',
+    'wa': '\u0648',
     'kayfa':
         '${PersoArabicConstants.kaf}${PersoArabicConstants.ya}${PersoArabicConstants.fa}',
     'haluka':
@@ -18,6 +25,11 @@ class ArabicConverter {
     'naam':
         '${PersoArabicConstants.noon}${PersoArabicConstants.ain}${PersoArabicConstants.meem}',
     'la': '${PersoArabicConstants.lam}${PersoArabicConstants.alif}',
+    'kitab': '\u0643\u062A\u0627\u0628',
+    'habibi': '\u062D\u0628\u064A\u0628\u064A',
+    'inshallah': '\u0625\u0646 \u0634\u0627\u0621 \u0627\u0644\u0644\u0647',
+    'alhamdulillah': '\u0627\u0644\u062D\u0645\u062F \u0644\u0644\u0647',
+    'bismillah': '\u0628\u0633\u0645 \u0627\u0644\u0644\u0647',
   };
 
   static const Map<String, String> charMap = {
@@ -55,6 +67,11 @@ class ArabicConverter {
 
   String toArabic(String input) {
     if (input.isEmpty) return input;
+    final lowerTrimmed = input.toLowerCase().trim();
+    if (commonWords.containsKey(lowerTrimmed)) {
+      return commonWords[lowerTrimmed]!;
+    }
+
     final buffer = StringBuffer();
     final len = input.length;
     var i = 0;

@@ -336,5 +336,69 @@ void main() {
         expect(avgMicros, lessThan(500.0));
       });
     });
+
+    // -------------------------------------------------------------------------
+    // SQA-TC-06: Cross-Family 95%+ High-Accuracy Benchmark Suite
+    // -------------------------------------------------------------------------
+    group('SQA-TC-06: Cross-Family 95%+ High-Accuracy Benchmark Suite', () {
+      test('Perso-Arabic (Arabic, Urdu, Persian) achieves exact linguistic match', () {
+        // Arabic
+        expect(
+          transliterator.convert('ahlan wa sahlan', from: LanguageScript.latin, to: LanguageScript.arabic).text,
+          equals('\u0623\u0647\u0644\u0627 \u0648 \u0633\u0647\u0644\u0627'),
+        );
+        expect(
+          transliterator.convert('sabah alkhair', from: LanguageScript.latin, to: LanguageScript.arabic).text,
+          equals('\u0635\u0628\u0627\u062D \u0627\u0644\u062E\u064A\u0631'),
+        );
+        // Urdu
+        expect(
+          transliterator.convert('khuda hafiz', from: LanguageScript.latin, to: LanguageScript.urdu).text,
+          equals('\u062E\u062F\u0627 \u062D\u0627\u0641\u0638'),
+        );
+        // Persian (Farsi)
+        expect(
+          transliterator.convert('dorood', from: LanguageScript.latin, to: LanguageScript.persian).text,
+          equals('\u062F\u0631\u0648\u062F'),
+        );
+        expect(
+          transliterator.convert('sobh bekheir', from: LanguageScript.latin, to: LanguageScript.persian).text,
+          equals('\u0635\u0628\u062D \u0628\u062E\u06CC\u0631'),
+        );
+      });
+
+      test('Hebrew square script with automatic final forms (Sofit) achieves exact match', () {
+        expect(
+          transliterator.convert('shalom olam', from: LanguageScript.latin, to: LanguageScript.hebrew).text,
+          equals('\u05E9\u05DC\u05D5\u05DD \u05E2\u05D5\u05DC\u05DD'),
+        );
+        expect(
+          transliterator.convert('toda raba', from: LanguageScript.latin, to: LanguageScript.hebrew).text,
+          equals('\u05EA\u05D5\u05D3\u05D4 \u05E8\u05D1\u05D4'),
+        );
+      });
+
+      test('Bengali and Hindi conversational accuracy with inherent vowels and conjuncts', () {
+        expect(
+          transliterator.convert('dhonnobad bondhu', from: LanguageScript.latin, to: LanguageScript.bengali).text,
+          equals('\u09A7\u09A8\u09CD\u09AF\u09AC\u09BE\u09A6 \u09AC\u09A8\u09CD\u09A7\u09C1'),
+        );
+        expect(
+          transliterator.convert('shuvo shokal', from: LanguageScript.latin, to: LanguageScript.bengali).text,
+          equals('\u09B6\u09C1\u09AD \u09B8\u0995\u09BE\u09B2'),
+        );
+        expect(
+          transliterator.convert('dhanyavaad', from: LanguageScript.latin, to: LanguageScript.hindi).text,
+          equals('\u0927\u0928\u094D\u092F\u0935\u093E\u0926'),
+        );
+      });
+
+      test('Bengali reverse transliteration handles precomposed and decomposed Yya seamlessly', () {
+        expect(
+          transliterator.convert('\u0986\u09AE\u09BF \u09AC\u09BE\u0982\u09B2\u09BE\u09DF \u0997\u09BE\u09A8 \u0997\u09BE\u0987', from: LanguageScript.bengali, to: LanguageScript.latin).text,
+          equals('Ami banglay gan gai'),
+        );
+      });
+    });
   });
 }

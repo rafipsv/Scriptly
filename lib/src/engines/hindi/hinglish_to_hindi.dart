@@ -26,6 +26,16 @@ class HinglishToHindiConverter {
         '${DevanagariConstants.conDh}${DevanagariConstants.conN}${DevanagariConstants.virama}${DevanagariConstants.conY}${DevanagariConstants.conV}${DevanagariConstants.matraAa}${DevanagariConstants.conD}',
     'dhanyavad':
         '${DevanagariConstants.conDh}${DevanagariConstants.conN}${DevanagariConstants.virama}${DevanagariConstants.conY}${DevanagariConstants.conV}${DevanagariConstants.matraAa}${DevanagariConstants.conD}',
+    'dhanyavaad':
+        '${DevanagariConstants.conDh}${DevanagariConstants.conN}${DevanagariConstants.virama}${DevanagariConstants.conY}${DevanagariConstants.conV}${DevanagariConstants.matraAa}${DevanagariConstants.conD}',
+    'prabhat':
+        '${DevanagariConstants.conP}${DevanagariConstants.virama}${DevanagariConstants.conR}${DevanagariConstants.conBh}${DevanagariConstants.matraAa}${DevanagariConstants.conT}',
+    'shubh':
+        '${DevanagariConstants.conSh}${DevanagariConstants.matraU}${DevanagariConstants.conBh}',
+    'shubh prabhat':
+        '${DevanagariConstants.conSh}${DevanagariConstants.matraU}${DevanagariConstants.conBh} ${DevanagariConstants.conP}${DevanagariConstants.virama}${DevanagariConstants.conR}${DevanagariConstants.conBh}${DevanagariConstants.matraAa}${DevanagariConstants.conT}',
+    'shubh din':
+        '${DevanagariConstants.conSh}${DevanagariConstants.matraU}${DevanagariConstants.conBh} ${DevanagariConstants.conD}${DevanagariConstants.matraI}${DevanagariConstants.conN}',
     'bharat':
         '${DevanagariConstants.conBh}${DevanagariConstants.matraAa}${DevanagariConstants.conR}${DevanagariConstants.conT}',
     'mera':
@@ -110,6 +120,10 @@ class HinglishToHindiConverter {
     ConversionOptions options = ConversionOptions.standard,
   }) {
     if (input.isEmpty) return input;
+    final lowerTrimmed = input.toLowerCase().trim();
+    if (commonWords.containsKey(lowerTrimmed)) {
+      return commonWords[lowerTrimmed]!;
+    }
     final buffer = StringBuffer();
     final len = input.length;
     var i = 0;

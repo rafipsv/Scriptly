@@ -83,6 +83,32 @@ class BengaliPhoneticRules {
         '${BengaliConstants.vowelE}${BengaliConstants.conB}${BengaliConstants.anusvara}',
     'ar': '${BengaliConstants.vowelAa}${BengaliConstants.conR}',
     'aar': '${BengaliConstants.vowelAa}${BengaliConstants.conR}',
+    'bondhu':
+        '${BengaliConstants.conB}${BengaliConstants.conN}${BengaliConstants.hasanta}${BengaliConstants.conDh}${BengaliConstants.karU}',
+    'shokal':
+        '${BengaliConstants.conS}${BengaliConstants.conK}${BengaliConstants.karAa}${BengaliConstants.conL}',
+    'sokal':
+        '${BengaliConstants.conS}${BengaliConstants.conK}${BengaliConstants.karAa}${BengaliConstants.conL}',
+    'shuvo':
+        '${BengaliConstants.conSh}${BengaliConstants.karU}${BengaliConstants.conBh}',
+    'subho':
+        '${BengaliConstants.conSh}${BengaliConstants.karU}${BengaliConstants.conBh}',
+    'shubho':
+        '${BengaliConstants.conSh}${BengaliConstants.karU}${BengaliConstants.conBh}',
+    'gan':
+        '${BengaliConstants.conG}${BengaliConstants.karAa}${BengaliConstants.conN}',
+    'gaan':
+        '${BengaliConstants.conG}${BengaliConstants.karAa}${BengaliConstants.conN}',
+    'gai':
+        '${BengaliConstants.conG}${BengaliConstants.karAa}${BengaliConstants.vowelI}',
+    'bhai':
+        '${BengaliConstants.conBh}${BengaliConstants.karAa}${BengaliConstants.vowelI}',
+    'dada':
+        '${BengaliConstants.conD}${BengaliConstants.karAa}${BengaliConstants.conD}${BengaliConstants.karAa}',
+    'sathe':
+        '${BengaliConstants.conS}${BengaliConstants.karAa}${BengaliConstants.conTh}${BengaliConstants.karE}',
+    'shathe':
+        '${BengaliConstants.conS}${BengaliConstants.karAa}${BengaliConstants.conTh}${BengaliConstants.karE}',
   };
 
   /// Independent vowels (at the start of a word or after another vowel).

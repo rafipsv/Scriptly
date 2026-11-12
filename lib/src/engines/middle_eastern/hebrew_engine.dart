@@ -16,14 +16,28 @@ class HebrewEngine implements TransliteratorEngine {
   String get version => '0.2.0';
 
   static const Map<String, String> commonWords = {
-    'shalom': '\u05E9\u05DC\u05D5\u05DD',
-    'toda': '\u05EA\u05D5\u05D3\u05D4',
+    'shalom olam': '\u05E9\u05DC\u05D5\u05DD \u05E2\u05D5\u05DC\u05DD',
+    'toda raba': '\u05EA\u05D5\u05D3\u05D4 \u05E8\u05D1\u05D4',
+    'toda rabba': '\u05EA\u05D5\u05D3\u05D4 \u05E8\u05D1\u05D4',
     'boker tov': '\u05D1\u05D5\u05E7\u05E8 \u05D8\u05D5\u05D1',
+    'erev tov': '\u05E2\u05E8\u05D1 \u05D8\u05D5\u05D1',
+    'layla tov': '\u05DC\u05D9\u05DC\u05D4 \u05D8\u05D5\u05D1',
+    'chag sameach': '\u05D7\u05D2 \u05E9\u05DE\u05D7',
+    'lehitraot': '\u05DC\u05D4\u05EA\u05E8\u05D0\u05D5\u05EA',
+    'bevakasha': '\u05D1\u05D1\u05E7\u05E9\u05D4',
+    'shalom': '\u05E9\u05DC\u05D5\u05DD',
+    'olam': '\u05E2\u05D5\u05DC\u05DD',
+    'toda': '\u05EA\u05D5\u05D3\u05D4',
+    'raba': '\u05E8\u05D1\u05D4',
+    'rabba': '\u05E8\u05D1\u05D4',
+    'tov': '\u05D8\u05D5\u05D1',
     'ken': '\u05DB\u05DF',
     'lo': '\u05DC\u05D0',
     'yisrael': '\u05D9\u05E9\u05E8\u05D0\u05DC',
     'israel': '\u05D9\u05E9\u05E8\u05D0\u05DC',
     'sababa': '\u05E1\u05D1\u05D1\u05D4',
+    'ma shlomcha': '\u05DE\u05D4 \u05E9\u05DC\u05D5\u05DE\u05DA',
+    'ma nishma': '\u05DE\u05D4 \u05E0\u05E9\u05DE\u05E2',
   };
 
   static const Map<String, String> charMap = {
@@ -125,7 +139,42 @@ class HebrewEngine implements TransliteratorEngine {
         index++;
       }
     }
-    return buffer.toString();
+    return _applyFinalForms(buffer.toString());
+  }
+
+  String _applyFinalForms(String text) {
+    final runes = text.runes.toList();
+    final len = runes.length;
+    final out = StringBuffer();
+
+    for (var i = 0; i < len; i++) {
+      final r = runes[i];
+      final isLastInWord = (i + 1 == len) ||
+          (runes[i + 1] <= 0x20 ||
+              (runes[i + 1] >= 0x21 && runes[i + 1] <= 0x2F));
+
+      if (isLastInWord) {
+        switch (r) {
+          case 0x05DB: // Kaf
+            out.writeCharCode(0x05DA);
+            continue;
+          case 0x05DE: // Mem
+            out.writeCharCode(0x05DD);
+            continue;
+          case 0x05E0: // Nun
+            out.writeCharCode(0x05DF);
+            continue;
+          case 0x05E4: // Pe
+            out.writeCharCode(0x05E3);
+            continue;
+          case 0x05E6: // Tsadi
+            out.writeCharCode(0x05E5);
+            continue;
+        }
+      }
+      out.writeCharCode(r);
+    }
+    return out.toString();
   }
 
   String _toLatin(String input) {
