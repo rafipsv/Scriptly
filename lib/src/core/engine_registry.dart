@@ -105,11 +105,13 @@ class EngineRegistry {
     TransliteratorEngine Function() factory,
     bool Function(LanguageScript from, LanguageScript to) supportsChecker,
   ) {
-    _lazyEngines.add(_LazyEngineEntry(
-      id: id,
-      factory: factory,
-      supportsChecker: supportsChecker,
-    ));
+    _lazyEngines.add(
+      _LazyEngineEntry(
+        id: id,
+        factory: factory,
+        supportsChecker: supportsChecker,
+      ),
+    );
   }
 
   /// Unregisters an engine by its [engineId].

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 import '../core/language_script.dart';
 import '../core/transliterator.dart';
 
@@ -22,7 +23,8 @@ class ScriptlySuggestionOverlay extends StatefulWidget {
   });
 
   @override
-  State<ScriptlySuggestionOverlay> createState() => _ScriptlySuggestionOverlayState();
+  State<ScriptlySuggestionOverlay> createState() =>
+      _ScriptlySuggestionOverlayState();
 }
 
 class _ScriptlySuggestionOverlayState extends State<ScriptlySuggestionOverlay> {
@@ -53,7 +55,11 @@ class _ScriptlySuggestionOverlayState extends State<ScriptlySuggestionOverlay> {
     }
 
     try {
-      final converted = _engine.convert(lastWord, from: widget.from, to: widget.to);
+      final converted = _engine.convert(
+        lastWord,
+        from: widget.from,
+        to: widget.to,
+      );
       setState(() => _candidates = [converted.text, lastWord]);
     } catch (_) {
       setState(() => _candidates = []);
@@ -73,7 +79,9 @@ class _ScriptlySuggestionOverlayState extends State<ScriptlySuggestionOverlay> {
     final newText = '$prefix$candidate$after';
     widget.controller.value = TextEditingValue(
       text: newText,
-      selection: TextSelection.collapsed(offset: prefix.length + candidate.length),
+      selection: TextSelection.collapsed(
+        offset: prefix.length + candidate.length,
+      ),
     );
     widget.onSelected?.call(candidate);
   }
@@ -89,17 +97,30 @@ class _ScriptlySuggestionOverlayState extends State<ScriptlySuggestionOverlay> {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Wrap(
               spacing: 6,
-              children: _candidates.map((c) => GestureDetector(
-                onTap: () => _selectCandidate(c),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE3F2FD),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(c, style: const TextStyle(fontSize: 13, color: Color(0xFF1565C0))),
-                ),
-              )).toList(),
+              children: _candidates
+                  .map(
+                    (c) => GestureDetector(
+                      onTap: () => _selectCandidate(c),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE3F2FD),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Text(
+                          c,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Color(0xFF1565C0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         widget.child,

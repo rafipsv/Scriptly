@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:scriptly/scriptly.dart';
 
@@ -7,10 +8,7 @@ double calculateSimilarity(String s1, String s2) {
   if (s1 == s2) return 1.0;
   if (s1.isEmpty || s2.isEmpty) return 0.0;
 
-  final d = List.generate(
-    s1.length + 1,
-    (i) => List.filled(s2.length + 1, 0),
-  );
+  final d = List.generate(s1.length + 1, (i) => List.filled(s2.length + 1, 0));
 
   for (var i = 0; i <= s1.length; i++) {
     d[i][0] = i;
@@ -351,7 +349,10 @@ void main() {
         final expected = tc['expected'] as String;
 
         final res = transliterator.convert(input, from: from, to: to);
-        final sim = calculateSimilarity(res.text.toLowerCase().trim(), expected.toLowerCase().trim());
+        final sim = calculateSimilarity(
+          res.text.toLowerCase().trim(),
+          expected.toLowerCase().trim(),
+        );
         scores[lang] = sim;
         totalSimilarity += sim;
         if (res.text.toLowerCase().trim() == expected.toLowerCase().trim()) {
@@ -362,7 +363,8 @@ void main() {
         expect(
           sim,
           greaterThanOrEqualTo(0.95),
-          reason: 'Language $lang failed 95% accuracy bar! Got: "${res.text}", expected: "$expected" (Similarity: ${(sim * 100).toStringAsFixed(1)}%)',
+          reason:
+              'Language $lang failed 95% accuracy bar! Got: "${res.text}", expected: "$expected" (Similarity: ${(sim * 100).toStringAsFixed(1)}%)',
         );
       }
 
@@ -376,40 +378,244 @@ void main() {
 
     test('All 41 Reverse Transliteration (Native -> Latin) precision benchmark', () {
       final reverseCases = <Map<String, dynamic>>[
-        {'lang': 'Bengali', 'from': LanguageScript.bengali, 'to': LanguageScript.latin, 'input': 'আমি', 'expected': 'Ami'},
-        {'lang': 'Hindi', 'from': LanguageScript.hindi, 'to': LanguageScript.latin, 'input': 'नमस्ते', 'expected': 'Namaste'},
-        {'lang': 'Urdu', 'from': LanguageScript.urdu, 'to': LanguageScript.latin, 'input': 'آپ', 'expected': 'Aap'},
-        {'lang': 'Arabic', 'from': LanguageScript.arabic, 'to': LanguageScript.latin, 'input': 'مرحبا', 'expected': 'Marhaban'},
-        {'lang': 'Gujarati', 'from': LanguageScript.gujarati, 'to': LanguageScript.latin, 'input': 'નમસ્તે', 'expected': 'Namaste'},
-        {'lang': 'Tamil', 'from': LanguageScript.tamil, 'to': LanguageScript.latin, 'input': 'வணக்கம்', 'expected': 'Vanakkam'},
-        {'lang': 'Telugu', 'from': LanguageScript.telugu, 'to': LanguageScript.latin, 'input': 'నమస్కారం', 'expected': 'Namaskaram'},
-        {'lang': 'Punjabi', 'from': LanguageScript.punjabi, 'to': LanguageScript.latin, 'input': 'ਸਤਿ', 'expected': 'Sat'},
-        {'lang': 'Malayalam', 'from': LanguageScript.malayalam, 'to': LanguageScript.latin, 'input': 'നമസ്കാരം', 'expected': 'Namaskaram'},
-        {'lang': 'Kannada', 'from': LanguageScript.kannada, 'to': LanguageScript.latin, 'input': 'ನಮಸ್ಕಾರ', 'expected': 'Namaskara'},
-        {'lang': 'Odia', 'from': LanguageScript.odia, 'to': LanguageScript.latin, 'input': 'ନମସ୍କାର', 'expected': 'Namaskar'},
-        {'lang': 'Sinhala', 'from': LanguageScript.sinhala, 'to': LanguageScript.latin, 'input': 'ආයුබෝවන්', 'expected': 'Ayubowan'},
-        {'lang': 'Sanskrit', 'from': LanguageScript.sanskrit, 'to': LanguageScript.latin, 'input': 'ॐ', 'expected': 'Om'},
-        {'lang': 'Marathi', 'from': LanguageScript.marathi, 'to': LanguageScript.latin, 'input': 'महाराष्ट्र', 'expected': 'Maharashtra'},
-        {'lang': 'Nepali', 'from': LanguageScript.nepali, 'to': LanguageScript.latin, 'input': 'नेपाल', 'expected': 'Nepal'},
-        {'lang': 'Assamese', 'from': LanguageScript.assamese, 'to': LanguageScript.latin, 'input': 'গুৱাহাটী', 'expected': 'Guwahati'},
-        {'lang': 'Thai', 'from': LanguageScript.thai, 'to': LanguageScript.latin, 'input': 'สวัสดี', 'expected': 'Sawatdee'},
-        {'lang': 'Lao', 'from': LanguageScript.lao, 'to': LanguageScript.latin, 'input': 'ສະບາຍດີ', 'expected': 'Sabaidee'},
-        {'lang': 'Burmese', 'from': LanguageScript.burmese, 'to': LanguageScript.latin, 'input': 'မင်္ဂလာပါ', 'expected': 'Mingalaba'},
-        {'lang': 'Khmer', 'from': LanguageScript.khmer, 'to': LanguageScript.latin, 'input': 'សួស្តី', 'expected': 'Suesdei'},
-        {'lang': 'Japanese', 'from': LanguageScript.japanese, 'to': LanguageScript.latin, 'input': 'ありがとう', 'expected': 'Arigatou'},
-        {'lang': 'Korean', 'from': LanguageScript.korean, 'to': LanguageScript.latin, 'input': '안녕하세요', 'expected': 'Annyeonghaseyo'},
-        {'lang': 'Persian', 'from': LanguageScript.persian, 'to': LanguageScript.latin, 'input': 'سلام', 'expected': 'Salam'},
-        {'lang': 'Hebrew', 'from': LanguageScript.hebrew, 'to': LanguageScript.latin, 'input': 'שלום', 'expected': 'Shalom'},
-        {'lang': 'Kurdish', 'from': LanguageScript.kurdish, 'to': LanguageScript.latin, 'input': 'سڵاو', 'expected': 'Slaw'},
-        {'lang': 'Kazakh', 'from': LanguageScript.kazakh, 'to': LanguageScript.latin, 'input': 'Сәлем', 'expected': 'Sälem'},
-        {'lang': 'Russian', 'from': LanguageScript.russian, 'to': LanguageScript.latin, 'input': 'привет', 'expected': 'Privet'},
-        {'lang': 'Ukrainian', 'from': LanguageScript.ukrainian, 'to': LanguageScript.latin, 'input': 'привіт', 'expected': 'Pryvit'},
-        {'lang': 'Serbian', 'from': LanguageScript.serbian, 'to': LanguageScript.latin, 'input': 'београд', 'expected': 'Beograd'},
-        {'lang': 'Bulgarian', 'from': LanguageScript.bulgarian, 'to': LanguageScript.latin, 'input': 'софия', 'expected': 'Sofia'},
-        {'lang': 'Greek', 'from': LanguageScript.greek, 'to': LanguageScript.latin, 'input': 'καλημέρα', 'expected': 'Kalimera'},
-        {'lang': 'Georgian', 'from': LanguageScript.georgian, 'to': LanguageScript.latin, 'input': 'გამარჯობა', 'expected': 'Gamarjoba'},
-        {'lang': 'Armenian', 'from': LanguageScript.armenian, 'to': LanguageScript.latin, 'input': 'բարև', 'expected': 'Barev'},
-        {'lang': 'Amharic', 'from': LanguageScript.amharic, 'to': LanguageScript.latin, 'input': 'ሰላም', 'expected': 'Selam'},
+        {
+          'lang': 'Bengali',
+          'from': LanguageScript.bengali,
+          'to': LanguageScript.latin,
+          'input': 'আমি',
+          'expected': 'Ami',
+        },
+        {
+          'lang': 'Hindi',
+          'from': LanguageScript.hindi,
+          'to': LanguageScript.latin,
+          'input': 'नमस्ते',
+          'expected': 'Namaste',
+        },
+        {
+          'lang': 'Urdu',
+          'from': LanguageScript.urdu,
+          'to': LanguageScript.latin,
+          'input': 'آپ',
+          'expected': 'Aap',
+        },
+        {
+          'lang': 'Arabic',
+          'from': LanguageScript.arabic,
+          'to': LanguageScript.latin,
+          'input': 'مرحبا',
+          'expected': 'Marhaban',
+        },
+        {
+          'lang': 'Gujarati',
+          'from': LanguageScript.gujarati,
+          'to': LanguageScript.latin,
+          'input': 'નમસ્તે',
+          'expected': 'Namaste',
+        },
+        {
+          'lang': 'Tamil',
+          'from': LanguageScript.tamil,
+          'to': LanguageScript.latin,
+          'input': 'வணக்கம்',
+          'expected': 'Vanakkam',
+        },
+        {
+          'lang': 'Telugu',
+          'from': LanguageScript.telugu,
+          'to': LanguageScript.latin,
+          'input': 'నమస్కారం',
+          'expected': 'Namaskaram',
+        },
+        {
+          'lang': 'Punjabi',
+          'from': LanguageScript.punjabi,
+          'to': LanguageScript.latin,
+          'input': 'ਸਤਿ',
+          'expected': 'Sat',
+        },
+        {
+          'lang': 'Malayalam',
+          'from': LanguageScript.malayalam,
+          'to': LanguageScript.latin,
+          'input': 'നമസ്കാരം',
+          'expected': 'Namaskaram',
+        },
+        {
+          'lang': 'Kannada',
+          'from': LanguageScript.kannada,
+          'to': LanguageScript.latin,
+          'input': 'ನಮಸ್ಕಾರ',
+          'expected': 'Namaskara',
+        },
+        {
+          'lang': 'Odia',
+          'from': LanguageScript.odia,
+          'to': LanguageScript.latin,
+          'input': 'ନମସ୍କାର',
+          'expected': 'Namaskar',
+        },
+        {
+          'lang': 'Sinhala',
+          'from': LanguageScript.sinhala,
+          'to': LanguageScript.latin,
+          'input': 'ආයුබෝවන්',
+          'expected': 'Ayubowan',
+        },
+        {
+          'lang': 'Sanskrit',
+          'from': LanguageScript.sanskrit,
+          'to': LanguageScript.latin,
+          'input': 'ॐ',
+          'expected': 'Om',
+        },
+        {
+          'lang': 'Marathi',
+          'from': LanguageScript.marathi,
+          'to': LanguageScript.latin,
+          'input': 'महाराष्ट्र',
+          'expected': 'Maharashtra',
+        },
+        {
+          'lang': 'Nepali',
+          'from': LanguageScript.nepali,
+          'to': LanguageScript.latin,
+          'input': 'नेपाल',
+          'expected': 'Nepal',
+        },
+        {
+          'lang': 'Assamese',
+          'from': LanguageScript.assamese,
+          'to': LanguageScript.latin,
+          'input': 'গুৱাহাটী',
+          'expected': 'Guwahati',
+        },
+        {
+          'lang': 'Thai',
+          'from': LanguageScript.thai,
+          'to': LanguageScript.latin,
+          'input': 'สวัสดี',
+          'expected': 'Sawatdee',
+        },
+        {
+          'lang': 'Lao',
+          'from': LanguageScript.lao,
+          'to': LanguageScript.latin,
+          'input': 'ສະບາຍດີ',
+          'expected': 'Sabaidee',
+        },
+        {
+          'lang': 'Burmese',
+          'from': LanguageScript.burmese,
+          'to': LanguageScript.latin,
+          'input': 'မင်္ဂလာပါ',
+          'expected': 'Mingalaba',
+        },
+        {
+          'lang': 'Khmer',
+          'from': LanguageScript.khmer,
+          'to': LanguageScript.latin,
+          'input': 'សួស្តី',
+          'expected': 'Suesdei',
+        },
+        {
+          'lang': 'Japanese',
+          'from': LanguageScript.japanese,
+          'to': LanguageScript.latin,
+          'input': 'ありがとう',
+          'expected': 'Arigatou',
+        },
+        {
+          'lang': 'Korean',
+          'from': LanguageScript.korean,
+          'to': LanguageScript.latin,
+          'input': '안녕하세요',
+          'expected': 'Annyeonghaseyo',
+        },
+        {
+          'lang': 'Persian',
+          'from': LanguageScript.persian,
+          'to': LanguageScript.latin,
+          'input': 'سلام',
+          'expected': 'Salam',
+        },
+        {
+          'lang': 'Hebrew',
+          'from': LanguageScript.hebrew,
+          'to': LanguageScript.latin,
+          'input': 'שלום',
+          'expected': 'Shalom',
+        },
+        {
+          'lang': 'Kurdish',
+          'from': LanguageScript.kurdish,
+          'to': LanguageScript.latin,
+          'input': 'سڵاو',
+          'expected': 'Slaw',
+        },
+        {
+          'lang': 'Kazakh',
+          'from': LanguageScript.kazakh,
+          'to': LanguageScript.latin,
+          'input': 'Сәлем',
+          'expected': 'Sälem',
+        },
+        {
+          'lang': 'Russian',
+          'from': LanguageScript.russian,
+          'to': LanguageScript.latin,
+          'input': 'привет',
+          'expected': 'Privet',
+        },
+        {
+          'lang': 'Ukrainian',
+          'from': LanguageScript.ukrainian,
+          'to': LanguageScript.latin,
+          'input': 'привіт',
+          'expected': 'Pryvit',
+        },
+        {
+          'lang': 'Serbian',
+          'from': LanguageScript.serbian,
+          'to': LanguageScript.latin,
+          'input': 'београд',
+          'expected': 'Beograd',
+        },
+        {
+          'lang': 'Bulgarian',
+          'from': LanguageScript.bulgarian,
+          'to': LanguageScript.latin,
+          'input': 'софия',
+          'expected': 'Sofia',
+        },
+        {
+          'lang': 'Greek',
+          'from': LanguageScript.greek,
+          'to': LanguageScript.latin,
+          'input': 'καλημέρα',
+          'expected': 'Kalimera',
+        },
+        {
+          'lang': 'Georgian',
+          'from': LanguageScript.georgian,
+          'to': LanguageScript.latin,
+          'input': 'გამარჯობა',
+          'expected': 'Gamarjoba',
+        },
+        {
+          'lang': 'Armenian',
+          'from': LanguageScript.armenian,
+          'to': LanguageScript.latin,
+          'input': 'բարև',
+          'expected': 'Barev',
+        },
+        {
+          'lang': 'Amharic',
+          'from': LanguageScript.amharic,
+          'to': LanguageScript.latin,
+          'input': 'ሰላም',
+          'expected': 'Selam',
+        },
       ];
 
       for (final tc in reverseCases) {
@@ -420,12 +626,16 @@ void main() {
         final expected = tc['expected'] as String;
 
         final res = transliterator.convert(input, from: from, to: to);
-        final sim = calculateSimilarity(res.text.toLowerCase().trim(), expected.toLowerCase().trim());
+        final sim = calculateSimilarity(
+          res.text.toLowerCase().trim(),
+          expected.toLowerCase().trim(),
+        );
 
         expect(
           sim,
           greaterThanOrEqualTo(0.95),
-          reason: 'Reverse language $lang failed 95% accuracy! Got: "${res.text}", expected: "$expected" (Similarity: ${(sim * 100).toStringAsFixed(1)}%)',
+          reason:
+              'Reverse language $lang failed 95% accuracy! Got: "${res.text}", expected: "$expected" (Similarity: ${(sim * 100).toStringAsFixed(1)}%)',
         );
       }
     });

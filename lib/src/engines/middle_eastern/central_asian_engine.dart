@@ -22,49 +22,146 @@ class CentralAsianEngine implements TransliteratorEngine {
     'spas': '\u0633\u0648\u067E\u0627\u0633', // سوپاس
     'kurd': '\u06A9\u0648\u0631\u062F', // کورد
     'kurdistan': '\u06A9\u0648\u0631\u062F\u0633\u062A\u0627\u0646', // کوردستان
-
     // Pashto
     'manana': '\u0645\u0646\u0646\u0647', // مننه
     'pakhto': '\u067E\u069A\u062A\u0648', // پښتو
-    'afghanistan': '\u0627\u0641\u063A\u0627\u0646\u0633\u062A\u0627\u0646', // افغانستان
+    'afghanistan':
+        '\u0627\u0641\u063A\u0627\u0646\u0633\u062A\u0627\u0646', // افغانستان
     'khe raghlay': '\u069A\u0647 \u0631\u0627\u063A\u0644\u0626', // ښه راغلئ
-
     // Kazakh
     'sälem': '\u0421\u04D9\u043B\u0435\u043C', // Сәлем
     'salem': '\u0421\u04D9\u043B\u0435\u043C', // Сәлем
     'raqmet': '\u0420\u0430\u049B\u043C\u0435\u0442', // Рақмет
-    'qazaqstan': '\u049A\u0430\u0437\u0430\u049B\u0441\u0442\u0430\u043D', // Қазақстан
+    'qazaqstan':
+        '\u049A\u0430\u0437\u0430\u049B\u0441\u0442\u0430\u043D', // Қазақстан
     'astana': '\u0410\u0441\u0442\u0430\u043D\u0430', // Астана
   };
 
   static const Map<String, String> kurdishHawarToSorani = {
-    'sh': '\u0634', 'ş': '\u0634', 'ch': '\u0686', 'ç': '\u0686',
-    'jh': '\u0698', 'j': '\u0698', 'x': '\u062E', 'gh': '\u063A',
-    'll': '\u06B5', 'rr': '\u0695', 'ee': '\u06CE', 'ê': '\u06CE',
-    'oo': '\u06C6', 'o': '\u06C6', 'u': '\u0648', 'û': '\u0648\u0648',
-    'a': '\u0627', 'b': '\u0628', 'c': '\u062C', 'd': '\u062F',
-    'e': '\u06D5', 'f': '\u0641', 'g': '\u06AF', 'h': '\u0647',
-    'i': '', 'î': '\u06CC', 'k': '\u06A9', 'l': '\u0644',
-    'm': '\u0645', 'n': '\u0646', 'p': '\u067E', 'q': '\u0642',
-    'r': '\u0631', 's': '\u0633', 't': '\u062A', 'v': '\u06A4',
-    'w': '\u0648', 'y': '\u06CC', 'z': '\u0632',
+    'sh': '\u0634',
+    'ş': '\u0634',
+    'ch': '\u0686',
+    'ç': '\u0686',
+    'jh': '\u0698',
+    'j': '\u0698',
+    'x': '\u062E',
+    'gh': '\u063A',
+    'll': '\u06B5',
+    'rr': '\u0695',
+    'ee': '\u06CE',
+    'ê': '\u06CE',
+    'oo': '\u06C6',
+    'o': '\u06C6',
+    'u': '\u0648',
+    'û': '\u0648\u0648',
+    'a': '\u0627',
+    'b': '\u0628',
+    'c': '\u062C',
+    'd': '\u062F',
+    'e': '\u06D5',
+    'f': '\u0641',
+    'g': '\u06AF',
+    'h': '\u0647',
+    'i': '',
+    'î': '\u06CC',
+    'k': '\u06A9',
+    'l': '\u0644',
+    'm': '\u0645',
+    'n': '\u0646',
+    'p': '\u067E',
+    'q': '\u0642',
+    'r': '\u0631',
+    's': '\u0633',
+    't': '\u062A',
+    'v': '\u06A4',
+    'w': '\u0648',
+    'y': '\u06CC',
+    'z': '\u0632',
   };
 
   static const Map<String, String> kazakhCyrToLat = {
-    'Ә': 'Ä', 'ә': 'ä', 'Ғ': 'Ğ', 'ғ': 'ğ', 'Қ': 'Q', 'қ': 'q',
-    'Ң': 'Ñ', 'ң': 'ñ', 'Ө': 'Ö', 'ө': 'ö', 'Ұ': 'Ū', 'ұ': 'ū',
-    'Ү': 'Ü', 'ү': 'ü', 'Һ': 'H', 'һ': 'h', 'Ш': 'Ş', 'ш': 'ş',
-    'Ч': 'Ç', 'ч': 'ç', 'Ы': 'Y', 'ы': 'y', 'І': 'İ', 'і': 'i',
-    'А': 'A', 'а': 'a', 'Б': 'B', 'б': 'b', 'В': 'V', 'в': 'v',
-    'Г': 'G', 'г': 'g', 'Д': 'D', 'д': 'd', 'Е': 'E', 'е': 'e',
-    'Ж': 'J', 'ж': 'j', 'З': 'Z', 'з': 'z', 'И': 'I', 'и': 'i',
-    'Й': 'I', 'й': 'i', 'К': 'K', 'к': 'k', 'Л': 'L', 'л': 'l',
-    'М': 'M', 'м': 'm', 'Н': 'N', 'н': 'n', 'О': 'O', 'о': 'o',
-    'П': 'P', 'п': 'p', 'Р': 'R', 'р': 'r', 'С': 'S', 'с': 's',
-    'Т': 'T', 'т': 't', 'У': 'U', 'у': 'u', 'Ф': 'F', 'ф': 'f',
-    'Х': 'H', 'х': 'h', 'Ц': 'Ts', 'ц': 'ts', 'Щ': 'Ş', 'щ': 'ş',
-    'Ъ': '', 'ъ': '', 'Ь': '', 'ь': '', 'Э': 'E', 'э': 'e',
-    'Ю': 'Iu', 'ю': 'iu', 'Я': 'Ia', 'я': 'ia',
+    'Ә': 'Ä',
+    'ә': 'ä',
+    'Ғ': 'Ğ',
+    'ғ': 'ğ',
+    'Қ': 'Q',
+    'қ': 'q',
+    'Ң': 'Ñ',
+    'ң': 'ñ',
+    'Ө': 'Ö',
+    'ө': 'ö',
+    'Ұ': 'Ū',
+    'ұ': 'ū',
+    'Ү': 'Ü',
+    'ү': 'ü',
+    'Һ': 'H',
+    'һ': 'h',
+    'Ш': 'Ş',
+    'ш': 'ş',
+    'Ч': 'Ç',
+    'ч': 'ç',
+    'Ы': 'Y',
+    'ы': 'y',
+    'І': 'İ',
+    'і': 'i',
+    'А': 'A',
+    'а': 'a',
+    'Б': 'B',
+    'б': 'b',
+    'В': 'V',
+    'в': 'v',
+    'Г': 'G',
+    'г': 'g',
+    'Д': 'D',
+    'д': 'd',
+    'Е': 'E',
+    'е': 'e',
+    'Ж': 'J',
+    'ж': 'j',
+    'З': 'Z',
+    'з': 'z',
+    'И': 'I',
+    'и': 'i',
+    'Й': 'I',
+    'й': 'i',
+    'К': 'K',
+    'к': 'k',
+    'Л': 'L',
+    'л': 'l',
+    'М': 'M',
+    'м': 'm',
+    'Н': 'N',
+    'н': 'n',
+    'О': 'O',
+    'о': 'o',
+    'П': 'P',
+    'п': 'p',
+    'Р': 'R',
+    'р': 'r',
+    'С': 'S',
+    'с': 's',
+    'Т': 'T',
+    'т': 't',
+    'У': 'U',
+    'у': 'u',
+    'Ф': 'F',
+    'ф': 'f',
+    'Х': 'H',
+    'х': 'h',
+    'Ц': 'Ts',
+    'ц': 'ts',
+    'Щ': 'Ş',
+    'щ': 'ş',
+    'Ъ': '',
+    'ъ': '',
+    'Ь': '',
+    'ь': '',
+    'Э': 'E',
+    'э': 'e',
+    'Ю': 'Iu',
+    'ю': 'iu',
+    'Я': 'Ia',
+    'я': 'ia',
   };
 
   static const Map<String, String> kazakhLatToCyr = {
@@ -104,7 +201,9 @@ class CentralAsianEngine implements TransliteratorEngine {
     }
 
     final isFromLatin = request.from.normalizedScript == 'Latn';
-    final targetLang = isFromLatin ? request.to.normalizedLanguage : request.from.normalizedLanguage;
+    final targetLang = isFromLatin
+        ? request.to.normalizedLanguage
+        : request.from.normalizedLanguage;
     final text = request.text;
 
     final output = isFromLatin
@@ -116,7 +215,9 @@ class CentralAsianEngine implements TransliteratorEngine {
       sourceText: text,
       from: request.from,
       to: request.to,
-      scheme: isFromLatin ? '$targetLang-roman-to-native' : '$targetLang-native-to-roman',
+      scheme: isFromLatin
+          ? '$targetLang-roman-to-native'
+          : '$targetLang-native-to-roman',
     );
   }
 

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:scriptly/scriptly_core.dart';
 
@@ -11,9 +12,23 @@ void main(List<String> arguments) {
 
   // Configure 'convert' command
   parser.commands['convert']!
-    ..addOption('to', abbr: 't', mandatory: true, help: 'Target script code (e.g. bn-Beng, hi-Deva, ar-Arab)')
-    ..addOption('from', abbr: 'f', help: 'Source script code (auto-detected if omitted)')
-    ..addFlag('digits', abbr: 'd', help: 'Convert digits to target script', defaultsTo: false);
+    ..addOption(
+      'to',
+      abbr: 't',
+      mandatory: true,
+      help: 'Target script code (e.g. bn-Beng, hi-Deva, ar-Arab)',
+    )
+    ..addOption(
+      'from',
+      abbr: 'f',
+      help: 'Source script code (auto-detected if omitted)',
+    )
+    ..addFlag(
+      'digits',
+      abbr: 'd',
+      help: 'Convert digits to target script',
+      defaultsTo: false,
+    );
 
   // Configure 'detect' command
   parser.commands['detect']!;
@@ -23,8 +38,17 @@ void main(List<String> arguments) {
     ..addOption('input', abbr: 'i', mandatory: true, help: 'Input file path')
     ..addOption('output', abbr: 'o', mandatory: true, help: 'Output file path')
     ..addOption('to', abbr: 't', mandatory: true, help: 'Target script code')
-    ..addOption('from', abbr: 'f', help: 'Source script code (auto-detected if omitted)')
-    ..addFlag('digits', abbr: 'd', help: 'Convert digits to target script', defaultsTo: false);
+    ..addOption(
+      'from',
+      abbr: 'f',
+      help: 'Source script code (auto-detected if omitted)',
+    )
+    ..addFlag(
+      'digits',
+      abbr: 'd',
+      help: 'Convert digits to target script',
+      defaultsTo: false,
+    );
 
   if (arguments.isEmpty) {
     _printUsage(parser);
@@ -87,7 +111,9 @@ void _handleConvert(ArgResults command, Transliterator transliterator) {
   final targetScript = LanguageScript.fromCode(targetCode);
   final digits = command['digits'] as bool;
   final options = ConversionOptions(
-    digitPolicy: digits ? DigitPolicy.convertToTarget : DigitPolicy.preserveSource,
+    digitPolicy: digits
+        ? DigitPolicy.convertToTarget
+        : DigitPolicy.preserveSource,
   );
 
   final fromCode = command['from'] as String?;
@@ -98,11 +124,7 @@ void _handleConvert(ArgResults command, Transliterator transliterator) {
           to: targetScript,
           options: options,
         )
-      : transliterator.autoConvert(
-          text,
-          to: targetScript,
-          options: options,
-        );
+      : transliterator.autoConvert(text, to: targetScript, options: options);
 
   stdout.writeln(result.text);
 }
@@ -116,8 +138,12 @@ void _handleDetect(ArgResults command) {
   }
 
   final result = ScriptDetector.detect(text);
-  stdout.writeln('Detected Script: ${result.script.name} (${result.script.code})');
-  stdout.writeln('Confidence:      ${(result.confidence * 100).toStringAsFixed(1)}%');
+  stdout.writeln(
+    'Detected Script: ${result.script.name} (${result.script.code})',
+  );
+  stdout.writeln(
+    'Confidence:      ${(result.confidence * 100).toStringAsFixed(1)}%',
+  );
   stdout.writeln('Scored Runes:    ${result.totalScoredCharacters}');
 }
 
@@ -128,7 +154,9 @@ void _handleFile(ArgResults command, Transliterator transliterator) {
   final targetScript = LanguageScript.fromCode(targetCode);
   final digits = command['digits'] as bool;
   final options = ConversionOptions(
-    digitPolicy: digits ? DigitPolicy.convertToTarget : DigitPolicy.preserveSource,
+    digitPolicy: digits
+        ? DigitPolicy.convertToTarget
+        : DigitPolicy.preserveSource,
   );
 
   final inputFile = File(inputPath);
@@ -147,18 +175,18 @@ void _handleFile(ArgResults command, Transliterator transliterator) {
           to: targetScript,
           options: options,
         )
-      : transliterator.autoConvert(
-          content,
-          to: targetScript,
-          options: options,
-        );
+      : transliterator.autoConvert(content, to: targetScript, options: options);
 
   File(outputPath).writeAsStringSync(result.text);
-  stdout.writeln('Successfully converted $inputPath -> $outputPath (${result.scheme})');
+  stdout.writeln(
+    'Successfully converted $inputPath -> $outputPath (${result.scheme})',
+  );
 }
 
 void _handleList() {
-  stdout.writeln('Supported Scripts in Scriptly (${LanguageScript.values.length} total):\n');
+  stdout.writeln(
+    'Supported Scripts in Scriptly (${LanguageScript.values.length} total):\n',
+  );
   for (final s in LanguageScript.values) {
     stdout.writeln('  • ${s.code.padRight(10)} : ${s.name} [${s.category}]');
   }

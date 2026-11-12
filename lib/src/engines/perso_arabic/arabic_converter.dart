@@ -3,11 +3,15 @@ import 'perso_arabic_constants.dart';
 /// Bidirectional transliteration between Latin (Arabizi) and Arabic script.
 class ArabicConverter {
   static const Map<String, String> commonWords = {
-    'ahlan wa sahlan': '\u0623\u0647\u0644\u0627 \u0648 \u0633\u0647\u0644\u0627',
-    'alsalam alaykum': '\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645',
-    'as-salamu alaykum': '\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645',
+    'ahlan wa sahlan':
+        '\u0623\u0647\u0644\u0627 \u0648 \u0633\u0647\u0644\u0627',
+    'alsalam alaykum':
+        '\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645',
+    'as-salamu alaykum':
+        '\u0627\u0644\u0633\u0644\u0627\u0645 \u0639\u0644\u064A\u0643\u0645',
     'sabah alkhair': '\u0635\u0628\u0627\u062D \u0627\u0644\u062E\u064A\u0631',
-    'shukran jazeelan': '\u0634\u0643\u0631\u0627 \u062C\u0632\u064A\u0644\u0627',
+    'shukran jazeelan':
+        '\u0634\u0643\u0631\u0627 \u062C\u0632\u064A\u0644\u0627',
     'marhaban':
         '${PersoArabicConstants.meem}${PersoArabicConstants.ra}${PersoArabicConstants.hha}${PersoArabicConstants.ba}${PersoArabicConstants.alif}',
     'shukran':

@@ -309,9 +309,7 @@ class _SearchableLanguagePickerSheetState
     }).toList();
 
     return Container(
-      constraints: BoxConstraints(
-        maxHeight: mediaQuery.size.height * 0.75,
-      ),
+      constraints: BoxConstraints(maxHeight: mediaQuery.size.height * 0.75),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
@@ -361,7 +359,8 @@ class _SearchableLanguagePickerSheetState
             controller: _searchController,
             autofocus: false,
             decoration: InputDecoration(
-              hintText: 'Search language, script or code (e.g. Kannada, Viet)...',
+              hintText:
+                  'Search language, script or code (e.g. Kannada, Viet)...',
               prefixIcon: const Icon(Icons.search_rounded),
               suffixIcon: _query.isNotEmpty
                   ? IconButton(
@@ -373,12 +372,17 @@ class _SearchableLanguagePickerSheetState
                     )
                   : null,
               filled: true,
-              fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+              fillColor: colorScheme.surfaceContainerHighest.withValues(
+                alpha: 0.5,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
             ),
             onChanged: (val) {
               setState(() => _query = val.trim().toLowerCase());
@@ -414,7 +418,8 @@ class _SearchableLanguagePickerSheetState
                   )
                 : ListView.separated(
                     itemCount: filtered.length,
-                    separatorBuilder: (context, index) => const Divider(height: 1),
+                    separatorBuilder: (context, index) =>
+                        const Divider(height: 1),
                     itemBuilder: (context, index) {
                       final item = filtered[index];
                       final script = item['script'] as LanguageScript;
@@ -455,8 +460,9 @@ class _SearchableLanguagePickerSheetState
                           name,
                           style: TextStyle(
                             fontSize: 14,
-                            fontWeight:
-                                isSelected ? FontWeight.w700 : FontWeight.w500,
+                            fontWeight: isSelected
+                                ? FontWeight.w700
+                                : FontWeight.w500,
                             color: isSelected
                                 ? colorScheme.primary
                                 : colorScheme.onSurface,

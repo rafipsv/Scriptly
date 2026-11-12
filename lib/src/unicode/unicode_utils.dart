@@ -84,7 +84,10 @@ class UnicodeUtils {
       convertAsciiDigitsToScript(input, 0x09E6);
 
   /// Converts ASCII digits to the native numeral script based on target script or zero-offset.
-  static String convertAsciiDigitsToScript(String input, dynamic scriptOrZeroRune) {
+  static String convertAsciiDigitsToScript(
+    String input,
+    dynamic scriptOrZeroRune,
+  ) {
     int? zeroRune;
     if (scriptOrZeroRune is int) {
       zeroRune = scriptOrZeroRune;
@@ -192,14 +195,29 @@ class UnicodeUtils {
 
     // 3. Arabic / Perso-Arabic Combining Diacritics Canonicalization
     s = s.replaceAll('\u0627\u0653', '\u0622'); // Alif + Madda -> Alif Madda
-    s = s.replaceAll('\u0627\u0654', '\u0623'); // Alif + Hamza Above -> Alif Hamza Above
-    s = s.replaceAll('\u0627\u0655', '\u0625'); // Alif + Hamza Below -> Alif Hamza Below
+    s = s.replaceAll(
+      '\u0627\u0654',
+      '\u0623',
+    ); // Alif + Hamza Above -> Alif Hamza Above
+    s = s.replaceAll(
+      '\u0627\u0655',
+      '\u0625',
+    ); // Alif + Hamza Below -> Alif Hamza Below
 
     // 4. Latin Decomposed Vowels with Combining Accents
-    s = s.replaceAll('a\u0300', 'à').replaceAll('a\u0301', 'á').replaceAll('a\u0303', 'ã');
-    s = s.replaceAll('e\u0300', 'è').replaceAll('e\u0301', 'é').replaceAll('e\u0302', 'ê');
+    s = s
+        .replaceAll('a\u0300', 'à')
+        .replaceAll('a\u0301', 'á')
+        .replaceAll('a\u0303', 'ã');
+    s = s
+        .replaceAll('e\u0300', 'è')
+        .replaceAll('e\u0301', 'é')
+        .replaceAll('e\u0302', 'ê');
     s = s.replaceAll('i\u0300', 'ì').replaceAll('i\u0301', 'í');
-    s = s.replaceAll('o\u0300', 'ò').replaceAll('o\u0301', 'ó').replaceAll('o\u0303', 'õ');
+    s = s
+        .replaceAll('o\u0300', 'ò')
+        .replaceAll('o\u0301', 'ó')
+        .replaceAll('o\u0303', 'õ');
     s = s.replaceAll('u\u0300', 'ù').replaceAll('u\u0301', 'ú');
 
     return s;
@@ -210,7 +228,9 @@ class UnicodeUtils {
   static String wrapBidiIsolates(String text, {required bool isRtlTarget}) {
     if (!isRtlTarget || text.isEmpty) return text;
 
-    final ltrTokenRegex = RegExp(r'(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9_]{3,})');
+    final ltrTokenRegex = RegExp(
+      r'(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9_]{3,})',
+    );
     return text.replaceAllMapped(ltrTokenRegex, (m) {
       final token = m.group(0)!;
       return '\u2066$token\u2069';

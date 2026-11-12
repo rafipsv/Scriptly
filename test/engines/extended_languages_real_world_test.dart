@@ -20,7 +20,10 @@ void main() {
           to: LanguageScript.kannada,
         );
 
-        expect(result.text, contains('\u0CA8\u0CAE\u0CB8\u0CCD\u0C95\u0CBE\u0CB0')); // ನಮಸ್ಕಾರ
+        expect(
+          result.text,
+          contains('\u0CA8\u0CAE\u0CB8\u0CCD\u0C95\u0CBE\u0CB0'),
+        ); // ನಮಸ್ಕಾರ
         expect(result.text, contains('!'));
         expect(result.text, contains('?'));
         expect(result.text, contains('2026'));
@@ -34,7 +37,10 @@ void main() {
           to: LanguageScript.odia,
         );
 
-        expect(result.text, contains('\u0B28\u0B2E\u0B38\u0B4D\u0B15\u0B3E\u0B30')); // ନମସ୍କାର
+        expect(
+          result.text,
+          contains('\u0B28\u0B2E\u0B38\u0B4D\u0B15\u0B3E\u0B30'),
+        ); // ନମସ୍କାର
         expect(result.text, contains('!'));
         expect(result.text, contains('?'));
         expect(result.text, contains('100%'));
@@ -47,122 +53,152 @@ void main() {
           to: LanguageScript.sinhala,
         );
 
-        expect(result.text, contains('\u0D86\u0DBA\u0DD4\u0DB6\u0DDD\u0DC0\u0DB1\u0DCA')); // ආයුබෝවන්
+        expect(
+          result.text,
+          contains('\u0D86\u0DBA\u0DD4\u0DB6\u0DDD\u0DC0\u0DB1\u0DCA'),
+        ); // ආයුබෝවන්
         expect(result.text, contains('!'));
         expect(result.text, contains('?'));
         expect(result.text, contains('24/7'));
       });
 
-      test('Direct Brahmic Cross-Script Bridge between Indic extended pairs', () {
-        // Direct Devanagari to Kannada (zero romanization bridge)
-        final kn = transliterator.convert(
-          'नमस्ते',
-          from: LanguageScript.hindi,
-          to: LanguageScript.kannada,
-        );
-        expect(kn.text.isNotEmpty, isTrue);
+      test(
+        'Direct Brahmic Cross-Script Bridge between Indic extended pairs',
+        () {
+          // Direct Devanagari to Kannada (zero romanization bridge)
+          final kn = transliterator.convert(
+            'नमस्ते',
+            from: LanguageScript.hindi,
+            to: LanguageScript.kannada,
+          );
+          expect(kn.text.isNotEmpty, isTrue);
 
-        // Direct Bengali to Odia (zero romanization bridge)
-        final od = transliterator.convert(
-          'নমস্কার',
-          from: LanguageScript.bengali,
-          to: LanguageScript.odia,
-        );
-        expect(od.text.isNotEmpty, isTrue);
-      });
+          // Direct Bengali to Odia (zero romanization bridge)
+          final od = transliterator.convert(
+            'নমস্কার',
+            from: LanguageScript.bengali,
+            to: LanguageScript.odia,
+          );
+          expect(od.text.isNotEmpty, isTrue);
+        },
+      );
     });
 
     // =========================================================================
     // 2. Southeast Asian Suite
     // =========================================================================
-    group('Tier 2: Southeast Asian Languages (Vietnamese Telex & Thai RTGS)', () {
-      test('Vietnamese conversational Telex typing', () {
-        final r1 = transliterator.convert(
-          'Xin chao! Cam on ban rat nhieu. Viet Nam 🇻🇳',
-          from: LanguageScript.latin,
-          to: LanguageScript.vietnamese,
-        );
+    group(
+      'Tier 2: Southeast Asian Languages (Vietnamese Telex & Thai RTGS)',
+      () {
+        test('Vietnamese conversational Telex typing', () {
+          final r1 = transliterator.convert(
+            'Xin chao! Cam on ban rat nhieu. Viet Nam 🇻🇳',
+            from: LanguageScript.latin,
+            to: LanguageScript.vietnamese,
+          );
 
-        expect(r1.text, contains('Xin chào!'));
-        expect(r1.text, contains('Cảm ơn'));
-        expect(r1.text, contains('Việt Nam'));
-        expect(r1.text, contains('🇻🇳'));
-      });
+          expect(r1.text, contains('Xin chào!'));
+          expect(r1.text, contains('Cảm ơn'));
+          expect(r1.text, contains('Việt Nam'));
+          expect(r1.text, contains('🇻🇳'));
+        });
 
-      test('Vietnamese Telex tone keys (s, f, r, x, j)', () {
-        // Acute (s), Grave (f), Hook (r), Tilde (x), Dot below (j)
-        expect(
-          transliterator.convert('chaof', from: LanguageScript.latin, to: LanguageScript.vietnamese).text,
-          equals('chào'),
-        );
-        expect(
-          transliterator.convert('carm', from: LanguageScript.latin, to: LanguageScript.vietnamese).text,
-          equals('cảm'),
-        );
-        expect(
-          transliterator.convert('tamj', from: LanguageScript.latin, to: LanguageScript.vietnamese).text,
-          equals('tạm'),
-        );
-      });
+        test('Vietnamese Telex tone keys (s, f, r, x, j)', () {
+          // Acute (s), Grave (f), Hook (r), Tilde (x), Dot below (j)
+          expect(
+            transliterator
+                .convert(
+                  'chaof',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.vietnamese,
+                )
+                .text,
+            equals('chào'),
+          );
+          expect(
+            transliterator
+                .convert(
+                  'carm',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.vietnamese,
+                )
+                .text,
+            equals('cảm'),
+          );
+          expect(
+            transliterator
+                .convert(
+                  'tamj',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.vietnamese,
+                )
+                .text,
+            equals('tạm'),
+          );
+        });
 
-      test('Vietnamese to Latin reverse accent stripping', () {
-        final reversed = transliterator.convert(
-          'Xin chào Việt Nam!',
-          from: LanguageScript.vietnamese,
-          to: LanguageScript.latin,
-        );
+        test('Vietnamese to Latin reverse accent stripping', () {
+          final reversed = transliterator.convert(
+            'Xin chào Việt Nam!',
+            from: LanguageScript.vietnamese,
+            to: LanguageScript.latin,
+          );
 
-        expect(reversed.text, equals('Xin chao Viet Nam!'));
-      });
+          expect(reversed.text, equals('Xin chao Viet Nam!'));
+        });
 
-      test('Thai conversational RTGS transliteration with symbols', () {
-        final thai = transliterator.convert(
-          'Sawatdee! Sabai dee? Bangkok 2026 🇹🇭',
-          from: LanguageScript.latin,
-          to: LanguageScript.thai,
-        );
+        test('Thai conversational RTGS transliteration with symbols', () {
+          final thai = transliterator.convert(
+            'Sawatdee! Sabai dee? Bangkok 2026 🇹🇭',
+            from: LanguageScript.latin,
+            to: LanguageScript.thai,
+          );
 
-        expect(thai.text, contains('สวัสดี!'));
-        expect(thai.text, contains('สบายดี?'));
-        expect(thai.text, contains('บางกอก'));
-        expect(thai.text, contains('🇹🇭'));
-      });
+          expect(thai.text, contains('สวัสดี!'));
+          expect(thai.text, contains('สบายดี?'));
+          expect(thai.text, contains('บางกอก'));
+          expect(thai.text, contains('🇹🇭'));
+        });
 
-      test('Thai to Latin RTGS reverse transliteration', () {
-        final lat = transliterator.convert(
-          'สวัสดี',
-          from: LanguageScript.thai,
-          to: LanguageScript.latin,
-        );
+        test('Thai to Latin RTGS reverse transliteration', () {
+          final lat = transliterator.convert(
+            'สวัสดี',
+            from: LanguageScript.thai,
+            to: LanguageScript.latin,
+          );
 
-        expect(lat.text, equals('Sawatdee'));
-      });
-    });
+          expect(lat.text, equals('Sawatdee'));
+        });
+      },
+    );
 
     // =========================================================================
     // 3. Unique World Scripts Suite
     // =========================================================================
     group('Tier 3: World Scripts (Georgian, Armenian, Ukrainian)', () {
-      test('Georgian Mkhedruli conversational transliteration (National 2002)', () {
-        final geo = transliterator.convert(
-          'Gamarjoba! Madloba. Sakartvelo 🇬🇪',
-          from: LanguageScript.latin,
-          to: LanguageScript.georgian,
-        );
+      test(
+        'Georgian Mkhedruli conversational transliteration (National 2002)',
+        () {
+          final geo = transliterator.convert(
+            'Gamarjoba! Madloba. Sakartvelo 🇬🇪',
+            from: LanguageScript.latin,
+            to: LanguageScript.georgian,
+          );
 
-        expect(geo.text, contains('გამარჯობა!'));
-        expect(geo.text, contains('მადლობა.'));
-        expect(geo.text, contains('საქართველო'));
-        expect(geo.text, contains('🇬🇪'));
+          expect(geo.text, contains('გამარჯობა!'));
+          expect(geo.text, contains('მადლობა.'));
+          expect(geo.text, contains('საქართველო'));
+          expect(geo.text, contains('🇬🇪'));
 
-        // Reverse
-        final rev = transliterator.convert(
-          'გამარჯობა',
-          from: LanguageScript.georgian,
-          to: LanguageScript.latin,
-        );
-        expect(rev.text, equals('Gamarjoba'));
-      });
+          // Reverse
+          final rev = transliterator.convert(
+            'გამარჯობა',
+            from: LanguageScript.georgian,
+            to: LanguageScript.latin,
+          );
+          expect(rev.text, equals('Gamarjoba'));
+        },
+      );
 
       test('Armenian ISO 9985 conversational transliteration', () {
         final arm = transliterator.convert(
@@ -185,26 +221,29 @@ void main() {
         expect(rev.text, equals('Barev'));
       });
 
-      test('Ukrainian Cyrillic conversational transliteration (Resolution 55)', () {
-        final ukr = transliterator.convert(
-          'Pryvit! Dyakuyu. Ukrayina 🇺🇦 100%',
-          from: LanguageScript.latin,
-          to: LanguageScript.ukrainian,
-        );
+      test(
+        'Ukrainian Cyrillic conversational transliteration (Resolution 55)',
+        () {
+          final ukr = transliterator.convert(
+            'Pryvit! Dyakuyu. Ukrayina 🇺🇦 100%',
+            from: LanguageScript.latin,
+            to: LanguageScript.ukrainian,
+          );
 
-        expect(ukr.text, contains('Привіт!'));
-        expect(ukr.text.toLowerCase(), contains('дякую.'));
-        expect(ukr.text.toLowerCase(), contains('україна'));
-        expect(ukr.text, contains('100%'));
+          expect(ukr.text, contains('Привіт!'));
+          expect(ukr.text.toLowerCase(), contains('дякую.'));
+          expect(ukr.text.toLowerCase(), contains('україна'));
+          expect(ukr.text, contains('100%'));
 
-        // Reverse
-        final rev = transliterator.convert(
-          'привіт',
-          from: LanguageScript.ukrainian,
-          to: LanguageScript.latin,
-        );
-        expect(rev.text, equals('Pryvit'));
-      });
+          // Reverse
+          final rev = transliterator.convert(
+            'привіт',
+            from: LanguageScript.ukrainian,
+            to: LanguageScript.latin,
+          );
+          expect(rev.text, equals('Pryvit'));
+        },
+      );
     });
 
     // =========================================================================

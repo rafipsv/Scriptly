@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'language_script.dart';
 import 'script_detector.dart';
 import 'transliterator.dart';
@@ -33,7 +34,8 @@ class PhoneticMatcher {
 
     // Check substring containment
     if (latinA.contains(latinB) || latinB.contains(latinA)) {
-      final ratio = math.min(latinA.length, latinB.length) /
+      final ratio =
+          math.min(latinA.length, latinB.length) /
           math.max(latinA.length, latinB.length);
       return math.max(0.85, ratio);
     }
@@ -131,7 +133,10 @@ class PhoneticMatcher {
         .replaceAll('ee', 'i')
         .replaceAll('oo', 'u')
         .replaceAll('w', 'o')
-        .replaceAllMapped(RegExp(r'(.)\1+'), (m) => m[1]!); // deduplicate repeated letters (e.g. kk -> k, aa -> a)
+        .replaceAllMapped(
+          RegExp(r'(.)\1+'),
+          (m) => m[1]!,
+        ); // deduplicate repeated letters (e.g. kk -> k, aa -> a)
 
     return norm;
   }
@@ -188,10 +193,7 @@ class PhoneticMatcher {
       v1[0] = i + 1;
       for (var j = 0; j < t.length; j++) {
         final cost = (s[i] == t[j]) ? 0 : 1;
-        v1[j + 1] = math.min(
-          v1[j] + 1,
-          math.min(v0[j + 1] + 1, v0[j] + cost),
-        );
+        v1[j + 1] = math.min(v1[j] + 1, math.min(v0[j + 1] + 1, v0[j] + cost));
       }
       final temp = v0;
       v0 = v1;

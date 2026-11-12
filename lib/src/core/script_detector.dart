@@ -66,10 +66,18 @@ class ScriptDetector {
         totalChars++;
 
         // Sub-family markers
-        if (rune == 0x0456 || rune == 0x0457 || rune == 0x0454 || rune == 0x0491) {
+        if (rune == 0x0456 ||
+            rune == 0x0457 ||
+            rune == 0x0454 ||
+            rune == 0x0491) {
           hasUkrainianSpecific = true;
         }
-        if (rune == 0x0452 || rune == 0x0458 || rune == 0x0459 || rune == 0x045A || rune == 0x045B || rune == 0x045F) {
+        if (rune == 0x0452 ||
+            rune == 0x0458 ||
+            rune == 0x0459 ||
+            rune == 0x045A ||
+            rune == 0x045B ||
+            rune == 0x045F) {
           hasSerbianSpecific = true;
         }
         if (rune == 0x0453 || rune == 0x045C || rune == 0x0455) {
@@ -78,16 +86,35 @@ class ScriptDetector {
         if (rune == 0x045E) {
           hasBelarusianSpecific = true;
         }
-        if (rune == 0x04D8 || rune == 0x04D9 || rune == 0x0492 || rune == 0x049A || rune == 0x04E8 || rune == 0x04B0 || rune == 0x04AE) {
+        if (rune == 0x04D8 ||
+            rune == 0x04D9 ||
+            rune == 0x0492 ||
+            rune == 0x049A ||
+            rune == 0x04E8 ||
+            rune == 0x04B0 ||
+            rune == 0x04AE) {
           hasKazakhSpecific = true;
         }
-        if (rune == 0x0679 || rune == 0x0688 || rune == 0x0691 || rune == 0x06D2) {
+        if (rune == 0x0679 ||
+            rune == 0x0688 ||
+            rune == 0x0691 ||
+            rune == 0x06D2) {
           hasUrduSpecific = true;
         }
-        if (rune == 0x06C6 || rune == 0x06CE || rune == 0x0695 || rune == 0x06B5) {
+        if (rune == 0x06C6 ||
+            rune == 0x06CE ||
+            rune == 0x0695 ||
+            rune == 0x06B5) {
           hasKurdishSpecific = true;
         }
-        if (rune == 0x069A || rune == 0x0698 || rune == 0x0685 || rune == 0x0681 || rune == 0x06BC || rune == 0x0689 || rune == 0x067C || rune == 0x0693) {
+        if (rune == 0x069A ||
+            rune == 0x0698 ||
+            rune == 0x0685 ||
+            rune == 0x0681 ||
+            rune == 0x06BC ||
+            rune == 0x0689 ||
+            rune == 0x067C ||
+            rune == 0x0693) {
           hasPashtoSpecific = true;
         }
         if (rune >= 0x1EA0 && rune <= 0x1EF9) {
@@ -108,13 +135,19 @@ class ScriptDetector {
     // Refine specific sub-scripts
     if (counts.containsKey(LanguageScript.russian)) {
       if (hasUkrainianSpecific) {
-        counts[LanguageScript.ukrainian] = counts.remove(LanguageScript.russian)!;
+        counts[LanguageScript.ukrainian] = counts.remove(
+          LanguageScript.russian,
+        )!;
       } else if (hasSerbianSpecific) {
         counts[LanguageScript.serbian] = counts.remove(LanguageScript.russian)!;
       } else if (hasMacedonianSpecific) {
-        counts[LanguageScript.macedonian] = counts.remove(LanguageScript.russian)!;
+        counts[LanguageScript.macedonian] = counts.remove(
+          LanguageScript.russian,
+        )!;
       } else if (hasBelarusianSpecific) {
-        counts[LanguageScript.belarusian] = counts.remove(LanguageScript.russian)!;
+        counts[LanguageScript.belarusian] = counts.remove(
+          LanguageScript.russian,
+        )!;
       } else if (hasKazakhSpecific) {
         counts[LanguageScript.kazakh] = counts.remove(LanguageScript.russian)!;
       }

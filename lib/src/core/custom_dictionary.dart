@@ -38,10 +38,7 @@ class CustomDictionary {
   static String apply(String text, {Map<String, String>? localOverrides}) {
     if (text.isEmpty) return text;
 
-    final combined = <String, String>{
-      ..._globalEntries,
-      ...?localOverrides,
-    };
+    final combined = <String, String>{..._globalEntries, ...?localOverrides};
 
     if (combined.isEmpty) return text;
 
@@ -54,7 +51,9 @@ class CustomDictionary {
       final target = combined[key]!;
       // Escape for regex and match on word boundaries if key is alphanumeric
       final isAlphanumeric = RegExp(r'^\w+$').hasMatch(key);
-      final pattern = isAlphanumeric ? '\\b${RegExp.escape(key)}\\b' : RegExp.escape(key);
+      final pattern = isAlphanumeric
+          ? '\\b${RegExp.escape(key)}\\b'
+          : RegExp.escape(key);
       result = result.replaceAll(RegExp(pattern, caseSensitive: false), target);
     }
 

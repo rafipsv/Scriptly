@@ -31,7 +31,10 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.punjabi,
         );
-        expect(res.text, '\u0A38\u0A24\u0A3F \u0A38\u0A4D\u0A30\u0A40 \u0A05\u0A15\u0A3E\u0A32');
+        expect(
+          res.text,
+          '\u0A38\u0A24\u0A3F \u0A38\u0A4D\u0A30\u0A40 \u0A05\u0A15\u0A3E\u0A32',
+        );
 
         final rev = transliterator.convert(
           res.text,
@@ -275,7 +278,10 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.greek,
         );
-        expect(res2.text, '\u03B5\u03C5\u03C7\u03B1\u03C1\u03B9\u03C3\u03C4\u03CE');
+        expect(
+          res2.text,
+          '\u03B5\u03C5\u03C7\u03B1\u03C1\u03B9\u03C3\u03C4\u03CE',
+        );
 
         final rev = transliterator.convert(
           res1.text,
@@ -375,12 +381,14 @@ void main() {
           expect(
             transliterator.canConvert(LanguageScript.latin, lang),
             isTrue,
-            reason: 'Should convert from Latin to ${lang.language}-${lang.script}',
+            reason:
+                'Should convert from Latin to ${lang.language}-${lang.script}',
           );
           expect(
             transliterator.canConvert(lang, LanguageScript.latin),
             isTrue,
-            reason: 'Should convert from ${lang.language}-${lang.script} to Latin',
+            reason:
+                'Should convert from ${lang.language}-${lang.script} to Latin',
           );
         }
       });
@@ -390,7 +398,11 @@ void main() {
         for (final from in allLanguages) {
           for (final to in allLanguages) {
             final possible = transliterator.canConvert(from, to);
-            expect(possible, isTrue, reason: 'Pair $from -> $to must be supported');
+            expect(
+              possible,
+              isTrue,
+              reason: 'Pair $from -> $to must be supported',
+            );
             pairsCount++;
           }
         }

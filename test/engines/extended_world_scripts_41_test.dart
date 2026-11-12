@@ -20,7 +20,10 @@ void main() {
           to: LanguageScript.sanskrit,
         );
         expect(res.text, contains('\u0950')); // ॐ
-        expect(res.text, contains('\u0936\u093E\u0928\u094D\u0924\u093F\u0903')); // शान्तिः
+        expect(
+          res.text,
+          contains('\u0936\u093E\u0928\u094D\u0924\u093F\u0903'),
+        ); // शान्तिः
 
         final rev = transliterator.convert(
           res.text,
@@ -36,7 +39,12 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.marathi,
         );
-        expect(res.text, contains('\u092E\u0939\u093E\u0930\u093E\u0937\u094D\u091F\u094D\u0930')); // महाराष्ट्र
+        expect(
+          res.text,
+          contains(
+            '\u092E\u0939\u093E\u0930\u093E\u0937\u094D\u091F\u094D\u0930',
+          ),
+        ); // महाराष्ट्र
       });
 
       test('Nepali Devanagari conversion', () {
@@ -54,7 +62,10 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.assamese,
         );
-        expect(res.text, contains('\u0997\u09C1\u09F1\u09BE\u09B9\u09BE\u099F\u09C0')); // গুৱাহাটী
+        expect(
+          res.text,
+          contains('\u0997\u09C1\u09F1\u09BE\u09B9\u09BE\u099F\u09C0'),
+        ); // গুৱাহাটী
       });
     });
 
@@ -121,7 +132,10 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.lao,
         );
-        expect(res.text, equals('\u0EAA\u0EB0\u0E9A\u0EB2\u0E8D\u0E94\u0EB5')); // ສະບາຍດີ
+        expect(
+          res.text,
+          equals('\u0EAA\u0EB0\u0E9A\u0EB2\u0E8D\u0E94\u0EB5'),
+        ); // ສະບາຍດີ
 
         final rev = transliterator.convert(
           res.text,
@@ -137,7 +151,10 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.burmese,
         );
-        expect(res.text, equals('\u1019\u1004\u103A\u1039\u1002\u101C\u102C\u1015\u102B')); // မင်္ဂလာပါ
+        expect(
+          res.text,
+          equals('\u1019\u1004\u103A\u1039\u1002\u101C\u102C\u1015\u102B'),
+        ); // မင်္ဂလာပါ
       });
 
       test('Khmer Cambodian conversational transliteration', () {
@@ -146,7 +163,10 @@ void main() {
           from: LanguageScript.latin,
           to: LanguageScript.khmer,
         );
-        expect(res.text, equals('\u179f\u17bd\u179f\u17d2\u178f\u17b8')); // សួស្តី
+        expect(
+          res.text,
+          equals('\u179f\u17bd\u179f\u17d2\u178f\u17b8'),
+        ); // សួស្តី
       });
     });
 

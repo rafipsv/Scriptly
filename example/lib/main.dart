@@ -58,11 +58,11 @@ void main() {
     'amar 500 taka ache',
     from: LanguageScript.latin,
     to: LanguageScript.bengali,
-    options: const ConversionOptions(
-      digitPolicy: DigitPolicy.convertToTarget,
-    ),
+    options: const ConversionOptions(digitPolicy: DigitPolicy.convertToTarget),
   );
-  debugPrint('Native Digits: ${withNativeDigits.text}'); // Output: আমার ৫০০ টাকা আছে
+  debugPrint(
+    'Native Digits: ${withNativeDigits.text}',
+  ); // Output: আমার ৫০০ টাকা আছে
 
   runApp(const TransliteratorApp());
 }

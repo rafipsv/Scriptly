@@ -23,7 +23,8 @@ class PersoArabicEngine implements TransliteratorEngine {
   String get version => '0.2.0';
 
   static const Map<String, String> farsiWords = {
-    'dorood bar shoma': '\u062F\u0631\u0648\u062F \u0628\u0631 \u0634\u0645\u0627',
+    'dorood bar shoma':
+        '\u062F\u0631\u0648\u062F \u0628\u0631 \u0634\u0645\u0627',
     'sobh bekheir': '\u0635\u0628\u062D \u0628\u062E\u06CC\u0631',
     'shab bekheir': '\u0634\u0628 \u0628\u062E\u06CC\u0631',
     'rooz bekheir': '\u0631\u0648\u0632 \u0628\u062E\u06CC\u0631',
@@ -34,10 +35,14 @@ class PersoArabicEngine implements TransliteratorEngine {
     'khoobam': '\u062E\u0648\u0628\u0645',
     'khoob': '\u062E\u0648\u0628',
     'mamnoon': '\u0645\u0645\u0646\u0648\u0646',
-    'salam': '${PersoArabicConstants.seen}${PersoArabicConstants.lam}${PersoArabicConstants.alif}${PersoArabicConstants.meem}',
-    'chetori': '${PersoArabicConstants.urduChe}${PersoArabicConstants.tah}${PersoArabicConstants.waw}${PersoArabicConstants.ra}${PersoArabicConstants.urduChhotiYe}',
-    'farsi': '${PersoArabicConstants.fa}${PersoArabicConstants.alif}${PersoArabicConstants.ra}${PersoArabicConstants.seen}${PersoArabicConstants.urduChhotiYe}',
-    'khodafez': '${PersoArabicConstants.kha}${PersoArabicConstants.dal}${PersoArabicConstants.alif}${PersoArabicConstants.hha}${PersoArabicConstants.alif}${PersoArabicConstants.fa}${PersoArabicConstants.zah}',
+    'salam':
+        '${PersoArabicConstants.seen}${PersoArabicConstants.lam}${PersoArabicConstants.alif}${PersoArabicConstants.meem}',
+    'chetori':
+        '${PersoArabicConstants.urduChe}${PersoArabicConstants.tah}${PersoArabicConstants.waw}${PersoArabicConstants.ra}${PersoArabicConstants.urduChhotiYe}',
+    'farsi':
+        '${PersoArabicConstants.fa}${PersoArabicConstants.alif}${PersoArabicConstants.ra}${PersoArabicConstants.seen}${PersoArabicConstants.urduChhotiYe}',
+    'khodafez':
+        '${PersoArabicConstants.kha}${PersoArabicConstants.dal}${PersoArabicConstants.alif}${PersoArabicConstants.hha}${PersoArabicConstants.alif}${PersoArabicConstants.fa}${PersoArabicConstants.zah}',
     'dust': '\u062F\u0648\u0633\u062A',
     'iran': '\u0627\u06CC\u0631\u0627\u0646',
     'merci': '\u0645\u0631\u0633\u06CC',
@@ -52,11 +57,19 @@ class PersoArabicEngine implements TransliteratorEngine {
     final tScript = to.normalizedScript;
 
     // Latin <-> Arabic/Urdu/Persian
-    if (fScript == 'Latn' && (tLang == 'ar' || tLang == 'ur' || tLang == 'fa') && tScript == 'Arab') return true;
-    if ((fLang == 'ar' || fLang == 'ur' || fLang == 'fa') && fScript == 'Arab' && tScript == 'Latn') return true;
+    if (fScript == 'Latn' &&
+        (tLang == 'ar' || tLang == 'ur' || tLang == 'fa') &&
+        tScript == 'Arab')
+      return true;
+    if ((fLang == 'ar' || fLang == 'ur' || fLang == 'fa') &&
+        fScript == 'Arab' &&
+        tScript == 'Latn')
+      return true;
 
     // Direct Perso-Arabic cross mapping
-    if ((fLang == 'ar' || fLang == 'ur' || fLang == 'fa') && (tLang == 'ar' || tLang == 'ur' || tLang == 'fa')) return true;
+    if ((fLang == 'ar' || fLang == 'ur' || fLang == 'fa') &&
+        (tLang == 'ar' || tLang == 'ur' || tLang == 'fa'))
+      return true;
 
     return false;
   }
@@ -98,9 +111,13 @@ class PersoArabicEngine implements TransliteratorEngine {
       // Direct Perso-Arabic harmonizer
       output = text;
       if (tLang == 'ur') {
-        output = output.replaceAll('\u0643', '\u06A9').replaceAll('\u064A', '\u06CC');
+        output = output
+            .replaceAll('\u0643', '\u06A9')
+            .replaceAll('\u064A', '\u06CC');
       } else if (tLang == 'ar') {
-        output = output.replaceAll('\u06A9', '\u0643').replaceAll('\u06CC', '\u064A');
+        output = output
+            .replaceAll('\u06A9', '\u0643')
+            .replaceAll('\u06CC', '\u064A');
       }
       activeScheme = '$fLang-to-$tLang-perso-arabic';
     }

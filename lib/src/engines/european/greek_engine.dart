@@ -25,11 +25,30 @@ class GreekEngine implements TransliteratorEngine {
   };
 
   static const Map<String, String> charMap = {
-    'th': '\u03B8', 'ch': '\u03C7', 'ps': '\u03C8', 'ks': '\u03BE',
-    'a': '\u03B1', 'b': '\u03B2', 'g': '\u03B3', 'd': '\u03B4', 'e': '\u03B5',
-    'z': '\u03B6', 'i': '\u03B9', 'k': '\u03BA', 'l': '\u03BB', 'm': '\u03BC',
-    'n': '\u03BD', 'x': '\u03BE', 'o': '\u03BF', 'p': '\u03C0', 'r': '\u03C1',
-    's': '\u03C3', 't': '\u03C4', 'u': '\u03C5', 'y': '\u03C5', 'f': '\u03C6',
+    'th': '\u03B8',
+    'ch': '\u03C7',
+    'ps': '\u03C8',
+    'ks': '\u03BE',
+    'a': '\u03B1',
+    'b': '\u03B2',
+    'g': '\u03B3',
+    'd': '\u03B4',
+    'e': '\u03B5',
+    'z': '\u03B6',
+    'i': '\u03B9',
+    'k': '\u03BA',
+    'l': '\u03BB',
+    'm': '\u03BC',
+    'n': '\u03BD',
+    'x': '\u03BE',
+    'o': '\u03BF',
+    'p': '\u03C0',
+    'r': '\u03C1',
+    's': '\u03C3',
+    't': '\u03C4',
+    'u': '\u03C5',
+    'y': '\u03C5',
+    'f': '\u03C6',
     'w': '\u03C9',
   };
 
@@ -47,7 +66,9 @@ class GreekEngine implements TransliteratorEngine {
     }
 
     final isLatnToGrek = request.from.normalizedScript == 'Latn';
-    final output = isLatnToGrek ? _toGreek(request.text) : _toLatin(request.text);
+    final output = isLatnToGrek
+        ? _toGreek(request.text)
+        : _toLatin(request.text);
 
     return ConversionResult(
       text: output,
@@ -70,7 +91,10 @@ class GreekEngine implements TransliteratorEngine {
 
     while (index < len) {
       final codeUnit = input.codeUnitAt(index);
-      if (codeUnit == 0x20 || codeUnit == 0x09 || codeUnit == 0x0A || (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
+      if (codeUnit == 0x20 ||
+          codeUnit == 0x09 ||
+          codeUnit == 0x0A ||
+          (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
         buffer.writeCharCode(codeUnit);
         index++;
         continue;
@@ -82,7 +106,8 @@ class GreekEngine implements TransliteratorEngine {
         if (input.toLowerCase().startsWith(key, index)) {
           final afterIndex = index + key.length;
           final isAtEnd = afterIndex == len;
-          final isNextNonWord = isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
+          final isNextNonWord =
+              isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
           if (isNextNonWord) {
             matchedWordKey = key;
             break;
@@ -130,31 +155,64 @@ class GreekEngine implements TransliteratorEngine {
 
   String _greekToLatinChar(int rune) {
     switch (rune) {
-      case 0x03B1: case 0x03AC: return 'a';
-      case 0x03B2: return 'v';
-      case 0x03B3: return 'g';
-      case 0x03B4: return 'd';
-      case 0x03B5: case 0x03AD: return 'e';
-      case 0x03B6: return 'z';
-      case 0x03B7: case 0x03AE: return 'i';
-      case 0x03B8: return 'th';
-      case 0x03B9: case 0x03AF: return 'i';
-      case 0x03BA: return 'k';
-      case 0x03BB: return 'l';
-      case 0x03BC: return 'm';
-      case 0x03BD: return 'n';
-      case 0x03BE: return 'x';
-      case 0x03BF: case 0x03CC: return 'o';
-      case 0x03C0: return 'p';
-      case 0x03C1: return 'r';
-      case 0x03C3: case 0x03C2: return 's';
-      case 0x03C4: return 't';
-      case 0x03C5: case 0x03CD: return 'y';
-      case 0x03C6: return 'f';
-      case 0x03C7: return 'ch';
-      case 0x03C8: return 'ps';
-      case 0x03C9: case 0x03CE: return 'o';
-      default: return String.fromCharCode(rune);
+      case 0x03B1:
+      case 0x03AC:
+        return 'a';
+      case 0x03B2:
+        return 'v';
+      case 0x03B3:
+        return 'g';
+      case 0x03B4:
+        return 'd';
+      case 0x03B5:
+      case 0x03AD:
+        return 'e';
+      case 0x03B6:
+        return 'z';
+      case 0x03B7:
+      case 0x03AE:
+        return 'i';
+      case 0x03B8:
+        return 'th';
+      case 0x03B9:
+      case 0x03AF:
+        return 'i';
+      case 0x03BA:
+        return 'k';
+      case 0x03BB:
+        return 'l';
+      case 0x03BC:
+        return 'm';
+      case 0x03BD:
+        return 'n';
+      case 0x03BE:
+        return 'x';
+      case 0x03BF:
+      case 0x03CC:
+        return 'o';
+      case 0x03C0:
+        return 'p';
+      case 0x03C1:
+        return 'r';
+      case 0x03C3:
+      case 0x03C2:
+        return 's';
+      case 0x03C4:
+        return 't';
+      case 0x03C5:
+      case 0x03CD:
+        return 'y';
+      case 0x03C6:
+        return 'f';
+      case 0x03C7:
+        return 'ch';
+      case 0x03C8:
+        return 'ps';
+      case 0x03C9:
+      case 0x03CE:
+        return 'o';
+      default:
+        return String.fromCharCode(rune);
     }
   }
 

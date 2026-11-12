@@ -124,10 +124,13 @@ class ArmenianEngine implements TransliteratorEngine {
       throw UnsupportedConversionException(request.from, request.to);
     }
 
-    final isLatinToArmn = request.from.normalizedLanguage == 'en' ||
+    final isLatinToArmn =
+        request.from.normalizedLanguage == 'en' ||
         request.from.normalizedScript == 'Latn';
     final text = request.text;
-    final converted = isLatinToArmn ? _latinToArmenian(text) : _armenianToLatin(text);
+    final converted = isLatinToArmn
+        ? _latinToArmenian(text)
+        : _armenianToLatin(text);
 
     return ConversionResult(
       text: converted,

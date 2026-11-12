@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 import '../core/language_script.dart';
 import '../core/phonetic_matcher.dart';
 

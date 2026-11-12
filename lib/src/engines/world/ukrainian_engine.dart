@@ -33,15 +33,15 @@ class UkrainianEngine implements TransliteratorEngine {
 
   static const Map<String, String> latinToUkrainianMulti = {
     'shch': '\u0449', // щ
-    'zh': '\u0436',   // ж
-    'kh': '\u0445',   // х
-    'ts': '\u0446',   // ц
-    'ch': '\u0447',   // ч
-    'sh': '\u0448',   // ш
-    'yu': '\u044E',   // ю
-    'ya': '\u044F',   // я
-    'ye': '\u0454',   // є
-    'yi': '\u0457',   // ї
+    'zh': '\u0436', // ж
+    'kh': '\u0445', // х
+    'ts': '\u0446', // ц
+    'ch': '\u0447', // ч
+    'sh': '\u0448', // ш
+    'yu': '\u044E', // ю
+    'ya': '\u044F', // я
+    'ye': '\u0454', // є
+    'yi': '\u0457', // ї
   };
 
   static const Map<String, String> latinToUkrainianSingle = {
@@ -121,10 +121,13 @@ class UkrainianEngine implements TransliteratorEngine {
       throw UnsupportedConversionException(request.from, request.to);
     }
 
-    final isLatinToUk = request.from.normalizedLanguage == 'en' ||
+    final isLatinToUk =
+        request.from.normalizedLanguage == 'en' ||
         request.from.normalizedScript == 'Latn';
     final text = request.text;
-    final converted = isLatinToUk ? _latinToUkrainian(text) : _ukrainianToLatin(text);
+    final converted = isLatinToUk
+        ? _latinToUkrainian(text)
+        : _ukrainianToLatin(text);
 
     return ConversionResult(
       text: converted,
@@ -141,11 +144,16 @@ class UkrainianEngine implements TransliteratorEngine {
     var result = text;
     // 1. Replace multi-word common phrases with word boundaries
     for (final entry in commonWords.entries) {
-      final pattern = RegExp('\\b${RegExp.escape(entry.key)}\\b', caseSensitive: false);
+      final pattern = RegExp(
+        '\\b${RegExp.escape(entry.key)}\\b',
+        caseSensitive: false,
+      );
       result = result.replaceAllMapped(pattern, (m) {
         final matchStr = m.group(0)!;
         final val = entry.value;
-        if (matchStr.isNotEmpty && matchStr[0].toUpperCase() == matchStr[0] && matchStr[0].toLowerCase() != matchStr[0]) {
+        if (matchStr.isNotEmpty &&
+            matchStr[0].toUpperCase() == matchStr[0] &&
+            matchStr[0].toLowerCase() != matchStr[0]) {
           return val[0].toUpperCase() + val.substring(1);
         }
         return val;
@@ -168,7 +176,10 @@ class UkrainianEngine implements TransliteratorEngine {
       final suffix = match.group(3) ?? '';
 
       final lowerCore = core.toLowerCase();
-      final isCapital = core.isNotEmpty && core[0].toUpperCase() == core[0] && core[0].toLowerCase() != core[0];
+      final isCapital =
+          core.isNotEmpty &&
+          core[0].toUpperCase() == core[0] &&
+          core[0].toLowerCase() != core[0];
 
       String converted;
       if (commonWords.containsKey(lowerCore)) {

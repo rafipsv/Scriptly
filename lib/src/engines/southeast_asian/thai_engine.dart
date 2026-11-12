@@ -129,7 +129,8 @@ class ThaiEngine implements TransliteratorEngine {
       throw UnsupportedConversionException(request.from, request.to);
     }
 
-    final isLatinToThai = request.from.normalizedLanguage == 'en' ||
+    final isLatinToThai =
+        request.from.normalizedLanguage == 'en' ||
         request.from.normalizedScript == 'Latn';
     final text = request.text;
     final converted = isLatinToThai ? _latinToThai(text) : _thaiToLatin(text);
@@ -149,7 +150,10 @@ class ThaiEngine implements TransliteratorEngine {
     var result = text;
     // 1. Replace multi-word common phrases with word boundaries
     for (final entry in commonWords.entries) {
-      final pattern = RegExp('\\b${RegExp.escape(entry.key)}\\b', caseSensitive: false);
+      final pattern = RegExp(
+        '\\b${RegExp.escape(entry.key)}\\b',
+        caseSensitive: false,
+      );
       result = result.replaceAllMapped(pattern, (m) => entry.value);
     }
 

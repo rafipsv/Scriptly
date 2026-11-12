@@ -61,7 +61,8 @@ class UniversalIndicEngine implements TransliteratorEngine {
     },
     'Telu': {
       'namaskaram': '\u0C28\u0C2E\u0C38\u0C4D\u0C15\u0C3E\u0C30\u0C02',
-      'dhanyavadalu': '\u0C27\u0C28\u0C4D\u0C2F\u0C35\u0C3E\u0C26\u0C3E\u0C32\u0C41',
+      'dhanyavadalu':
+          '\u0C27\u0C28\u0C4D\u0C2F\u0C35\u0C3E\u0C26\u0C3E\u0C32\u0C41',
       'telugu': '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41',
       'meeru': '\u0C2E\u0C40\u0C30\u0C41',
     },
@@ -69,7 +70,8 @@ class UniversalIndicEngine implements TransliteratorEngine {
       'namaskara': '\u0CA8\u0CAE\u0CB8\u0CCD\u0C95\u0CBE\u0CB0',
       'dhanyavada': '\u0CA7\u0CA8\u0CCD\u0CAF\u0CB5\u0CBE\u0CA6',
       'kannada': '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1',
-      'hegiddeera': '\u0CB9\u0CC7\u0C97\u0CBF\u0CA6\u0CCD\u0CA6\u0CC0\u0CB0\u0CBE',
+      'hegiddeera':
+          '\u0CB9\u0CC7\u0C97\u0CBF\u0CA6\u0CCD\u0CA6\u0CC0\u0CB0\u0CBE',
       'bengaluru': '\u0CAC\u0CC6\u0C82\u0C97\u0CB3\u0CC2\u0CB0\u0CC1',
     },
     'Mlym': {
@@ -119,8 +121,14 @@ class UniversalIndicEngine implements TransliteratorEngine {
 
     String output;
 
-    final isFromLatin = f == 'Latn' && (request.from.normalizedLanguage == 'en' || request.from.normalizedLanguage == 'latn');
-    final isToLatin = t == 'Latn' && (request.to.normalizedLanguage == 'en' || request.to.normalizedLanguage == 'latn');
+    final isFromLatin =
+        f == 'Latn' &&
+        (request.from.normalizedLanguage == 'en' ||
+            request.from.normalizedLanguage == 'latn');
+    final isToLatin =
+        t == 'Latn' &&
+        (request.to.normalizedLanguage == 'en' ||
+            request.to.normalizedLanguage == 'latn');
 
     if (isFromLatin && scriptBases.containsKey(t)) {
       output = _latinToIndic(text, t);
@@ -146,7 +154,10 @@ class UniversalIndicEngine implements TransliteratorEngine {
     var result = input;
     // 1. Replace dictionary words case-insensitively with word boundaries
     for (final entry in words.entries) {
-      final pattern = RegExp('\\b${RegExp.escape(entry.key)}\\b', caseSensitive: false);
+      final pattern = RegExp(
+        '\\b${RegExp.escape(entry.key)}\\b',
+        caseSensitive: false,
+      );
       result = result.replaceAllMapped(pattern, (m) => entry.value);
     }
 

@@ -24,15 +24,19 @@ class HindiEngine implements TransliteratorEngine {
   bool supports(LanguageScript from, LanguageScript to) {
     final f = from.normalizedScript;
     final t = to.normalizedScript;
-    final isDevaPair = (f == 'Latn' && t == 'Deva') || (f == 'Deva' && t == 'Latn');
+    final isDevaPair =
+        (f == 'Latn' && t == 'Deva') || (f == 'Deva' && t == 'Latn');
     if (!isDevaPair) return false;
 
     final fLang = from.normalizedLanguage;
     final tLang = to.normalizedLanguage;
     // Exclude other specific Devanagari languages: sa, mr, ne
-    if (fLang == 'sa' || tLang == 'sa' ||
-        fLang == 'mr' || tLang == 'mr' ||
-        fLang == 'ne' || tLang == 'ne') {
+    if (fLang == 'sa' ||
+        tLang == 'sa' ||
+        fLang == 'mr' ||
+        tLang == 'mr' ||
+        fLang == 'ne' ||
+        tLang == 'ne') {
       return false;
     }
     return true;

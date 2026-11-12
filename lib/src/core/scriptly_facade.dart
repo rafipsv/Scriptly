@@ -22,8 +22,12 @@ class Scriptly {
     required LanguageScript from,
     required LanguageScript to,
     ConversionOptions options = ConversionOptions.standard,
-  }) =>
-      _defaultTransliterator.convert(text, from: from, to: to, options: options);
+  }) => _defaultTransliterator.convert(
+    text,
+    from: from,
+    to: to,
+    options: options,
+  );
 
   /// Asynchronously converts [text] from [from] to [to] without blocking the main event loop.
   static Future<ConversionResult> convertAsync(
@@ -42,8 +46,7 @@ class Scriptly {
     String text, {
     required LanguageScript to,
     ConversionOptions options = ConversionOptions.standard,
-  }) =>
-      _defaultTransliterator.autoConvert(text, to: to, options: options);
+  }) => _defaultTransliterator.autoConvert(text, to: to, options: options);
 
   /// Asynchronously detects the source script and converts [text] to [to].
   static Future<ConversionResult> autoConvertAsync(
@@ -63,7 +66,8 @@ class Scriptly {
   }
 
   /// Analyzes and detects the primary script of [text].
-  static ScriptDetectionResult detect(String text) => ScriptDetector.detect(text);
+  static ScriptDetectionResult detect(String text) =>
+      ScriptDetector.detect(text);
 
   /// Calculates cross-script phonetic similarity between [textA] and [textB] (0.0 to 1.0).
   static double similarity(
@@ -71,8 +75,12 @@ class Scriptly {
     String textB, {
     LanguageScript? scriptA,
     LanguageScript? scriptB,
-  }) =>
-      PhoneticMatcher.similarity(textA, textB, scriptA: scriptA, scriptB: scriptB);
+  }) => PhoneticMatcher.similarity(
+    textA,
+    textB,
+    scriptA: scriptA,
+    scriptB: scriptB,
+  );
 
   /// Checks if [query] matches [candidate] within phonetic [threshold] (default 0.70).
   static bool isMatch(
@@ -81,14 +89,13 @@ class Scriptly {
     double threshold = 0.70,
     LanguageScript? queryScript,
     LanguageScript? candidateScript,
-  }) =>
-      PhoneticMatcher.isMatch(
-        query,
-        candidate,
-        threshold: threshold,
-        queryScript: queryScript,
-        candidateScript: candidateScript,
-      );
+  }) => PhoneticMatcher.isMatch(
+    query,
+    candidate,
+    threshold: threshold,
+    queryScript: queryScript,
+    candidateScript: candidateScript,
+  );
 
   /// Generates a standardized 4-character phonetic Soundex code.
   static String soundex(String text, {LanguageScript? script}) =>

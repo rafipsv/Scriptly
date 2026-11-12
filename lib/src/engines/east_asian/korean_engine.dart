@@ -44,7 +44,9 @@ class KoreanEngine implements TransliteratorEngine {
     }
 
     final isLatnToHang = request.from.normalizedScript == 'Latn';
-    final output = isLatnToHang ? _toHangul(request.text) : _toRomanization(request.text);
+    final output = isLatnToHang
+        ? _toHangul(request.text)
+        : _toRomanization(request.text);
 
     return ConversionResult(
       text: output,
@@ -64,7 +66,8 @@ class KoreanEngine implements TransliteratorEngine {
     // Word by word conversion with leading/trailing punctuation preservation
     final words = input.split(' ');
     final convertedWords = words.map((w) {
-      final match = RegExp(r'^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$').firstMatch(w);
+      final match = RegExp(r'^([^a-zA-Z0-9]*)(.*?)([^a-zA-Z0-9]*)$')
+          .firstMatch(w);
       if (match != null) {
         final prefix = match.group(1)!;
         final core = match.group(2)!.toLowerCase();

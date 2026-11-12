@@ -35,7 +35,8 @@ class TransliterationTextEditingController extends TextEditingController {
 
   void _recordHistory(TextEditingValue val) {
     if (_historyIndex >= 0 && _history[_historyIndex].text == val.text) return;
-    if (_historyIndex < _history.length - 1) _history.removeRange(_historyIndex + 1, _history.length);
+    if (_historyIndex < _history.length - 1)
+      _history.removeRange(_historyIndex + 1, _history.length);
     _history.add(val);
     if (_history.length > 25) _history.removeAt(0);
     _historyIndex = _history.length - 1;
@@ -67,9 +68,14 @@ class TransliterationTextEditingController extends TextEditingController {
 
     _isConverting = true;
     try {
-      final converted = _transliterator.convert(newValue.text, from: from, to: to, options: options).text;
+      final converted = _transliterator
+          .convert(newValue.text, from: from, to: to, options: options)
+          .text;
       final diff = converted.length - newValue.text.length;
-      final newCursor = (newValue.selection.baseOffset + diff).clamp(0, converted.length);
+      final newCursor = (newValue.selection.baseOffset + diff).clamp(
+        0,
+        converted.length,
+      );
 
       final result = TextEditingValue(
         text: converted,

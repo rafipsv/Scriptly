@@ -82,7 +82,9 @@ class HebrewEngine implements TransliteratorEngine {
     }
 
     final isLatnToHebr = request.from.normalizedScript == 'Latn';
-    final output = isLatnToHebr ? _toHebrew(request.text) : _toLatin(request.text);
+    final output = isLatnToHebr
+        ? _toHebrew(request.text)
+        : _toLatin(request.text);
 
     return ConversionResult(
       text: output,
@@ -105,7 +107,10 @@ class HebrewEngine implements TransliteratorEngine {
 
     while (index < len) {
       final codeUnit = input.codeUnitAt(index);
-      if (codeUnit == 0x20 || codeUnit == 0x09 || codeUnit == 0x0A || (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
+      if (codeUnit == 0x20 ||
+          codeUnit == 0x09 ||
+          codeUnit == 0x0A ||
+          (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
         buffer.writeCharCode(codeUnit);
         index++;
         continue;
@@ -117,7 +122,8 @@ class HebrewEngine implements TransliteratorEngine {
         if (input.toLowerCase().startsWith(key, index)) {
           final afterIndex = index + key.length;
           final isAtEnd = afterIndex == len;
-          final isNextNonWord = isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
+          final isNextNonWord =
+              isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
           if (isNextNonWord) {
             matchedWordKey = key;
             break;
@@ -149,7 +155,8 @@ class HebrewEngine implements TransliteratorEngine {
 
     for (var i = 0; i < len; i++) {
       final r = runes[i];
-      final isLastInWord = (i + 1 == len) ||
+      final isLastInWord =
+          (i + 1 == len) ||
           (runes[i + 1] <= 0x20 ||
               (runes[i + 1] >= 0x21 && runes[i + 1] <= 0x2F));
 
@@ -198,34 +205,57 @@ class HebrewEngine implements TransliteratorEngine {
 
   String _hebrewToLatinChar(int rune) {
     switch (rune) {
-      case 0x05D0: return 'a';
-      case 0x05D1: return 'b';
-      case 0x05D2: return 'g';
-      case 0x05D3: return 'd';
-      case 0x05D4: return 'h';
-      case 0x05D5: return 'v';
-      case 0x05D6: return 'z';
-      case 0x05D7: return 'ch';
-      case 0x05D8: return 't';
-      case 0x05D9: return 'y';
+      case 0x05D0:
+        return 'a';
+      case 0x05D1:
+        return 'b';
+      case 0x05D2:
+        return 'g';
+      case 0x05D3:
+        return 'd';
+      case 0x05D4:
+        return 'h';
+      case 0x05D5:
+        return 'v';
+      case 0x05D6:
+        return 'z';
+      case 0x05D7:
+        return 'ch';
+      case 0x05D8:
+        return 't';
+      case 0x05D9:
+        return 'y';
       case 0x05DA:
-      case 0x05DB: return 'k';
-      case 0x05DC: return 'l';
+      case 0x05DB:
+        return 'k';
+      case 0x05DC:
+        return 'l';
       case 0x05DD:
-      case 0x05DE: return 'm';
+      case 0x05DE:
+        return 'm';
       case 0x05DF:
-      case 0x05E0: return 'n';
-      case 0x05E1: return 's';
-      case 0x05E2: return 'a';
+      case 0x05E0:
+        return 'n';
+      case 0x05E1:
+        return 's';
+      case 0x05E2:
+        return 'a';
       case 0x05E3:
-      case 0x05E4: return 'p';
+      case 0x05E4:
+        return 'p';
       case 0x05E5:
-      case 0x05E6: return 'ts';
-      case 0x05E7: return 'q';
-      case 0x05E8: return 'r';
-      case 0x05E9: return 'sh';
-      case 0x05EA: return 't';
-      default: return String.fromCharCode(rune);
+      case 0x05E6:
+        return 'ts';
+      case 0x05E7:
+        return 'q';
+      case 0x05E8:
+        return 'r';
+      case 0x05E9:
+        return 'sh';
+      case 0x05EA:
+        return 't';
+      default:
+        return String.fromCharCode(rune);
     }
   }
 

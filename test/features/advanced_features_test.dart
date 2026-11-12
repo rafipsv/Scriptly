@@ -29,10 +29,13 @@ void main() {
       expect(res.confidence, 1.0);
     });
 
-    test('detects Ukrainian Cyrillic correctly distinguishing from Russian', () {
-      final res = ScriptDetector.detect('привіт як справи? їж яблуко');
-      expect(res.script, LanguageScript.ukrainian);
-    });
+    test(
+      'detects Ukrainian Cyrillic correctly distinguishing from Russian',
+      () {
+        final res = ScriptDetector.detect('привіт як справи? їж яблуко');
+        expect(res.script, LanguageScript.ukrainian);
+      },
+    );
 
     test('detects Thai script', () {
       final res = ScriptDetector.detect('สวัสดีครับ');
@@ -80,9 +83,7 @@ void main() {
         'Hello Google',
         from: LanguageScript.latin,
         to: LanguageScript.bengali,
-        options: const ConversionOptions(
-          customDictionary: {'Google': 'গুগল'},
-        ),
+        options: const ConversionOptions(customDictionary: {'Google': 'গুগল'}),
       );
 
       expect(result.text.contains('গুগল'), isTrue);
@@ -133,7 +134,9 @@ void main() {
   });
 
   group('5. Flutter Widgets Verification', () {
-    testWidgets('ScriptlySearchField filters items cross-script', (tester) async {
+    testWidgets('ScriptlySearchField filters items cross-script', (
+      tester,
+    ) async {
       final cities = ['ঢাকা', 'চট্টগ্রাম', 'সিলেট', 'রাজশাহী'];
 
       await tester.pumpWidget(
@@ -151,7 +154,9 @@ void main() {
       expect(find.text('সিলেট'), findsOneWidget);
     });
 
-    testWidgets('ScriptlySuggestionOverlay mounts and renders child', (tester) async {
+    testWidgets('ScriptlySuggestionOverlay mounts and renders child', (
+      tester,
+    ) async {
       final controller = TextEditingController(text: 'ami');
 
       await tester.pumpWidget(

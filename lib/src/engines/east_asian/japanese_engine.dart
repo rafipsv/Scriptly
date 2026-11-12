@@ -29,31 +29,106 @@ class JapaneseEngine implements TransliteratorEngine {
   };
 
   static const Map<String, String> romajiToHiragana = {
-    'kya': '\u304D\u3083', 'kyu': '\u304D\u3085', 'kyo': '\u304D\u3087',
-    'sha': '\u3057\u3083', 'shu': '\u3057\u3085', 'sho': '\u3057\u3087',
-    'cha': '\u3061\u3083', 'chu': '\u3061\u3085', 'cho': '\u3061\u3087',
-    'nya': '\u306B\u3083', 'nyu': '\u306B\u3085', 'nyo': '\u306B\u3087',
-    'hya': '\u3072\u3083', 'hyu': '\u3072\u3085', 'hyo': '\u3072\u3087',
-    'mya': '\u307F\u3083', 'myu': '\u307F\u3085', 'myo': '\u307F\u3087',
-    'rya': '\u308A\u3083', 'ryu': '\u308A\u3085', 'ryo': '\u308A\u3087',
-    'gya': '\u304E\u3083', 'gyu': '\u304E\u3085', 'gyo': '\u304E\u3087',
-    'bya': '\u3073\u3083', 'byu': '\u3073\u3085', 'byo': '\u3073\u3087',
-    'pya': '\u3074\u3083', 'pyu': '\u3074\u3085', 'pyo': '\u3074\u3087',
-    'ka': '\u304B', 'ki': '\u304D', 'ku': '\u304F', 'ke': '\u3051', 'ko': '\u3053',
-    'sa': '\u3055', 'shi': '\u3057', 'su': '\u3059', 'se': '\u305B', 'so': '\u305D',
-    'ta': '\u305F', 'chi': '\u3061', 'tsu': '\u3064', 'te': '\u3066', 'to': '\u3068',
-    'na': '\u306A', 'ni': '\u306B', 'nu': '\u306C', 'ne': '\u306D', 'no': '\u306E',
-    'ha': '\u306F', 'hi': '\u3072', 'fu': '\u3075', 'he': '\u3078', 'ho': '\u307B',
-    'ma': '\u307E', 'mi': '\u307F', 'mu': '\u3080', 'me': '\u3081', 'mo': '\u3082',
-    'ya': '\u3084', 'yu': '\u3086', 'yo': '\u3088',
-    'ra': '\u3089', 'ri': '\u308A', 'ru': '\u308B', 're': '\u308C', 'ro': '\u308D',
-    'wa': '\u308F', 'wo': '\u3092', 'nn': '\u3093',
-    'ga': '\u304C', 'gi': '\u304E', 'gu': '\u3042', 'ge': '\u3052', 'go': '\u3054',
-    'za': '\u3056', 'ji': '\u3058', 'zu': '\u305A', 'ze': '\u305C', 'zo': '\u305E',
-    'da': '\u3060', 'de': '\u3067', 'do': '\u3068',
-    'ba': '\u3070', 'bi': '\u3073', 'bu': '\u3074', 'be': '\u3076', 'bo': '\u3078',
-    'pa': '\u3071', 'pi': '\u3074', 'pu': '\u3077', 'pe': '\u307A', 'po': '\u307D',
-    'a': '\u3042', 'i': '\u3044', 'u': '\u3046', 'e': '\u3048', 'o': '\u304A', 'n': '\u3093',
+    'kya': '\u304D\u3083',
+    'kyu': '\u304D\u3085',
+    'kyo': '\u304D\u3087',
+    'sha': '\u3057\u3083',
+    'shu': '\u3057\u3085',
+    'sho': '\u3057\u3087',
+    'cha': '\u3061\u3083',
+    'chu': '\u3061\u3085',
+    'cho': '\u3061\u3087',
+    'nya': '\u306B\u3083',
+    'nyu': '\u306B\u3085',
+    'nyo': '\u306B\u3087',
+    'hya': '\u3072\u3083',
+    'hyu': '\u3072\u3085',
+    'hyo': '\u3072\u3087',
+    'mya': '\u307F\u3083',
+    'myu': '\u307F\u3085',
+    'myo': '\u307F\u3087',
+    'rya': '\u308A\u3083',
+    'ryu': '\u308A\u3085',
+    'ryo': '\u308A\u3087',
+    'gya': '\u304E\u3083',
+    'gyu': '\u304E\u3085',
+    'gyo': '\u304E\u3087',
+    'bya': '\u3073\u3083',
+    'byu': '\u3073\u3085',
+    'byo': '\u3073\u3087',
+    'pya': '\u3074\u3083',
+    'pyu': '\u3074\u3085',
+    'pyo': '\u3074\u3087',
+    'ka': '\u304B',
+    'ki': '\u304D',
+    'ku': '\u304F',
+    'ke': '\u3051',
+    'ko': '\u3053',
+    'sa': '\u3055',
+    'shi': '\u3057',
+    'su': '\u3059',
+    'se': '\u305B',
+    'so': '\u305D',
+    'ta': '\u305F',
+    'chi': '\u3061',
+    'tsu': '\u3064',
+    'te': '\u3066',
+    'to': '\u3068',
+    'na': '\u306A',
+    'ni': '\u306B',
+    'nu': '\u306C',
+    'ne': '\u306D',
+    'no': '\u306E',
+    'ha': '\u306F',
+    'hi': '\u3072',
+    'fu': '\u3075',
+    'he': '\u3078',
+    'ho': '\u307B',
+    'ma': '\u307E',
+    'mi': '\u307F',
+    'mu': '\u3080',
+    'me': '\u3081',
+    'mo': '\u3082',
+    'ya': '\u3084',
+    'yu': '\u3086',
+    'yo': '\u3088',
+    'ra': '\u3089',
+    'ri': '\u308A',
+    'ru': '\u308B',
+    're': '\u308C',
+    'ro': '\u308D',
+    'wa': '\u308F',
+    'wo': '\u3092',
+    'nn': '\u3093',
+    'ga': '\u304C',
+    'gi': '\u304E',
+    'gu': '\u3042',
+    'ge': '\u3052',
+    'go': '\u3054',
+    'za': '\u3056',
+    'ji': '\u3058',
+    'zu': '\u305A',
+    'ze': '\u305C',
+    'zo': '\u305E',
+    'da': '\u3060',
+    'de': '\u3067',
+    'do': '\u3068',
+    'ba': '\u3070',
+    'bi': '\u3073',
+    'bu': '\u3074',
+    'be': '\u3076',
+    'bo': '\u3078',
+    'pa': '\u3071',
+    'pi': '\u3074',
+    'pu': '\u3077',
+    'pe': '\u307A',
+    'po': '\u307D',
+    'a': '\u3042',
+    'i': '\u3044',
+    'u': '\u3046',
+    'e': '\u3048',
+    'o': '\u304A',
+    'n': '\u3093',
   };
 
   @override
@@ -70,7 +145,9 @@ class JapaneseEngine implements TransliteratorEngine {
     }
 
     final isLatnToJpan = request.from.normalizedScript == 'Latn';
-    final output = isLatnToJpan ? _toKana(request.text) : _toRomaji(request.text);
+    final output = isLatnToJpan
+        ? _toKana(request.text)
+        : _toRomaji(request.text);
 
     return ConversionResult(
       text: output,
@@ -93,7 +170,10 @@ class JapaneseEngine implements TransliteratorEngine {
 
     while (index < len) {
       final codeUnit = input.codeUnitAt(index);
-      if (codeUnit == 0x20 || codeUnit == 0x09 || codeUnit == 0x0A || (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
+      if (codeUnit == 0x20 ||
+          codeUnit == 0x09 ||
+          codeUnit == 0x0A ||
+          (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
         buffer.writeCharCode(codeUnit);
         index++;
         continue;
@@ -105,7 +185,8 @@ class JapaneseEngine implements TransliteratorEngine {
         if (input.toLowerCase().startsWith(key, index)) {
           final afterIndex = index + key.length;
           final isAtEnd = afterIndex == len;
-          final isNextNonWord = isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
+          final isNextNonWord =
+              isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
           if (isNextNonWord) {
             matchedWordKey = key;
             break;

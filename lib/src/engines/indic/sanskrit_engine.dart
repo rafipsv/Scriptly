@@ -31,7 +31,8 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
     'nepal': '\u0928\u0947\u092A\u093E\u0932',
     'namaskar': '\u0928\u092E\u0938\u094D\u0915\u093E\u0930',
     'dhanyabad': '\u0927\u0928\u094D\u092F\u092C\u093E\u0926',
-    'maharashtra': '\u092E\u0939\u093E\u0930\u093E\u0937\u094D\u091F\u094D\u0930',
+    'maharashtra':
+        '\u092E\u0939\u093E\u0930\u093E\u0937\u094D\u091F\u094D\u0930',
     'asomiya': '\u0985\u09B8\u09AE\u09C0\u09AF\u09BC\u09BE',
     'guwahati': '\u0997\u09C1\u09F1\u09BE\u09B9\u09BE\u099F\u09C0',
     'axom': '\u0985\u09B8\u09AE',
@@ -50,8 +51,10 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
     if (supportedLangs.contains(f) && tS == 'Latn') return true;
 
     // Cross-bridge with Indic
-    if (supportedLangs.contains(f) && (tS == 'Deva' || tS == 'Beng')) return true;
-    if ((fS == 'Deva' || fS == 'Beng') && supportedLangs.contains(t)) return true;
+    if (supportedLangs.contains(f) && (tS == 'Deva' || tS == 'Beng'))
+      return true;
+    if ((fS == 'Deva' || fS == 'Beng') && supportedLangs.contains(t))
+      return true;
 
     return false;
   }
@@ -84,7 +87,11 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
     );
   }
 
-  String _convertFromLatin(String text, String tLang, ConversionRequest request) {
+  String _convertFromLatin(
+    String text,
+    String tLang,
+    ConversionRequest request,
+  ) {
     final lower = text.toLowerCase().trim();
     if (sanskritWords.containsKey(lower)) {
       return sanskritWords[lower]!;
@@ -92,28 +99,32 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
 
     // Assamese uses Bengali script base with specific Ro and Wo
     if (tLang == 'as') {
-      final beng = _bengaliEngine.convert(
-        ConversionRequest(
-          text: text,
-          from: LanguageScript.latin,
-          to: LanguageScript.bengali,
-          options: request.options,
-        ),
-      ).text;
+      final beng = _bengaliEngine
+          .convert(
+            ConversionRequest(
+              text: text,
+              from: LanguageScript.latin,
+              to: LanguageScript.bengali,
+              options: request.options,
+            ),
+          )
+          .text;
       // Replace Bengali Ra (\u09B0) with Assamese Ro (\u09F0) and Ba (\u09AC) with Assamese Wo (\u09F1) where contextually requested
       return beng.replaceAll('র', '\u09F0');
     }
 
     // Sanskrit, Marathi, Nepali map through Devanagari with IAST pre-normalization
     final normalizedIast = _normalizeIast(text);
-    final deva = _hindiEngine.convert(
-      ConversionRequest(
-        text: normalizedIast,
-        from: LanguageScript.latin,
-        to: LanguageScript.hindi,
-        options: request.options,
-      ),
-    ).text;
+    final deva = _hindiEngine
+        .convert(
+          ConversionRequest(
+            text: normalizedIast,
+            from: LanguageScript.latin,
+            to: LanguageScript.hindi,
+            options: request.options,
+          ),
+        )
+        .text;
 
     if (tLang == 'mr') {
       // Marathi retroflex lateral Lla (U+0933)
@@ -123,7 +134,12 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
     return deva;
   }
 
-  String _convertToLatinOrBridge(String text, String fLang, String tLang, ConversionRequest request) {
+  String _convertToLatinOrBridge(
+    String text,
+    String fLang,
+    String tLang,
+    ConversionRequest request,
+  ) {
     for (final entry in sanskritWords.entries) {
       if (text.trim() == entry.value) {
         final k = entry.key;
@@ -132,25 +148,31 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
     }
 
     if (fLang == 'as') {
-      final normalized = text.replaceAll('\u09F0', 'র').replaceAll('\u09F1', 'ব');
-      return _bengaliEngine.convert(
-        ConversionRequest(
-          text: normalized,
-          from: LanguageScript.bengali,
-          to: LanguageScript.latin,
-          options: request.options,
-        ),
-      ).text;
+      final normalized = text
+          .replaceAll('\u09F0', 'র')
+          .replaceAll('\u09F1', 'ব');
+      return _bengaliEngine
+          .convert(
+            ConversionRequest(
+              text: normalized,
+              from: LanguageScript.bengali,
+              to: LanguageScript.latin,
+              options: request.options,
+            ),
+          )
+          .text;
     }
 
-    return _hindiEngine.convert(
-      ConversionRequest(
-        text: text,
-        from: LanguageScript.hindi,
-        to: LanguageScript.latin,
-        options: request.options,
-      ),
-    ).text;
+    return _hindiEngine
+        .convert(
+          ConversionRequest(
+            text: text,
+            from: LanguageScript.hindi,
+            to: LanguageScript.latin,
+            options: request.options,
+          ),
+        )
+        .text;
   }
 
   String _normalizeIast(String input) {

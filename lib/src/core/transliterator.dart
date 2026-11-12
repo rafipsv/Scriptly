@@ -55,7 +55,8 @@ class Transliterator {
     }
 
     // Mask technical tokens (URLs, emails) when converting from Latin to non-Latin
-    final isMaskingNeeded = from == LanguageScript.latin && to != LanguageScript.latin;
+    final isMaskingNeeded =
+        from == LanguageScript.latin && to != LanguageScript.latin;
     final urlEmailRegex = RegExp(
       r'(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
       caseSensitive: false,
@@ -156,12 +157,7 @@ class Transliterator {
     ConversionOptions options = ConversionOptions.standard,
   }) {
     final detection = ScriptDetector.detect(text);
-    return convert(
-      text,
-      from: detection.script,
-      to: to,
-      options: options,
-    );
+    return convert(text, from: detection.script, to: to, options: options);
   }
 
   /// Checks if a conversion between [from] and [to] is currently supported

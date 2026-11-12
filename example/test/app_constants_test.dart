@@ -17,7 +17,8 @@ void main() {
         expect(
           configuredScripts.contains(script),
           isTrue,
-          reason: 'Missing language configuration for ${script.code} (${script.name}) in AppConstants',
+          reason:
+              'Missing language configuration for ${script.code} (${script.name}) in AppConstants',
         );
       }
     });

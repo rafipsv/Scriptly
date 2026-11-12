@@ -10,7 +10,8 @@ void main() {
     // -------------------------------------------------------------------------
     group('SQA-TC-01: Real-World Conversational Paragraphs', () {
       test('Bengali conversational text with numbers, emojis, and punctuation', () {
-        const input = 'Ami tomake bhalobashi! Call me at 01711-223344. Shob thik ache? 🚀';
+        const input =
+            'Ami tomake bhalobashi! Call me at 01711-223344. Shob thik ache? 🚀';
         final res = transliterator.convert(
           input,
           from: LanguageScript.latin,
@@ -76,7 +77,10 @@ void main() {
 
         expect(res.text.contains('🎉'), isTrue);
         expect(res.text.contains('!'), isTrue);
-        expect(res.text.contains('\uC548\uB155\uD558\uC138\uC694'), isTrue); // Annyeonghaseyo
+        expect(
+          res.text.contains('\uC548\uB155\uD558\uC138\uC694'),
+          isTrue,
+        ); // Annyeonghaseyo
       });
 
       test('Russian Cyrillic conversational phrase', () {
@@ -89,7 +93,10 @@ void main() {
 
         expect(res.text.contains('❄️'), isTrue);
         expect(res.text.contains('!'), isTrue);
-        expect(res.text.contains('\u043F\u0440\u0438\u0432\u0435\u0442'), isTrue); // privet
+        expect(
+          res.text.contains('\u043F\u0440\u0438\u0432\u0435\u0442'),
+          isTrue,
+        ); // privet
       });
 
       test('Greek conversational greeting', () {
@@ -101,7 +108,10 @@ void main() {
         );
 
         expect(res.text.contains('☀️'), isTrue);
-        expect(res.text.contains('\u03BA\u03B1\u03BB\u03B7\u03BC\u03AD\u03C1\u03B1'), isTrue); // kalimera
+        expect(
+          res.text.contains('\u03BA\u03B1\u03BB\u03B7\u03BC\u03AD\u03C1\u03B1'),
+          isTrue,
+        ); // kalimera
       });
     });
 
@@ -193,7 +203,11 @@ void main() {
               from: from,
               to: to,
             );
-            expect(res.text.isNotEmpty, isTrue, reason: 'Conversion from $from to $to must not be empty');
+            expect(
+              res.text.isNotEmpty,
+              isTrue,
+              reason: 'Conversion from $from to $to must not be empty',
+            );
             executedConversions++;
           }
         }
@@ -236,65 +250,77 @@ void main() {
         expect(res.scheme, 'identity');
       });
 
-      test('Unsupported script cleanly throws UnsupportedConversionException', () {
-        const unsupportedScript = LanguageScript('xx', 'Xxxx');
-        expect(
-          () => transliterator.convert(
-            'testing',
-            from: unsupportedScript,
-            to: LanguageScript.latin,
-          ),
-          throwsA(isA<UnsupportedConversionException>()),
-        );
-      });
+      test(
+        'Unsupported script cleanly throws UnsupportedConversionException',
+        () {
+          const unsupportedScript = LanguageScript('xx', 'Xxxx');
+          expect(
+            () => transliterator.convert(
+              'testing',
+              from: unsupportedScript,
+              to: LanguageScript.latin,
+            ),
+            throwsA(isA<UnsupportedConversionException>()),
+          );
+        },
+      );
 
-      test('Multi-character skin-tone and complex emojis pass through untouched', () {
-        const emojiPayload = 'Hello 👨🏽‍💻 and 👩🏼‍🔬 with 🏳️‍🌈 and 🇦🇷';
-        final res = transliterator.convert(
-          emojiPayload,
-          from: LanguageScript.latin,
-          to: LanguageScript.bengali,
-        );
-        expect(res.text.contains('👨🏽‍💻'), isTrue);
-        expect(res.text.contains('👩🏼‍🔬'), isTrue);
-        expect(res.text.contains('🏳️‍🌈'), isTrue);
-        expect(res.text.contains('🇦🇷'), isTrue);
-      });
+      test(
+        'Multi-character skin-tone and complex emojis pass through untouched',
+        () {
+          const emojiPayload = 'Hello 👨🏽‍💻 and 👩🏼‍🔬 with 🏳️‍🌈 and 🇦🇷';
+          final res = transliterator.convert(
+            emojiPayload,
+            from: LanguageScript.latin,
+            to: LanguageScript.bengali,
+          );
+          expect(res.text.contains('👨🏽‍💻'), isTrue);
+          expect(res.text.contains('👩🏼‍🔬'), isTrue);
+          expect(res.text.contains('🏳️‍🌈'), isTrue);
+          expect(res.text.contains('🇦🇷'), isTrue);
+        },
+      );
 
-      test('Extremely long text payload (10,000+ characters stress buffer test)', () {
-        final longInput = List.filled(500, 'Ami Banglay gaan gai. ').join();
-        expect(longInput.length, greaterThan(10000));
+      test(
+        'Extremely long text payload (10,000+ characters stress buffer test)',
+        () {
+          final longInput = List.filled(500, 'Ami Banglay gaan gai. ').join();
+          expect(longInput.length, greaterThan(10000));
 
-        final stopwatch = Stopwatch()..start();
-        final res = transliterator.convert(
-          longInput,
-          from: LanguageScript.latin,
-          to: LanguageScript.bengali,
-        );
-        stopwatch.stop();
+          final stopwatch = Stopwatch()..start();
+          final res = transliterator.convert(
+            longInput,
+            from: LanguageScript.latin,
+            to: LanguageScript.bengali,
+          );
+          stopwatch.stop();
 
-        expect(res.text.isNotEmpty, isTrue);
-        // Even 10,000+ characters must convert under 50ms in memory
-        expect(stopwatch.elapsedMilliseconds, lessThan(100));
-      });
+          expect(res.text.isNotEmpty, isTrue);
+          // Even 10,000+ characters must convert under 50ms in memory
+          expect(stopwatch.elapsedMilliseconds, lessThan(100));
+        },
+      );
     });
 
     // -------------------------------------------------------------------------
     // SQA-TC-04: Digit Policy & Configuration Options
     // -------------------------------------------------------------------------
     group('SQA-TC-04: Digit Policy & Options Testing', () {
-      test('DigitPolicy.convertToTarget converts ASCII digits to Bengali digits', () {
-        final res = transliterator.convert(
-          '12345',
-          from: LanguageScript.latin,
-          to: LanguageScript.bengali,
-          options: const ConversionOptions(
-            digitPolicy: DigitPolicy.convertToTarget,
-          ),
-        );
-        // Bengali digits 1-5: \u09E7\u09E8\u09E9\u09EA\u09EB
-        expect(res.text, '\u09E7\u09E8\u09E9\u09EA\u09EB');
-      });
+      test(
+        'DigitPolicy.convertToTarget converts ASCII digits to Bengali digits',
+        () {
+          final res = transliterator.convert(
+            '12345',
+            from: LanguageScript.latin,
+            to: LanguageScript.bengali,
+            options: const ConversionOptions(
+              digitPolicy: DigitPolicy.convertToTarget,
+            ),
+          );
+          // Bengali digits 1-5: \u09E7\u09E8\u09E9\u09EA\u09EB
+          expect(res.text, '\u09E7\u09E8\u09E9\u09EA\u09EB');
+        },
+      );
 
       test('DigitPolicy.preserveSource retains ASCII digits', () {
         final res = transliterator.convert(
@@ -341,61 +367,132 @@ void main() {
     // SQA-TC-06: Cross-Family 95%+ High-Accuracy Benchmark Suite
     // -------------------------------------------------------------------------
     group('SQA-TC-06: Cross-Family 95%+ High-Accuracy Benchmark Suite', () {
-      test('Perso-Arabic (Arabic, Urdu, Persian) achieves exact linguistic match', () {
-        // Arabic
-        expect(
-          transliterator.convert('ahlan wa sahlan', from: LanguageScript.latin, to: LanguageScript.arabic).text,
-          equals('\u0623\u0647\u0644\u0627 \u0648 \u0633\u0647\u0644\u0627'),
-        );
-        expect(
-          transliterator.convert('sabah alkhair', from: LanguageScript.latin, to: LanguageScript.arabic).text,
-          equals('\u0635\u0628\u0627\u062D \u0627\u0644\u062E\u064A\u0631'),
-        );
-        // Urdu
-        expect(
-          transliterator.convert('khuda hafiz', from: LanguageScript.latin, to: LanguageScript.urdu).text,
-          equals('\u062E\u062F\u0627 \u062D\u0627\u0641\u0638'),
-        );
-        // Persian (Farsi)
-        expect(
-          transliterator.convert('dorood', from: LanguageScript.latin, to: LanguageScript.persian).text,
-          equals('\u062F\u0631\u0648\u062F'),
-        );
-        expect(
-          transliterator.convert('sobh bekheir', from: LanguageScript.latin, to: LanguageScript.persian).text,
-          equals('\u0635\u0628\u062D \u0628\u062E\u06CC\u0631'),
-        );
-      });
+      test(
+        'Perso-Arabic (Arabic, Urdu, Persian) achieves exact linguistic match',
+        () {
+          // Arabic
+          expect(
+            transliterator
+                .convert(
+                  'ahlan wa sahlan',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.arabic,
+                )
+                .text,
+            equals('\u0623\u0647\u0644\u0627 \u0648 \u0633\u0647\u0644\u0627'),
+          );
+          expect(
+            transliterator
+                .convert(
+                  'sabah alkhair',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.arabic,
+                )
+                .text,
+            equals('\u0635\u0628\u0627\u062D \u0627\u0644\u062E\u064A\u0631'),
+          );
+          // Urdu
+          expect(
+            transliterator
+                .convert(
+                  'khuda hafiz',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.urdu,
+                )
+                .text,
+            equals('\u062E\u062F\u0627 \u062D\u0627\u0641\u0638'),
+          );
+          // Persian (Farsi)
+          expect(
+            transliterator
+                .convert(
+                  'dorood',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.persian,
+                )
+                .text,
+            equals('\u062F\u0631\u0648\u062F'),
+          );
+          expect(
+            transliterator
+                .convert(
+                  'sobh bekheir',
+                  from: LanguageScript.latin,
+                  to: LanguageScript.persian,
+                )
+                .text,
+            equals('\u0635\u0628\u062D \u0628\u062E\u06CC\u0631'),
+          );
+        },
+      );
 
       test('Hebrew square script with automatic final forms (Sofit) achieves exact match', () {
         expect(
-          transliterator.convert('shalom olam', from: LanguageScript.latin, to: LanguageScript.hebrew).text,
+          transliterator
+              .convert(
+                'shalom olam',
+                from: LanguageScript.latin,
+                to: LanguageScript.hebrew,
+              )
+              .text,
           equals('\u05E9\u05DC\u05D5\u05DD \u05E2\u05D5\u05DC\u05DD'),
         );
         expect(
-          transliterator.convert('toda raba', from: LanguageScript.latin, to: LanguageScript.hebrew).text,
+          transliterator
+              .convert(
+                'toda raba',
+                from: LanguageScript.latin,
+                to: LanguageScript.hebrew,
+              )
+              .text,
           equals('\u05EA\u05D5\u05D3\u05D4 \u05E8\u05D1\u05D4'),
         );
       });
 
       test('Bengali and Hindi conversational accuracy with inherent vowels and conjuncts', () {
         expect(
-          transliterator.convert('dhonnobad bondhu', from: LanguageScript.latin, to: LanguageScript.bengali).text,
-          equals('\u09A7\u09A8\u09CD\u09AF\u09AC\u09BE\u09A6 \u09AC\u09A8\u09CD\u09A7\u09C1'),
+          transliterator
+              .convert(
+                'dhonnobad bondhu',
+                from: LanguageScript.latin,
+                to: LanguageScript.bengali,
+              )
+              .text,
+          equals(
+            '\u09A7\u09A8\u09CD\u09AF\u09AC\u09BE\u09A6 \u09AC\u09A8\u09CD\u09A7\u09C1',
+          ),
         );
         expect(
-          transliterator.convert('shuvo shokal', from: LanguageScript.latin, to: LanguageScript.bengali).text,
+          transliterator
+              .convert(
+                'shuvo shokal',
+                from: LanguageScript.latin,
+                to: LanguageScript.bengali,
+              )
+              .text,
           equals('\u09B6\u09C1\u09AD \u09B8\u0995\u09BE\u09B2'),
         );
         expect(
-          transliterator.convert('dhanyavaad', from: LanguageScript.latin, to: LanguageScript.hindi).text,
+          transliterator
+              .convert(
+                'dhanyavaad',
+                from: LanguageScript.latin,
+                to: LanguageScript.hindi,
+              )
+              .text,
           equals('\u0927\u0928\u094D\u092F\u0935\u093E\u0926'),
         );
       });
 
       test('Bengali reverse transliteration handles precomposed and decomposed Yya seamlessly', () {
         expect(
-          transliterator.convert('\u0986\u09AE\u09BF \u09AC\u09BE\u0982\u09B2\u09BE\u09DF \u0997\u09BE\u09A8 \u0997\u09BE\u0987', from: LanguageScript.bengali, to: LanguageScript.latin).text,
+          transliterator
+              .convert(
+                '\u0986\u09AE\u09BF \u09AC\u09BE\u0982\u09B2\u09BE\u09DF \u0997\u09BE\u09A8 \u0997\u09BE\u0987',
+                from: LanguageScript.bengali,
+                to: LanguageScript.latin,
+              )
+              .text,
           equals('Ami banglay gan gai'),
         );
       });

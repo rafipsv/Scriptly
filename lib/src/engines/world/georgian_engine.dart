@@ -31,17 +31,17 @@ class GeorgianEngine implements TransliteratorEngine {
   static const Map<String, String> latinToGeorgianMulti = {
     "ch'": '\u10ED', // ჭ
     "ts'": '\u10EC', // წ
-    "k'": '\u10D9',  // კ
-    "p'": '\u10DE',  // პ
-    "t'": '\u10E2',  // ტ
-    "q'": '\u10E7',  // ყ
-    'zh': '\u10DF',  // ჟ
-    'gh': '\u10E6',  // ღ
-    'sh': '\u10E8',  // შ
-    'ch': '\u10E9',  // ჩ
-    'ts': '\u10EA',  // ც
-    'dz': '\u10EB',  // ძ
-    'kh': '\u10EE',  // ხ
+    "k'": '\u10D9', // კ
+    "p'": '\u10DE', // პ
+    "t'": '\u10E2', // ტ
+    "q'": '\u10E7', // ყ
+    'zh': '\u10DF', // ჟ
+    'gh': '\u10E6', // ღ
+    'sh': '\u10E8', // შ
+    'ch': '\u10E9', // ჩ
+    'ts': '\u10EA', // ც
+    'dz': '\u10EB', // ძ
+    'kh': '\u10EE', // ხ
   };
 
   static const Map<String, String> latinToGeorgianSingle = {
@@ -120,10 +120,13 @@ class GeorgianEngine implements TransliteratorEngine {
       throw UnsupportedConversionException(request.from, request.to);
     }
 
-    final isLatinToGeor = request.from.normalizedLanguage == 'en' ||
+    final isLatinToGeor =
+        request.from.normalizedLanguage == 'en' ||
         request.from.normalizedScript == 'Latn';
     final text = request.text;
-    final converted = isLatinToGeor ? _latinToGeorgian(text) : _georgianToLatin(text);
+    final converted = isLatinToGeor
+        ? _latinToGeorgian(text)
+        : _georgianToLatin(text);
 
     return ConversionResult(
       text: converted,

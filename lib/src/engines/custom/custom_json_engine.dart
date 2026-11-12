@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import '../../core/conversion_request.dart';
 import '../../core/conversion_result.dart';
 import '../../core/errors.dart';
@@ -42,12 +43,14 @@ class CustomJsonEngine implements TransliteratorEngine {
     final fromCode = data['from'] as String? ?? 'en-Latn';
     final toCode = data['to'] as String? ?? 'custom-Cust';
 
-    final words = (data['words'] as Map<String, dynamic>?)?.map(
+    final words =
+        (data['words'] as Map<String, dynamic>?)?.map(
           (k, v) => MapEntry(k.toString(), v.toString()),
         ) ??
         {};
 
-    final rules = (data['rules'] as Map<String, dynamic>?)?.map(
+    final rules =
+        (data['rules'] as Map<String, dynamic>?)?.map(
           (k, v) => MapEntry(k.toString(), v.toString()),
         ) ??
         {};
@@ -78,7 +81,10 @@ class CustomJsonEngine implements TransliteratorEngine {
 
     // 1. Word-level replacements (case-insensitive boundary match)
     for (final entry in wordMap.entries) {
-      final pattern = RegExp('\\b${RegExp.escape(entry.key)}\\b', caseSensitive: false);
+      final pattern = RegExp(
+        '\\b${RegExp.escape(entry.key)}\\b',
+        caseSensitive: false,
+      );
       text = text.replaceAllMapped(pattern, (m) => entry.value);
     }
 

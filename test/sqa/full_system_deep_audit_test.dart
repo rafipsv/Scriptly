@@ -3,59 +3,62 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:scriptly/scriptly.dart';
 
 void main() {
-  group('Audit Layer 1: Cross-Family Multi-Hop Pivot Connectivity & Consistency', () {
-    final transliterator = Transliterator();
+  group(
+    'Audit Layer 1: Cross-Family Multi-Hop Pivot Connectivity & Consistency',
+    () {
+      final transliterator = Transliterator();
 
-    test('Japanese -> Latin -> Arabic', () {
-      final res = transliterator.convert(
-        'arigatou',
-        from: LanguageScript.japanese,
-        to: LanguageScript.arabic,
-      );
-      expect(res.text.isNotEmpty, isTrue);
-      expect(res.scheme.contains('pivot-latin'), isTrue);
-    });
+      test('Japanese -> Latin -> Arabic', () {
+        final res = transliterator.convert(
+          'arigatou',
+          from: LanguageScript.japanese,
+          to: LanguageScript.arabic,
+        );
+        expect(res.text.isNotEmpty, isTrue);
+        expect(res.scheme.contains('pivot-latin'), isTrue);
+      });
 
-    test('Hebrew -> Latin -> Korean', () {
-      final res = transliterator.convert(
-        'shalom',
-        from: LanguageScript.hebrew,
-        to: LanguageScript.korean,
-      );
-      expect(res.text.isNotEmpty, isTrue);
-      expect(res.scheme.contains('pivot-latin'), isTrue);
-    });
+      test('Hebrew -> Latin -> Korean', () {
+        final res = transliterator.convert(
+          'shalom',
+          from: LanguageScript.hebrew,
+          to: LanguageScript.korean,
+        );
+        expect(res.text.isNotEmpty, isTrue);
+        expect(res.scheme.contains('pivot-latin'), isTrue);
+      });
 
-    test('Greek -> Latin -> Bengali', () {
-      final res = transliterator.convert(
-        'kalimera',
-        from: LanguageScript.greek,
-        to: LanguageScript.bengali,
-      );
-      expect(res.text.isNotEmpty, isTrue);
-      expect(res.scheme.contains('pivot-latin'), isTrue);
-    });
+      test('Greek -> Latin -> Bengali', () {
+        final res = transliterator.convert(
+          'kalimera',
+          from: LanguageScript.greek,
+          to: LanguageScript.bengali,
+        );
+        expect(res.text.isNotEmpty, isTrue);
+        expect(res.scheme.contains('pivot-latin'), isTrue);
+      });
 
-    test('Thai -> Latin -> Georgian', () {
-      final res = transliterator.convert(
-        'sawatdee',
-        from: LanguageScript.thai,
-        to: LanguageScript.georgian,
-      );
-      expect(res.text.isNotEmpty, isTrue);
-      expect(res.scheme.contains('pivot-latin'), isTrue);
-    });
+      test('Thai -> Latin -> Georgian', () {
+        final res = transliterator.convert(
+          'sawatdee',
+          from: LanguageScript.thai,
+          to: LanguageScript.georgian,
+        );
+        expect(res.text.isNotEmpty, isTrue);
+        expect(res.scheme.contains('pivot-latin'), isTrue);
+      });
 
-    test('Persian -> Latin -> Ukrainian', () {
-      final res = transliterator.convert(
-        'salam',
-        from: LanguageScript.persian,
-        to: LanguageScript.ukrainian,
-      );
-      expect(res.text.isNotEmpty, isTrue);
-      expect(res.scheme.contains('pivot-latin'), isTrue);
-    });
-  });
+      test('Persian -> Latin -> Ukrainian', () {
+        final res = transliterator.convert(
+          'salam',
+          from: LanguageScript.persian,
+          to: LanguageScript.ukrainian,
+        );
+        expect(res.text.isNotEmpty, isTrue);
+        expect(res.scheme.contains('pivot-latin'), isTrue);
+      });
+    },
+  );
 
   group('Audit Layer 2: Digit Policy Enforcement Across Numeral Systems', () {
     test('DigitPolicy.convertToTarget converts ASCII digits across all Brahmic scripts', () {
@@ -104,7 +107,9 @@ void main() {
         phonePrice,
         from: LanguageScript.latin,
         to: LanguageScript.bengali,
-        options: const ConversionOptions(digitPolicy: DigitPolicy.preserveSource),
+        options: const ConversionOptions(
+          digitPolicy: DigitPolicy.preserveSource,
+        ),
       );
 
       expect(res.text.contains('+880-1711-000000'), isTrue);
@@ -132,116 +137,135 @@ void main() {
       controller.dispose();
     });
 
-    test('Backspace at end of converted word does not crash or throw RangeError', () {
-      final controller = TransliterationTextEditingController(
-        from: LanguageScript.latin,
-        to: LanguageScript.bengali,
-      );
+    test(
+      'Backspace at end of converted word does not crash or throw RangeError',
+      () {
+        final controller = TransliterationTextEditingController(
+          from: LanguageScript.latin,
+          to: LanguageScript.bengali,
+        );
 
-      controller.value = const TextEditingValue(
-        text: 'ami',
-        selection: TextSelection.collapsed(offset: 3),
-      );
-      expect(controller.text, 'আমি');
+        controller.value = const TextEditingValue(
+          text: 'ami',
+          selection: TextSelection.collapsed(offset: 3),
+        );
+        expect(controller.text, 'আমি');
 
-      // User hits backspace, removing last char
-      final currentText = controller.text;
-      final shortened = currentText.substring(0, currentText.length - 1);
-      controller.value = TextEditingValue(
-        text: shortened,
-        selection: TextSelection.collapsed(offset: shortened.length),
-      );
+        // User hits backspace, removing last char
+        final currentText = controller.text;
+        final shortened = currentText.substring(0, currentText.length - 1);
+        controller.value = TextEditingValue(
+          text: shortened,
+          selection: TextSelection.collapsed(offset: shortened.length),
+        );
 
-      expect(controller.text.isNotEmpty, isTrue);
-      expect(controller.selection.isValid, isTrue);
-      controller.dispose();
-    });
+        expect(controller.text.isNotEmpty, isTrue);
+        expect(controller.selection.isValid, isTrue);
+        controller.dispose();
+      },
+    );
 
-    test('Mid-sentence insertion updates text and restores selection offset', () {
-      final controller = TransliterationTextEditingController(
-        from: LanguageScript.latin,
-        to: LanguageScript.bengali,
-      );
+    test(
+      'Mid-sentence insertion updates text and restores selection offset',
+      () {
+        final controller = TransliterationTextEditingController(
+          from: LanguageScript.latin,
+          to: LanguageScript.bengali,
+        );
 
-      // Start with 'ami bhalo'
-      controller.value = const TextEditingValue(
-        text: 'ami bhalo',
-        selection: TextSelection.collapsed(offset: 9),
-      );
-      expect(controller.text.contains('ভালো'), isTrue);
+        // Start with 'ami bhalo'
+        controller.value = const TextEditingValue(
+          text: 'ami bhalo',
+          selection: TextSelection.collapsed(offset: 9),
+        );
+        expect(controller.text.contains('ভালো'), isTrue);
 
-      // Insert word in the middle
-      final current = controller.text;
-      const insert = ' khub';
-      final updated = '${current.substring(0, 3)}$insert${current.substring(3)}';
-      controller.value = TextEditingValue(
-        text: updated,
-        selection: TextSelection.collapsed(offset: 3 + insert.length),
-      );
+        // Insert word in the middle
+        final current = controller.text;
+        const insert = ' khub';
+        final updated =
+            '${current.substring(0, 3)}$insert${current.substring(3)}';
+        controller.value = TextEditingValue(
+          text: updated,
+          selection: TextSelection.collapsed(offset: 3 + insert.length),
+        );
 
-      expect(controller.text.contains('খুব'), isTrue);
-      controller.dispose();
-    });
+        expect(controller.text.contains('খুব'), isTrue);
+        controller.dispose();
+      },
+    );
   });
 
-  group('Audit Layer 4: ScriptlySuggestionOverlay Edge & Boundary Conditions', () {
-    testWidgets('Handles cursor in middle of sentence and replaces target word accurately', (tester) async {
-      final controller = TextEditingController(text: 'ami bhalo achi');
+  group(
+    'Audit Layer 4: ScriptlySuggestionOverlay Edge & Boundary Conditions',
+    () {
+      testWidgets(
+        'Handles cursor in middle of sentence and replaces target word accurately',
+        (tester) async {
+          final controller = TextEditingController(text: 'ami bhalo achi');
 
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: ScriptlySuggestionOverlay(
-            controller: controller,
-            from: LanguageScript.latin,
-            to: LanguageScript.bengali,
-            child: EditableText(
-              controller: controller,
-              focusNode: FocusNode(),
-              style: const TextStyle(fontSize: 14, color: Color(0xFF000000)),
-              cursorColor: const Color(0xFF2196F3),
-              backgroundCursorColor: const Color(0xFFE0E0E0),
+          await tester.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: ScriptlySuggestionOverlay(
+                controller: controller,
+                from: LanguageScript.latin,
+                to: LanguageScript.bengali,
+                child: EditableText(
+                  controller: controller,
+                  focusNode: FocusNode(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF000000),
+                  ),
+                  cursorColor: const Color(0xFF2196F3),
+                  backgroundCursorColor: const Color(0xFFE0E0E0),
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+
+          // Place cursor right after 'bhalo' (offset 9)
+          controller.selection = const TextSelection.collapsed(offset: 9);
+          await tester.pumpAndSettle();
+
+          // Tap on 'ভালো' suggestion
+          expect(find.text('ভালো'), findsOneWidget);
+          await tester.tap(find.text('ভালো'));
+          await tester.pumpAndSettle();
+
+          // Word 'bhalo' replaced with 'ভালো', while 'ami ' and ' achi' remain untouched
+          expect(controller.text, 'ami ভালো achi');
+          expect(controller.selection.baseOffset, 'ami ভালো'.length);
+        },
       );
 
-      // Place cursor right after 'bhalo' (offset 9)
-      controller.selection = const TextSelection.collapsed(offset: 9);
-      await tester.pumpAndSettle();
+      testWidgets(
+        'Safely handles trailing whitespace and empty selections without candidate popups',
+        (tester) async {
+          final controller = TextEditingController(text: 'ami    ');
 
-      // Tap on 'ভালো' suggestion
-      expect(find.text('ভালো'), findsOneWidget);
-      await tester.tap(find.text('ভালো'));
-      await tester.pumpAndSettle();
+          await tester.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: ScriptlySuggestionOverlay(
+                controller: controller,
+                from: LanguageScript.latin,
+                to: LanguageScript.bengali,
+                child: Container(),
+              ),
+            ),
+          );
 
-      // Word 'bhalo' replaced with 'ভালো', while 'ami ' and ' achi' remain untouched
-      expect(controller.text, 'ami ভালো achi');
-      expect(controller.selection.baseOffset, 'ami ভালো'.length);
-    });
+          controller.selection = const TextSelection.collapsed(offset: 7);
+          await tester.pumpAndSettle();
 
-    testWidgets('Safely handles trailing whitespace and empty selections without candidate popups', (tester) async {
-      final controller = TextEditingController(text: 'ami    ');
-
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: ScriptlySuggestionOverlay(
-            controller: controller,
-            from: LanguageScript.latin,
-            to: LanguageScript.bengali,
-            child: Container(),
-          ),
-        ),
+          // When cursor is surrounded by spaces, no candidate pills should be shown
+          expect(find.byType(GestureDetector), findsNothing);
+        },
       );
-
-      controller.selection = const TextSelection.collapsed(offset: 7);
-      await tester.pumpAndSettle();
-
-      // When cursor is surrounded by spaces, no candidate pills should be shown
-      expect(find.byType(GestureDetector), findsNothing);
-    });
-  });
+    },
+  );
 
   group('Audit Layer 5: Unicode Invisibility, ZWJ, and Combining Marks', () {
     test('Preserves Zero-Width Joiner (ZWJ) and Zero-Width Non-Joiner (ZWNJ) in Bengali/Hindi conjuncts', () {
@@ -275,13 +299,20 @@ void main() {
   });
 
   group('Audit Layer 6: Scriptly Facade & Registry Defensive Boundaries', () {
-    test('Throws UnsupportedConversionException on unroutable unknown pair', () {
-      final customUnknown = LanguageScript('xx', 'Xxxx');
-      expect(
-        () => Scriptly.convert('test', from: customUnknown, to: LanguageScript.bengali),
-        throwsA(isA<UnsupportedConversionException>()),
-      );
-    });
+    test(
+      'Throws UnsupportedConversionException on unroutable unknown pair',
+      () {
+        final customUnknown = LanguageScript('xx', 'Xxxx');
+        expect(
+          () => Scriptly.convert(
+            'test',
+            from: customUnknown,
+            to: LanguageScript.bengali,
+          ),
+          throwsA(isA<UnsupportedConversionException>()),
+        );
+      },
+    );
 
     test('fromCode gracefully handles invalid or partial code strings without crashing', () {
       final fallback = LanguageScript.fromCode('unknown');

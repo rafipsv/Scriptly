@@ -26,12 +26,35 @@ class CyrillicEngine implements TransliteratorEngine {
   };
 
   static const Map<String, String> charMap = {
-    'shch': '\u0449', 'sh': '\u0448', 'ch': '\u0447', 'zh': '\u0436', 'kh': '\u0445',
-    'ts': '\u0446', 'ya': '\u044F', 'yu': '\u044E', 'yo': '\u0451',
-    'a': '\u0430', 'b': '\u0431', 'v': '\u0432', 'g': '\u0433', 'd': '\u0434',
-    'e': '\u0435', 'z': '\u0437', 'i': '\u0438', 'j': '\u0439', 'k': '\u043A',
-    'l': '\u043B', 'm': '\u043C', 'n': '\u043D', 'o': '\u043E', 'p': '\u043F',
-    'r': '\u0440', 's': '\u0441', 't': '\u0442', 'u': '\u0443', 'f': '\u0444',
+    'shch': '\u0449',
+    'sh': '\u0448',
+    'ch': '\u0447',
+    'zh': '\u0436',
+    'kh': '\u0445',
+    'ts': '\u0446',
+    'ya': '\u044F',
+    'yu': '\u044E',
+    'yo': '\u0451',
+    'a': '\u0430',
+    'b': '\u0431',
+    'v': '\u0432',
+    'g': '\u0433',
+    'd': '\u0434',
+    'e': '\u0435',
+    'z': '\u0437',
+    'i': '\u0438',
+    'j': '\u0439',
+    'k': '\u043A',
+    'l': '\u043B',
+    'm': '\u043C',
+    'n': '\u043D',
+    'o': '\u043E',
+    'p': '\u043F',
+    'r': '\u0440',
+    's': '\u0441',
+    't': '\u0442',
+    'u': '\u0443',
+    'f': '\u0444',
     'y': '\u044B',
   };
 
@@ -41,7 +64,8 @@ class CyrillicEngine implements TransliteratorEngine {
     final tLang = to.normalizedLanguage;
     // Exclude Ukrainian, Serbian, Bulgarian, Macedonian, Belarusian, Kazakh
     const nonRussianCyrillic = {'uk', 'sr', 'bg', 'mk', 'be', 'kk'};
-    if (nonRussianCyrillic.contains(fLang) || nonRussianCyrillic.contains(tLang)) {
+    if (nonRussianCyrillic.contains(fLang) ||
+        nonRussianCyrillic.contains(tLang)) {
       return false;
     }
 
@@ -57,7 +81,9 @@ class CyrillicEngine implements TransliteratorEngine {
     }
 
     final isLatnToCyrl = request.from.normalizedScript == 'Latn';
-    final output = isLatnToCyrl ? _toCyrillic(request.text) : _toLatin(request.text);
+    final output = isLatnToCyrl
+        ? _toCyrillic(request.text)
+        : _toLatin(request.text);
 
     return ConversionResult(
       text: output,
@@ -80,7 +106,10 @@ class CyrillicEngine implements TransliteratorEngine {
 
     while (index < len) {
       final codeUnit = input.codeUnitAt(index);
-      if (codeUnit == 0x20 || codeUnit == 0x09 || codeUnit == 0x0A || (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
+      if (codeUnit == 0x20 ||
+          codeUnit == 0x09 ||
+          codeUnit == 0x0A ||
+          (codeUnit >= 0x21 && codeUnit <= 0x2F)) {
         buffer.writeCharCode(codeUnit);
         index++;
         continue;
@@ -92,7 +121,8 @@ class CyrillicEngine implements TransliteratorEngine {
         if (input.toLowerCase().startsWith(key, index)) {
           final afterIndex = index + key.length;
           final isAtEnd = afterIndex == len;
-          final isNextNonWord = isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
+          final isNextNonWord =
+              isAtEnd || !RegExp(r'[a-zA-Z]').hasMatch(input[afterIndex]);
           if (isNextNonWord) {
             matchedWordKey = key;
             break;
@@ -134,37 +164,68 @@ class CyrillicEngine implements TransliteratorEngine {
 
   String _cyrillicToLatinChar(int rune) {
     switch (rune) {
-      case 0x0430: return 'a';
-      case 0x0431: return 'b';
-      case 0x0432: return 'v';
-      case 0x0433: return 'g';
-      case 0x0434: return 'd';
-      case 0x0435: return 'e';
-      case 0x0451: return 'yo';
-      case 0x0436: return 'zh';
-      case 0x0437: return 'z';
-      case 0x0438: return 'i';
-      case 0x0439: return 'j';
-      case 0x043A: return 'k';
-      case 0x043B: return 'l';
-      case 0x043C: return 'm';
-      case 0x043D: return 'n';
-      case 0x043E: return 'o';
-      case 0x043F: return 'p';
-      case 0x0440: return 'r';
-      case 0x0441: return 's';
-      case 0x0442: return 't';
-      case 0x0443: return 'u';
-      case 0x0444: return 'f';
-      case 0x0445: return 'kh';
-      case 0x0446: return 'ts';
-      case 0x0447: return 'ch';
-      case 0x0448: return 'sh';
-      case 0x0449: return 'shch';
-      case 0x044B: return 'y';
-      case 0x044E: return 'yu';
-      case 0x044F: return 'ya';
-      default: return String.fromCharCode(rune);
+      case 0x0430:
+        return 'a';
+      case 0x0431:
+        return 'b';
+      case 0x0432:
+        return 'v';
+      case 0x0433:
+        return 'g';
+      case 0x0434:
+        return 'd';
+      case 0x0435:
+        return 'e';
+      case 0x0451:
+        return 'yo';
+      case 0x0436:
+        return 'zh';
+      case 0x0437:
+        return 'z';
+      case 0x0438:
+        return 'i';
+      case 0x0439:
+        return 'j';
+      case 0x043A:
+        return 'k';
+      case 0x043B:
+        return 'l';
+      case 0x043C:
+        return 'm';
+      case 0x043D:
+        return 'n';
+      case 0x043E:
+        return 'o';
+      case 0x043F:
+        return 'p';
+      case 0x0440:
+        return 'r';
+      case 0x0441:
+        return 's';
+      case 0x0442:
+        return 't';
+      case 0x0443:
+        return 'u';
+      case 0x0444:
+        return 'f';
+      case 0x0445:
+        return 'kh';
+      case 0x0446:
+        return 'ts';
+      case 0x0447:
+        return 'ch';
+      case 0x0448:
+        return 'sh';
+      case 0x0449:
+        return 'shch';
+      case 0x044B:
+        return 'y';
+      case 0x044E:
+        return 'yu';
+      case 0x044F:
+        return 'ya';
+      default:
+        return String.fromCharCode(rune);
     }
   }
 
