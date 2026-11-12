@@ -48,6 +48,148 @@ class LanguageScript {
   static const LanguageScript georgian = LanguageScript('ka', 'Geor');
   static const LanguageScript armenian = LanguageScript('hy', 'Armn');
 
+  /// All 25 officially supported [LanguageScript] constants.
+  static const List<LanguageScript> values = [
+    bengali,
+    latin,
+    hindi,
+    urdu,
+    arabic,
+    gujarati,
+    tamil,
+    telugu,
+    punjabi,
+    malayalam,
+    kannada,
+    odia,
+    sinhala,
+    vietnamese,
+    thai,
+    japanese,
+    korean,
+    chinesePinyin,
+    persian,
+    hebrew,
+    russian,
+    ukrainian,
+    greek,
+    georgian,
+    armenian,
+  ];
+
+  /// Standard tag code (e.g. 'bn-Beng', 'en-Latn').
+  String get code => '$language-$script';
+
+  /// Human-readable display name.
+  String get name {
+    switch (code) {
+      case 'bn-Beng':
+        return 'Bengali';
+      case 'en-Latn':
+        return 'Latin (English)';
+      case 'hi-Deva':
+        return 'Hindi (Devanagari)';
+      case 'ur-Arab':
+        return 'Urdu';
+      case 'ar-Arab':
+        return 'Arabic';
+      case 'gu-Gujr':
+        return 'Gujarati';
+      case 'ta-Taml':
+        return 'Tamil';
+      case 'te-Telu':
+        return 'Telugu';
+      case 'pa-Guru':
+        return 'Punjabi (Gurmukhi)';
+      case 'ml-Mlym':
+        return 'Malayalam';
+      case 'kn-Knda':
+        return 'Kannada';
+      case 'or-Orya':
+        return 'Odia';
+      case 'si-Sinh':
+        return 'Sinhala';
+      case 'vi-Latn':
+        return 'Vietnamese';
+      case 'th-Thai':
+        return 'Thai';
+      case 'ja-Jpan':
+        return 'Japanese';
+      case 'ko-Hang':
+        return 'Korean';
+      case 'zh-Latn':
+        return 'Chinese (Pinyin)';
+      case 'fa-Arab':
+        return 'Persian (Farsi)';
+      case 'he-Hebr':
+        return 'Hebrew';
+      case 'ru-Cyrl':
+        return 'Russian (Cyrillic)';
+      case 'uk-Cyrl':
+        return 'Ukrainian';
+      case 'el-Grek':
+        return 'Greek';
+      case 'ka-Geor':
+        return 'Georgian';
+      case 'hy-Armn':
+        return 'Armenian';
+      default:
+        return '$language ($script)';
+    }
+  }
+
+  /// Linguistic script family category.
+  String get category {
+    switch (script) {
+      case 'Beng':
+      case 'Deva':
+      case 'Gujr':
+      case 'Taml':
+      case 'Telu':
+      case 'Guru':
+      case 'Mlym':
+      case 'Knda':
+      case 'Orya':
+      case 'Sinh':
+        return 'South Asian (Indic)';
+      case 'Thai':
+        return 'Southeast Asian';
+      case 'Latn':
+        return language == 'vi' ? 'Southeast Asian' : 'Latin';
+      case 'Arab':
+      case 'Hebr':
+        return 'Middle Eastern';
+      case 'Jpan':
+      case 'Hang':
+        return 'East Asian';
+      case 'Cyrl':
+      case 'Grek':
+        return 'European';
+      case 'Geor':
+      case 'Armn':
+        return 'World Scripts';
+      default:
+        return 'Other';
+    }
+  }
+
+  /// Parses a code string (e.g. 'bn-Beng', 'bn', or 'Beng') into a [LanguageScript].
+  static LanguageScript fromCode(String code) {
+    final clean = code.trim().toLowerCase();
+    for (final item in values) {
+      if (item.code.toLowerCase() == clean ||
+          item.language.toLowerCase() == clean ||
+          item.script.toLowerCase() == clean) {
+        return item;
+      }
+    }
+    final parts = code.split(RegExp(r'[-_]'));
+    if (parts.length >= 2) {
+      return LanguageScript(parts[0], parts[1]);
+    }
+    return LanguageScript(code, 'Latn');
+  }
+
   /// Language code in lowercase.
   String get normalizedLanguage => language.trim().toLowerCase();
 

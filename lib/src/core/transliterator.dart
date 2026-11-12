@@ -1,9 +1,12 @@
+import '../unicode/unicode_utils.dart';
 import 'conversion_options.dart';
 import 'conversion_request.dart';
 import 'conversion_result.dart';
+import 'custom_dictionary.dart';
 import 'engine_registry.dart';
 import 'errors.dart';
 import 'language_script.dart';
+import 'script_detector.dart';
 
 /// The primary entry point for multi-language, multi-script transliteration.
 /// Supports direct engine conversions and automatic pivot routing through Latin.
@@ -22,7 +25,7 @@ class Transliterator {
     required LanguageScript to,
     ConversionOptions options = ConversionOptions.standard,
   }) {
-    if (from == to || text.isEmpty) {
+    if (text.isEmpty) {
       return ConversionResult(
         text: text,
         sourceText: text,
@@ -32,16 +35,60 @@ class Transliterator {
       );
     }
 
+    // Apply custom dictionary overrides (global + request-specific)
+    final preprocessedText = CustomDictionary.apply(
+      text,
+      localOverrides: options.customDictionary,
+    );
+
+    if (from == to) {
+      return ConversionResult(
+        text: preprocessedText,
+        sourceText: text,
+        from: from,
+        to: to,
+        scheme: 'identity',
+      );
+    }
+
+    // Mask technical tokens (URLs, emails) when converting from Latin to non-Latin
+    final isMaskingNeeded = from == LanguageScript.latin && to != LanguageScript.latin;
+    final urlEmailRegex = RegExp(
+      r'(https?:\/\/[^\s]+|www\.[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})',
+      caseSensitive: false,
+    );
+
+    final placeholders = <String, String>{};
+    var maskedText = preprocessedText;
+    if (isMaskingNeeded) {
+      var maskIndex = 0;
+      maskedText = maskedText.replaceAllMapped(urlEmailRegex, (m) {
+        final token = m.group(0)!;
+        final key = '\uFFF0$maskIndex\uFFF1';
+        maskIndex++;
+        placeholders[key] = token;
+        return key;
+      });
+    }
+
     // 1. Try direct engine lookup
     final directEngine = registry.findEngine(from, to);
     if (directEngine != null) {
       final request = ConversionRequest(
-        text: text,
+        text: maskedText,
         from: from,
         to: to,
         options: options,
       );
-      return directEngine.convert(request);
+      final rawResult = directEngine.convert(request);
+      return ConversionResult(
+        text: _restorePlaceholders(rawResult.text, placeholders, options, to),
+        sourceText: text,
+        from: from,
+        to: to,
+        scheme: rawResult.scheme,
+        warnings: rawResult.warnings,
+      );
     }
 
     // 2. Try auto-pivot routing through Latin (Hub-and-Spoke)
@@ -53,7 +100,7 @@ class Transliterator {
 
       if (canFromToLatin && canLatinToTarget) {
         final step1 = convert(
-          text,
+          maskedText,
           from: from,
           to: LanguageScript.latin,
           options: options,
@@ -65,7 +112,7 @@ class Transliterator {
           options: options,
         );
         return ConversionResult(
-          text: step2.text,
+          text: _restorePlaceholders(step2.text, placeholders, options, to),
           sourceText: text,
           from: from,
           to: to,
@@ -76,6 +123,39 @@ class Transliterator {
     }
 
     throw UnsupportedConversionException(from, to);
+  }
+
+  static String _restorePlaceholders(
+    String text,
+    Map<String, String> placeholders,
+    ConversionOptions options,
+    LanguageScript to,
+  ) {
+    var result = text;
+    if (options.digitPolicy == DigitPolicy.convertToTarget) {
+      result = UnicodeUtils.convertAsciiDigitsToScript(result, to);
+    }
+    if (placeholders.isNotEmpty) {
+      for (final entry in placeholders.entries) {
+        result = result.replaceAll(entry.key, entry.value);
+      }
+    }
+    return result;
+  }
+
+  /// Automatically detects the source script of [text] and converts it to [to].
+  ConversionResult autoConvert(
+    String text, {
+    required LanguageScript to,
+    ConversionOptions options = ConversionOptions.standard,
+  }) {
+    final detection = ScriptDetector.detect(text);
+    return convert(
+      text,
+      from: detection.script,
+      to: to,
+      options: options,
+    );
   }
 
   /// Checks if a conversion between [from] and [to] is currently supported

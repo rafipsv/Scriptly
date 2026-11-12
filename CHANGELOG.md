@@ -1,3 +1,23 @@
+## 0.4.0
+
+- **Automatic Script Detection (`ScriptDetector` & `Scriptly.detect`)**:
+  - Automatically identifies the source script and language family from raw text with confidence scoring.
+  - Added `Scriptly.autoConvert(text, to: targetScript)` for one-liner auto-routed transliteration without manually specifying `from`.
+- **Custom Dictionary & Word Overrides (`CustomDictionary`)**:
+  - Global registry and per-request `customDictionary` overrides taking highest priority for brand names, acronyms, and specialized terminology.
+- **Phonetic Matcher & Soundex (`PhoneticMatcher`)**:
+  - Cross-script phonetic similarity scoring (`0.0` to `1.0`) and fuzzy matching (`isMatch`).
+  - Standardized 4-character phonetic Soundex generator for native and romanized scripts.
+- **Flutter UI Components**:
+  - `ScriptlySearchField<T>`: Search native-script collections (e.g. cities, contacts, products) using phonetic queries.
+  - `ScriptlySuggestionOverlay`: Real-time floating suggestion overlay displaying candidate pills for `TextField`.
+- **CLI Executable (`bin/scriptly.dart`)**:
+  - Added command-line binary supporting `convert`, `detect`, `file`, and `list` operations.
+- **Pure Dart Core (`package:scriptly/scriptly_core.dart`)**:
+  - Clean separation allowing `scriptly` core to run in backend servers, CLI tools, and pure Dart scripts without `dart:ui`.
+- **Expanded Test Suite**:
+  - 140 comprehensive unit, widget, and system-wide SQA audit tests (100% pass rate).
+
 ## 0.3.0
 
 - **8 New High-Impact World Languages & Scripts (25+ Total Scripts, 625 Conversion Routes)**:

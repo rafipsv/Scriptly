@@ -80,12 +80,50 @@ class UnicodeUtils {
   }
 
   /// Converts ASCII digits (0-9) to Bengali digits (\u09E6-\u09EF).
-  static String convertAsciiDigitsToBengali(String input) {
+  static String convertAsciiDigitsToBengali(String input) =>
+      convertAsciiDigitsToScript(input, 0x09E6);
+
+  /// Converts ASCII digits to the native numeral script based on target script or zero-offset.
+  static String convertAsciiDigitsToScript(String input, dynamic scriptOrZeroRune) {
+    int? zeroRune;
+    if (scriptOrZeroRune is int) {
+      zeroRune = scriptOrZeroRune;
+    } else {
+      final code = scriptOrZeroRune.toString();
+      if (code.contains('Beng')) {
+        zeroRune = 0x09E6;
+      } else if (code.contains('Deva')) {
+        zeroRune = 0x0966;
+      } else if (code.contains('Guru')) {
+        zeroRune = 0x0A66;
+      } else if (code.contains('Gujr')) {
+        zeroRune = 0x0AE6;
+      } else if (code.contains('Orya')) {
+        zeroRune = 0x0B66;
+      } else if (code.contains('Taml')) {
+        zeroRune = 0x0BE6;
+      } else if (code.contains('Telu')) {
+        zeroRune = 0x0C66;
+      } else if (code.contains('Knda')) {
+        zeroRune = 0x0CE6;
+      } else if (code.contains('Mlym')) {
+        zeroRune = 0x0D66;
+      } else if (code.contains('Thai')) {
+        zeroRune = 0x0E50;
+      } else if (code.contains('fa') || code.contains('ur')) {
+        zeroRune = 0x06F0;
+      } else if (code.contains('ar') || code.contains('Arab')) {
+        zeroRune = 0x0660;
+      }
+    }
+
+    if (zeroRune == null) return input;
+
     final buffer = StringBuffer();
     for (final rune in input.runes) {
       if (rune >= asciiDigitZero && rune <= asciiDigitZero + 9) {
-        final bengaliRune = bengaliDigitZero + (rune - asciiDigitZero);
-        buffer.writeCharCode(bengaliRune);
+        final targetRune = zeroRune + (rune - asciiDigitZero);
+        buffer.writeCharCode(targetRune);
       } else {
         buffer.writeCharCode(rune);
       }

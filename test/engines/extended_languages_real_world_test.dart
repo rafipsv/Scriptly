@@ -192,9 +192,9 @@ void main() {
           to: LanguageScript.ukrainian,
         );
 
-        expect(ukr.text, contains('привіт!'));
-        expect(ukr.text, contains('дякую.'));
-        expect(ukr.text, contains('україна'));
+        expect(ukr.text, contains('Привіт!'));
+        expect(ukr.text.toLowerCase(), contains('дякую.'));
+        expect(ukr.text.toLowerCase(), contains('україна'));
         expect(ukr.text, contains('100%'));
 
         // Reverse

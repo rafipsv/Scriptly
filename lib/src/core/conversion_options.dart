@@ -54,6 +54,9 @@ class ConversionOptions {
   /// Capitalization rule for Latin targets.
   final CapitalizationPolicy capitalizationPolicy;
 
+  /// Optional per-request word overrides taking priority over engine rules.
+  final Map<String, String>? customDictionary;
+
   /// Creates a [ConversionOptions] configuration.
   const ConversionOptions({
     this.mode = ConversionMode.phonetic,
@@ -62,6 +65,7 @@ class ConversionOptions {
     this.preserveWhitespace = true,
     this.preserveExistingTargetScript = true,
     this.capitalizationPolicy = CapitalizationPolicy.preserveSource,
+    this.customDictionary,
   });
 
   /// Default standard options.

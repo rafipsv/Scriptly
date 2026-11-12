@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/scriptly.svg?logo=dart&logoColor=white)](https://pub.dev/packages/scriptly)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-flutter%20%7C%20dart%20vm%20%7C%20web-blue.svg)](https://pub.dev/packages/scriptly)
-[![Test Suite](https://img.shields.io/badge/tests-86%20passed%20%7C%20100%25-brightgreen.svg)](test/)
+[![Test Suite](https://img.shields.io/badge/tests-140%20passed%20%7C%20100%25-brightgreen.svg)](test/)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github&logoColor=white)](https://rafipsv.github.io/Scriptly)
 
 > 🌐 **Try it Live in your Browser:** **[https://rafipsv.github.io/Scriptly](https://rafipsv.github.io/Scriptly)**
@@ -128,7 +128,86 @@ void main() {
 }
 ```
 
-### 2. Auto-Pivot Cross-Script Routing
+### 2. Automatic Script Detection & Auto-Convert
+
+Detect scripts automatically or convert without explicitly specifying the source script:
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() {
+  // 1. Detect any script and inspect confidence:
+  final detection = Scriptly.detect('გამარჯობა');
+  print(detection.script.name); // Georgian
+  print(detection.confidence);  // 1.0
+
+  // 2. Auto-convert from detected script:
+  final autoRes = Scriptly.autoConvert('নমস্কার', to: LanguageScript.kannada);
+  print(autoRes.text); // Kannada output
+}
+```
+
+### 3. Custom Dictionary & Word Overrides
+
+Inject brand names, jargon, or acronyms globally or per request:
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() {
+  // Register global domain terms
+  Scriptly.setCustomDictionary({
+    'bKash': 'বিকাশ',
+    'Pathao': 'পাঠাও',
+  });
+
+  final res = Scriptly.convert(
+    'Use bKash and Pathao',
+    from: LanguageScript.latin,
+    to: LanguageScript.bengali,
+  );
+  print(res.text); // Uses 'বিকাশ' and 'পাঠাও'
+}
+```
+
+### 4. Cross-Script Phonetic Matcher & Soundex
+
+Search native script records using Latin queries:
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() {
+  // Check similarity between Latin query and native script (0.0 to 1.0)
+  final sim = Scriptly.similarity('dhaka', 'ঢাকা'); // >= 0.85
+
+  // Fast boolean fuzzy match for search bars
+  final isMatch = Scriptly.isMatch('karim', 'করিম'); // true
+
+  // Standard 4-character phonetic Soundex hash
+  final hash = Scriptly.soundex('ঢাকা'); // 'D200'
+}
+```
+
+### 5. CLI Command-Line Tool
+
+Use Scriptly directly from your terminal:
+
+```bash
+# Convert text:
+dart run scriptly convert -t bn "Ami bhalo achi"
+
+# Auto-detect script:
+dart run scriptly detect "নমস্কার বাংলাদেশ"
+
+# Convert entire files:
+dart run scriptly file -i input.txt -o output.txt -t hi
+
+# List all supported scripts:
+dart run scriptly list
+```
+
+### 6. Auto-Pivot Cross-Script Routing
 
 Convert between languages across different language families without direct pairwise engines:
 

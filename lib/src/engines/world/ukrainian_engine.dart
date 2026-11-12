@@ -19,8 +19,11 @@ class UkrainianEngine implements TransliteratorEngine {
   static const Map<String, String> commonWords = {
     'pryvit': 'привіт',
     'dyakuyu': 'дякую',
+    'dobryi den': 'добрий день',
     'dobryy den': 'добрий день',
     'dobry den': 'добрий день',
+    'dobryi': 'добрий',
+    'dobryy': 'добрий',
     'ukrayina': 'україна',
     'do pobachennya': 'до побачення',
     'tak': 'так',
@@ -139,7 +142,14 @@ class UkrainianEngine implements TransliteratorEngine {
     // 1. Replace multi-word common phrases with word boundaries
     for (final entry in commonWords.entries) {
       final pattern = RegExp('\\b${RegExp.escape(entry.key)}\\b', caseSensitive: false);
-      result = result.replaceAllMapped(pattern, (m) => entry.value);
+      result = result.replaceAllMapped(pattern, (m) {
+        final matchStr = m.group(0)!;
+        final val = entry.value;
+        if (matchStr.isNotEmpty && matchStr[0].toUpperCase() == matchStr[0] && matchStr[0].toLowerCase() != matchStr[0]) {
+          return val[0].toUpperCase() + val.substring(1);
+        }
+        return val;
+      });
     }
 
     final words = result.split(' ');
@@ -158,13 +168,19 @@ class UkrainianEngine implements TransliteratorEngine {
       final suffix = match.group(3) ?? '';
 
       final lowerCore = core.toLowerCase();
+      final isCapital = core.isNotEmpty && core[0].toUpperCase() == core[0] && core[0].toLowerCase() != core[0];
+
+      String converted;
       if (commonWords.containsKey(lowerCore)) {
-        resultWords.add('$prefix${commonWords[lowerCore]!}$suffix');
-        continue;
+        converted = commonWords[lowerCore]!;
+      } else {
+        converted = _convertWordToUkrainian(core);
       }
 
-      final convertedCore = _convertWordToUkrainian(core);
-      resultWords.add('$prefix$convertedCore$suffix');
+      if (isCapital && converted.isNotEmpty) {
+        converted = converted[0].toUpperCase() + converted.substring(1);
+      }
+      resultWords.add('$prefix$converted$suffix');
     }
 
     return resultWords.join(' ');
