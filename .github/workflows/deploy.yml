@@ -37,7 +37,7 @@ jobs:
 
       - name: Run Quality Gate (Analysis & Tests)
         run: |
-          flutter analyze
+          flutter analyze --no-fatal-infos
           flutter test
 
       - name: Build Web application

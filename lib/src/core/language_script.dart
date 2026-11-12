@@ -22,6 +22,13 @@ class LanguageScript {
   static const LanguageScript telugu = LanguageScript('te', 'Telu');
   static const LanguageScript punjabi = LanguageScript('pa', 'Guru');
   static const LanguageScript malayalam = LanguageScript('ml', 'Mlym');
+  static const LanguageScript kannada = LanguageScript('kn', 'Knda');
+  static const LanguageScript odia = LanguageScript('or', 'Orya');
+  static const LanguageScript sinhala = LanguageScript('si', 'Sinh');
+
+  // --- Southeast Asian Group ---
+  static const LanguageScript vietnamese = LanguageScript('vi', 'Latn');
+  static const LanguageScript thai = LanguageScript('th', 'Thai');
 
   // --- East Asian Group ---
   static const LanguageScript japanese = LanguageScript('ja', 'Jpan');
@@ -34,7 +41,12 @@ class LanguageScript {
 
   // --- European / Slavic Group ---
   static const LanguageScript russian = LanguageScript('ru', 'Cyrl');
+  static const LanguageScript ukrainian = LanguageScript('uk', 'Cyrl');
   static const LanguageScript greek = LanguageScript('el', 'Grek');
+
+  // --- Caucasus & World Group ---
+  static const LanguageScript georgian = LanguageScript('ka', 'Geor');
+  static const LanguageScript armenian = LanguageScript('hy', 'Armn');
 
   /// Language code in lowercase.
   String get normalizedLanguage => language.trim().toLowerCase();

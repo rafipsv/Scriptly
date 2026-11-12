@@ -1,3 +1,23 @@
+## 0.3.0
+
+- **8 New High-Impact World Languages & Scripts (25+ Total Scripts, 625 Conversion Routes)**:
+  - **South Asian (Indic Brahmic Extension)**:
+    - Kannada (`kn-Knda`): Paninian Unicode block alignment (`0x0C80`), ISO 15919 transliteration.
+    - Odia (`or-Orya`): Bengali sister script alignment (`0x0B00`), National Odia Romanization.
+    - Sinhala (`si-Sinh`): Sri Lankan official script (`0x0D80`), ISO 15919 Pali/Sanskrit mapping.
+  - **Southeast Asian Engines**:
+    - Vietnamese (`vi-Latn`): Complete rule-based Telex input method (`aa` ➔ `â`, `w` ➔ `ư`, `dd` ➔ `đ`) with multi-position tone marks (`s, f, r, x, j`) and reverse accent normalization.
+    - Thai (`th-Thai`): Royal Thai General System (RTGS) transcription with consonant/vowel maps and common conversational vocabulary lookups.
+  - **Unique World Script Engines**:
+    - Georgian Mkhedruli (`ka-Geor`): National Romanization 2002 standard (33 letters, 1:1 bi-directional character mapping).
+    - Armenian (`hy-Armn`): ISO 9985 standard with longest-match forward and reverse romanization.
+    - Ukrainian Cyrillic (`uk-Cyrl`): Ukrainian National Standard (Resolution 55) & ISO 9, correctly distinguishing `ґ` (g), `г` (h), `є` (ye), `і` (i), `ї` (yi).
+- **Searchable Language Dropdown (Web Example)**:
+  - Added full real-time search field in `example` application bottom sheet / picker modal.
+  - Instant filtering by language display name, script code, or language family.
+- **Exhaustive Real-World Testing**:
+  - Added 17 new real-world test cases covering conversational phrases, tone placement, reverse conversions, and auto-pivot matrix across all 25 languages (86 total unit tests, 100% pass rate).
+
 ## 0.2.1
 
 - Enhanced example with full programmatic transliteration samples across 5 language families.

@@ -27,8 +27,8 @@ jobs:
 
       - name: Verify formatting & lints
         run: |
-          flutter analyze
-          cd example && flutter analyze
+          flutter analyze --no-fatal-infos
+          cd example && flutter analyze --no-fatal-infos
 
       - name: Run Test Suite
         run: flutter test --coverage

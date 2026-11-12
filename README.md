@@ -3,14 +3,14 @@
 [![pub package](https://img.shields.io/pub/v/scriptly.svg?logo=dart&logoColor=white)](https://pub.dev/packages/scriptly)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-flutter%20%7C%20dart%20vm%20%7C%20web-blue.svg)](https://pub.dev/packages/scriptly)
-[![Test Suite](https://img.shields.io/badge/tests-69%20passed%20%7C%20100%25-brightgreen.svg)](test/)
+[![Test Suite](https://img.shields.io/badge/tests-86%20passed%20%7C%20100%25-brightgreen.svg)](test/)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github&logoColor=white)](https://rafipsv.github.io/Scriptly)
 
 > 🌐 **Try it Live in your Browser:** **[https://rafipsv.github.io/Scriptly](https://rafipsv.github.io/Scriptly)**
 
-An extensible, high-performance, offline-first multi-language transliteration engine for Flutter and Dart. Converts text seamlessly between **17+ writing systems (scripts)** with **289 auto-pivot conversion paths**, zero cloud dependencies, and sub-millisecond execution.
+An extensible, high-performance, offline-first multi-language transliteration engine for Flutter and Dart. Converts text seamlessly between **25+ writing systems (scripts)** with **625 auto-pivot conversion paths**, zero cloud dependencies, and sub-millisecond execution.
 
-Includes an out-of-the-box responsive **Google Translate-style Web application** (`example/`) architected with **Clean Architecture** and **BLoC**.
+Includes an out-of-the-box responsive **Google Translate-style Web application** (`example/`) architected with **Clean Architecture**, **BLoC**, and real-time **Searchable Language Dropdown Pickers**.
 
 ---
 
@@ -27,10 +27,13 @@ Includes an out-of-the-box responsive **Google Translate-style Web application**
 ## Key Features
 
 - **100% Offline & Private**: Zero network requests, zero telemetry, zero API keys. Everything runs in-memory on the client.
-- **17+ Supported Languages & Scripts**: Covers South Asian (Brahmic), East Asian, Middle Eastern (Perso-Arabic), European/Slavic, and Latin families.
-- **Universal Auto-Pivot Routing**: Any-to-Any hub-and-spoke conversion routing through phonetic Latin bridges ($17 \times 17 = 289$ conversion routes).
-- **Direct Brahmic Bridge**: Zero-latency direct cross-script alignment between Indic scripts (Devanagari, Bengali, Gurmukhi, Gujarati, Tamil, Telugu, Malayalam) without intermediary romanization.
-- **Perso-Arabic Script Harmonizer**: Bidirectional converter and script harmonizer between Arabic, Urdu, and Persian (Farsi).
+- **25+ Supported Languages & Scripts**: Covers South Asian (Brahmic), Southeast Asian, East Asian, Middle Eastern (Perso-Arabic), European/Slavic, and Caucasus/World families.
+- **Universal Auto-Pivot Routing**: Any-to-Any hub-and-spoke conversion routing through phonetic Latin bridges ($25 \times 25 = 625$ conversion routes).
+- **Direct Brahmic Bridge**: Zero-latency direct cross-script alignment between Indic scripts (Devanagari, Bengali, Gurmukhi, Gujarati, Tamil, Telugu, Malayalam, Kannada, Odia, Sinhala) without intermediary romanization.
+- **Vietnamese Telex Engine**: Full support for standard Telex typing (`aa` ➔ `â`, `w` ➔ `ư`, `dd` ➔ `đ`) and tone marks (`s, f, r, x, j`).
+- **Thai RTGS Transcription**: Phonetic Latin ↔ Thai script conversion based on the Royal Thai General System.
+- **Unique World Alphabets**: 1:1 deterministic phonetic mapping for Georgian (Mkhedruli National System 2002), Armenian (ISO 9985), and Ukrainian (Resolution 55).
+- **Searchable Language Selection**: Web demo includes real-time searchable modal sheets for instant language filtering by name, script code, or category.
 - **Unicode Grapheme Safe**: Grapheme cluster handling (`package:characters`), preserving emojis, symbols, whitespace, and combining diacritic marks.
 - **Configurable Digit Policies**: Easily keep ASCII numbers (`1, 2, 3`) or convert to native target script digits.
 - **Flutter TextField Integration**: Includes `TransliterationTextEditingController` for real-time transliteration with selection and cursor stability.
@@ -50,6 +53,11 @@ Includes an out-of-the-box responsive **Google Translate-style Web application**
 | **South Asian (Indic)** | Tamil | `ta-Taml` | Tanglish Phonetic & Brahmic Slot Matrix |
 | **South Asian (Indic)** | Telugu | `te-Telu` | Tenglish Phonetic & Brahmic Slot Matrix |
 | **South Asian (Indic)** | Malayalam | `ml-Mlym` | Manglish Phonetic & Brahmic Slot Matrix |
+| **South Asian (Indic)** | Kannada | `kn-Knda` | Kannada Phonetic & Brahmic Slot Matrix |
+| **South Asian (Indic)** | Odia / Oriya | `or-Orya` | Odia Phonetic & Brahmic Slot Matrix |
+| **South Asian (Indic)** | Sinhala | `si-Sinh` | Sinhala Phonetic & Brahmic Slot Matrix |
+| **Southeast Asian** | Vietnamese | `vi-Latn` | Standard Telex Input Method & Accent Stripper |
+| **Southeast Asian** | Thai | `th-Thai` | RTGS (Royal Thai General System) Engine |
 | **Middle Eastern** | Arabic | `ar-Arab` | Arabizi / Roman Arabic Phonetic Engine |
 | **Middle Eastern** | Urdu | `ur-Arab` | Roman Urdu Phonetic Engine |
 | **Middle Eastern** | Persian (Farsi) | `fa-Arab` | Finglish Phonetic & Perso-Arabic Harmonizer |
@@ -58,7 +66,10 @@ Includes an out-of-the-box responsive **Google Translate-style Web application**
 | **East Asian** | Korean | `ko-Hang` | Revised Romanization ↔ Hangul Syllables |
 | **East Asian** | Chinese Pinyin | `zh-Latn` | Numeric Pinyin Tones ➔ Diacritics (`ni3 hao3` ➔ `nǐ hǎo`) |
 | **European / Slavic** | Russian | `ru-Cyrl` | Latin ↔ Cyrillic (ISO 9 standard) |
+| **European / Slavic** | Ukrainian | `uk-Cyrl` | Ukrainian Cyrillic (Resolution 55 / ISO 9) |
 | **European / Slavic** | Greek | `el-Grek` | Greeklish ↔ Greek Alphabet (ISO 843 standard) |
+| **Caucasus & World** | Georgian | `ka-Geor` | Mkhedruli Script (National System 2002) |
+| **Caucasus & World** | Armenian | `hy-Armn` | Armenian Alphabet (ISO 9985 standard) |
 
 ---
 

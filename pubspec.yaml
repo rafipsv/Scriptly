@@ -1,6 +1,6 @@
 name: scriptly
-description: An extensible, offline-first multi-language transliteration engine for Flutter and Dart. Supports 17+ scripts across Indic, East Asian, Middle Eastern, and European families with auto-pivot routing.
-version: 0.2.1
+description: An extensible, offline-first multi-language transliteration engine for Flutter and Dart. Supports 25+ scripts across Indic, East Asian, Southeast Asian, Middle Eastern, and European families with auto-pivot routing.
+version: 0.3.0
 homepage: https://github.com/rafipsv/Scriptly
 repository: https://github.com/rafipsv/Scriptly
 issue_tracker: https://github.com/rafipsv/Scriptly/issues

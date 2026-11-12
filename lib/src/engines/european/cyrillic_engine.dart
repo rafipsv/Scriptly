@@ -37,6 +37,10 @@ class CyrillicEngine implements TransliteratorEngine {
 
   @override
   bool supports(LanguageScript from, LanguageScript to) {
+    final fLang = from.normalizedLanguage;
+    final tLang = to.normalizedLanguage;
+    if (fLang == 'uk' || tLang == 'uk') return false;
+
     final f = from.normalizedScript;
     final t = to.normalizedScript;
     return (f == 'Latn' && t == 'Cyrl') || (f == 'Cyrl' && t == 'Latn');

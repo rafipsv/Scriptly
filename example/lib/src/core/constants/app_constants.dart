@@ -55,6 +55,54 @@ class AppConstants {
       'category': 'Indic',
     },
     {
+      'script': LanguageScript.kannada,
+      'name': 'Kannada',
+      'code': 'Knda',
+      'category': 'Indic',
+    },
+    {
+      'script': LanguageScript.odia,
+      'name': 'Odia / Oriya',
+      'code': 'Orya',
+      'category': 'Indic',
+    },
+    {
+      'script': LanguageScript.sinhala,
+      'name': 'Sinhala',
+      'code': 'Sinh',
+      'category': 'Indic',
+    },
+    {
+      'script': LanguageScript.vietnamese,
+      'name': 'Vietnamese (Telex)',
+      'code': 'Viet',
+      'category': 'Southeast Asian',
+    },
+    {
+      'script': LanguageScript.thai,
+      'name': 'Thai',
+      'code': 'Thai',
+      'category': 'Southeast Asian',
+    },
+    {
+      'script': LanguageScript.georgian,
+      'name': 'Georgian (Mkhedruli)',
+      'code': 'Geor',
+      'category': 'Caucasus & World',
+    },
+    {
+      'script': LanguageScript.armenian,
+      'name': 'Armenian',
+      'code': 'Armn',
+      'category': 'Caucasus & World',
+    },
+    {
+      'script': LanguageScript.ukrainian,
+      'name': 'Ukrainian',
+      'code': 'Ukr',
+      'category': 'European',
+    },
+    {
       'script': LanguageScript.urdu,
       'name': 'Urdu (Perso-Arabic)',
       'code': 'Urdu',
@@ -127,5 +175,13 @@ class AppConstants {
     'Ni3 hao3',
     'Privet',
     'Kalimera',
+    'Namaskara',
+    'Kemiti achanti',
+    'Ayubowan',
+    'Xin chao',
+    'Sawatdee',
+    'Gamarjoba',
+    'Barev',
+    'Pryvit',
   ];
 }
