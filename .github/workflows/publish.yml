@@ -1,9 +1,9 @@
 name: Publish to Pub.dev
 
+# Automated publishing via GitHub Actions requires one-time setup on Pub.dev:
+# Go to https://pub.dev/packages/scriptly/admin -> Enable 'Automated publishing' from GitHub Actions.
+# Kept as workflow_dispatch only to avoid CI hangs when publishing is done locally.
 on:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
   workflow_dispatch:
 
 permissions:
