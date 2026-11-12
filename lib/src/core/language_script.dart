@@ -42,13 +42,37 @@ class LanguageScript {
   // --- European / Slavic Group ---
   static const LanguageScript russian = LanguageScript('ru', 'Cyrl');
   static const LanguageScript ukrainian = LanguageScript('uk', 'Cyrl');
+  static const LanguageScript serbian = LanguageScript('sr', 'Cyrl');
+  static const LanguageScript bulgarian = LanguageScript('bg', 'Cyrl');
+  static const LanguageScript macedonian = LanguageScript('mk', 'Cyrl');
+  static const LanguageScript belarusian = LanguageScript('be', 'Cyrl');
   static const LanguageScript greek = LanguageScript('el', 'Grek');
 
   // --- Caucasus & World Group ---
   static const LanguageScript georgian = LanguageScript('ka', 'Geor');
   static const LanguageScript armenian = LanguageScript('hy', 'Armn');
 
-  /// All 25 officially supported [LanguageScript] constants.
+  // --- Extended Indic Group ---
+  static const LanguageScript sanskrit = LanguageScript('sa', 'Deva');
+  static const LanguageScript marathi = LanguageScript('mr', 'Deva');
+  static const LanguageScript nepali = LanguageScript('ne', 'Deva');
+  static const LanguageScript assamese = LanguageScript('as', 'Beng');
+
+  // --- Extended Southeast Asian & Indochina ---
+  static const LanguageScript lao = LanguageScript('lo', 'Laoo');
+  static const LanguageScript burmese = LanguageScript('my', 'Mymr');
+  static const LanguageScript khmer = LanguageScript('km', 'Khmr');
+
+  // --- Extended Middle Eastern & Central Asian ---
+  static const LanguageScript kurdish = LanguageScript('ku', 'Arab');
+  static const LanguageScript pashto = LanguageScript('ps', 'Arab');
+  static const LanguageScript kazakh = LanguageScript('kk', 'Cyrl');
+
+  // --- African (Ge'ez Fidel) & Universal IPA ---
+  static const LanguageScript amharic = LanguageScript('am', 'Ethi');
+  static const LanguageScript ipa = LanguageScript('und', 'Zyyy');
+
+  /// All 41 officially supported [LanguageScript] constants.
   static const List<LanguageScript> values = [
     bengali,
     latin,
@@ -63,18 +87,34 @@ class LanguageScript {
     kannada,
     odia,
     sinhala,
+    sanskrit,
+    marathi,
+    nepali,
+    assamese,
     vietnamese,
     thai,
+    lao,
+    burmese,
+    khmer,
     japanese,
     korean,
     chinesePinyin,
     persian,
     hebrew,
+    kurdish,
+    pashto,
+    kazakh,
     russian,
     ukrainian,
+    serbian,
+    bulgarian,
+    macedonian,
+    belarusian,
     greek,
     georgian,
     armenian,
+    amharic,
+    ipa,
   ];
 
   /// Standard tag code (e.g. 'bn-Beng', 'en-Latn').
@@ -133,6 +173,38 @@ class LanguageScript {
         return 'Georgian';
       case 'hy-Armn':
         return 'Armenian';
+      case 'sa-Deva':
+        return 'Sanskrit (IAST / Devanagari)';
+      case 'mr-Deva':
+        return 'Marathi';
+      case 'ne-Deva':
+        return 'Nepali';
+      case 'as-Beng':
+        return 'Assamese';
+      case 'sr-Cyrl':
+        return 'Serbian (Cyrillic)';
+      case 'bg-Cyrl':
+        return 'Bulgarian';
+      case 'mk-Cyrl':
+        return 'Macedonian';
+      case 'be-Cyrl':
+        return 'Belarusian';
+      case 'lo-Laoo':
+        return 'Lao';
+      case 'my-Mymr':
+        return 'Burmese (Myanmar)';
+      case 'km-Khmr':
+        return 'Khmer (Cambodian)';
+      case 'ku-Arab':
+        return 'Kurdish (Sorani)';
+      case 'ps-Arab':
+        return 'Pashto';
+      case 'kk-Cyrl':
+        return 'Kazakh';
+      case 'am-Ethi':
+        return 'Amharic (Ge\'ez)';
+      case 'und-Zyyy':
+        return 'International Phonetic Alphabet (IPA)';
       default:
         return '$language ($script)';
     }
@@ -153,6 +225,9 @@ class LanguageScript {
       case 'Sinh':
         return 'South Asian (Indic)';
       case 'Thai':
+      case 'Laoo':
+      case 'Mymr':
+      case 'Khmr':
         return 'Southeast Asian';
       case 'Latn':
         return language == 'vi' ? 'Southeast Asian' : 'Latin';
@@ -168,6 +243,10 @@ class LanguageScript {
       case 'Geor':
       case 'Armn':
         return 'World Scripts';
+      case 'Ethi':
+        return 'African (Ge\'ez)';
+      case 'Zyyy':
+        return 'Phonetic (IPA)';
       default:
         return 'Other';
     }

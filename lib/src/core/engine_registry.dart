@@ -5,15 +5,21 @@ import '../engines/east_asian/pinyin_engine.dart';
 import '../engines/european/cyrillic_engine.dart';
 import '../engines/european/greek_engine.dart';
 import '../engines/hindi/hindi_engine.dart';
+import '../engines/indic/sanskrit_engine.dart';
 import '../engines/indic/universal_indic_engine.dart';
 import '../engines/indic_bridge/indic_bridge_engine.dart';
+import '../engines/middle_eastern/central_asian_engine.dart';
 import '../engines/middle_eastern/hebrew_engine.dart';
 import '../engines/perso_arabic/perso_arabic_engine.dart';
+import '../engines/phonetic/ipa_engine.dart';
+import '../engines/southeast_asian/indochina_engine.dart';
 import '../engines/southeast_asian/thai_engine.dart';
 import '../engines/southeast_asian/vietnamese_engine.dart';
+import '../engines/world/amharic_engine.dart';
 import '../engines/world/armenian_engine.dart';
 import '../engines/world/georgian_engine.dart';
 import '../engines/world/ukrainian_engine.dart';
+import '../engines/european/south_slavic_engine.dart';
 import 'language_script.dart';
 import 'transliterator_engine.dart';
 
@@ -43,6 +49,21 @@ class EngineRegistry {
   /// - Armenian Engine
   factory EngineRegistry.withDefaults() {
     final registry = EngineRegistry();
+    // Specialized high-priority engines
+    registry.register(SanskritIndicExtensionEngine());
+    registry.register(SouthSlavicEngine());
+    registry.register(IndochinaEngine());
+    registry.register(CentralAsianEngine());
+    registry.register(AmharicEngine());
+    registry.register(IpaEngine());
+    registry.register(UkrainianEngine());
+    registry.register(GreekEngine());
+    registry.register(VietnameseEngine());
+    registry.register(ThaiEngine());
+    registry.register(GeorgianEngine());
+    registry.register(ArmenianEngine());
+
+    // Indic, Perso-Arabic & East Asian
     registry.register(BengaliEngine());
     registry.register(HindiEngine());
     registry.register(UniversalIndicEngine());
@@ -53,12 +74,6 @@ class EngineRegistry {
     registry.register(KoreanEngine());
     registry.register(PinyinEngine());
     registry.register(CyrillicEngine());
-    registry.register(UkrainianEngine());
-    registry.register(GreekEngine());
-    registry.register(VietnameseEngine());
-    registry.register(ThaiEngine());
-    registry.register(GeorgianEngine());
-    registry.register(ArmenianEngine());
     return registry;
   }
 

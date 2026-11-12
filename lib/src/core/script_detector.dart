@@ -50,7 +50,13 @@ class ScriptDetector {
     var totalChars = 0;
 
     var hasUkrainianSpecific = false;
+    var hasSerbianSpecific = false;
+    var hasMacedonianSpecific = false;
+    var hasBelarusianSpecific = false;
+    var hasKazakhSpecific = false;
     var hasUrduSpecific = false;
+    var hasKurdishSpecific = false;
+    var hasPashtoSpecific = false;
     var hasVietnameseDiacritic = false;
 
     for (final rune in text.runes) {
@@ -63,8 +69,26 @@ class ScriptDetector {
         if (rune == 0x0456 || rune == 0x0457 || rune == 0x0454 || rune == 0x0491) {
           hasUkrainianSpecific = true;
         }
+        if (rune == 0x0452 || rune == 0x0458 || rune == 0x0459 || rune == 0x045A || rune == 0x045B || rune == 0x045F) {
+          hasSerbianSpecific = true;
+        }
+        if (rune == 0x0453 || rune == 0x045C || rune == 0x0455) {
+          hasMacedonianSpecific = true;
+        }
+        if (rune == 0x045E) {
+          hasBelarusianSpecific = true;
+        }
+        if (rune == 0x04D8 || rune == 0x04D9 || rune == 0x0492 || rune == 0x049A || rune == 0x04E8 || rune == 0x04B0 || rune == 0x04AE) {
+          hasKazakhSpecific = true;
+        }
         if (rune == 0x0679 || rune == 0x0688 || rune == 0x0691 || rune == 0x06D2) {
           hasUrduSpecific = true;
+        }
+        if (rune == 0x06C6 || rune == 0x06CE || rune == 0x0695 || rune == 0x06B5) {
+          hasKurdishSpecific = true;
+        }
+        if (rune == 0x069A || rune == 0x0698 || rune == 0x0685 || rune == 0x0681 || rune == 0x06BC || rune == 0x0689 || rune == 0x067C || rune == 0x0693) {
+          hasPashtoSpecific = true;
         }
         if (rune >= 0x1EA0 && rune <= 0x1EF9) {
           hasVietnameseDiacritic = true;
@@ -82,13 +106,27 @@ class ScriptDetector {
     }
 
     // Refine specific sub-scripts
-    if (counts.containsKey(LanguageScript.russian) && hasUkrainianSpecific) {
-      final cnt = counts.remove(LanguageScript.russian)!;
-      counts[LanguageScript.ukrainian] = cnt;
+    if (counts.containsKey(LanguageScript.russian)) {
+      if (hasUkrainianSpecific) {
+        counts[LanguageScript.ukrainian] = counts.remove(LanguageScript.russian)!;
+      } else if (hasSerbianSpecific) {
+        counts[LanguageScript.serbian] = counts.remove(LanguageScript.russian)!;
+      } else if (hasMacedonianSpecific) {
+        counts[LanguageScript.macedonian] = counts.remove(LanguageScript.russian)!;
+      } else if (hasBelarusianSpecific) {
+        counts[LanguageScript.belarusian] = counts.remove(LanguageScript.russian)!;
+      } else if (hasKazakhSpecific) {
+        counts[LanguageScript.kazakh] = counts.remove(LanguageScript.russian)!;
+      }
     }
-    if (counts.containsKey(LanguageScript.arabic) && hasUrduSpecific) {
-      final cnt = counts.remove(LanguageScript.arabic)!;
-      counts[LanguageScript.urdu] = cnt;
+    if (counts.containsKey(LanguageScript.arabic)) {
+      if (hasUrduSpecific) {
+        counts[LanguageScript.urdu] = counts.remove(LanguageScript.arabic)!;
+      } else if (hasKurdishSpecific) {
+        counts[LanguageScript.kurdish] = counts.remove(LanguageScript.arabic)!;
+      } else if (hasPashtoSpecific) {
+        counts[LanguageScript.pashto] = counts.remove(LanguageScript.arabic)!;
+      }
     }
     if (counts.containsKey(LanguageScript.latin) && hasVietnameseDiacritic) {
       final cnt = counts.remove(LanguageScript.latin)!;
@@ -149,8 +187,14 @@ class ScriptDetector {
     if (r >= 0x0D00 && r <= 0x0D7F) return LanguageScript.malayalam;
     if (r >= 0x0D80 && r <= 0x0DFF) return LanguageScript.sinhala;
 
-    // Southeast Asian
+    // Southeast Asian & Indochina
     if (r >= 0x0E00 && r <= 0x0E7F) return LanguageScript.thai;
+    if (r >= 0x0EA0 && r <= 0x0EFF) return LanguageScript.lao;
+    if (r >= 0x1000 && r <= 0x109F) return LanguageScript.burmese;
+    if (r >= 0x1780 && r <= 0x17FF) return LanguageScript.khmer;
+
+    // African (Ge'ez Fidel)
+    if (r >= 0x1200 && r <= 0x137F) return LanguageScript.amharic;
 
     // Middle Eastern
     if ((r >= 0x0600 && r <= 0x06FF) ||

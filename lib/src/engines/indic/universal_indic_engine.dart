@@ -40,6 +40,8 @@ class UniversalIndicEngine implements TransliteratorEngine {
     },
     'Guru': {
       'sat sri akaal': '\u0A38\u0A24\u0A3F \u0A38\u0A4D\u0A30\u0A40 \u0A05\u0A15\u0A3E\u0A32',
+      'sat sri akal': '\u0A38\u0A24\u0A3F \u0A38\u0A4D\u0A30\u0A40 \u0A05\u0A15\u0A3E\u0A32',
+      'sat': '\u0A38\u0A24\u0A3F',
       'dhanvaad': '\u0A27\u0A70\u0A28\u0A35\u0A3E\u0A26',
       'punjab': '\u0A2A\u0A70\u0A1C\u0A3E\u0A2C',
       'tussi': '\u0A24\u0A41\u0A38\u0A40\u0A02',

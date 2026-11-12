@@ -237,7 +237,7 @@ void main() {
       });
 
       test('Unsupported script cleanly throws UnsupportedConversionException', () {
-        const unsupportedScript = LanguageScript('am', 'Ethi');
+        const unsupportedScript = LanguageScript('xx', 'Xxxx');
         expect(
           () => transliterator.convert(
             'testing',

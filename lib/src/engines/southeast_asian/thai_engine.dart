@@ -18,7 +18,9 @@ class ThaiEngine implements TransliteratorEngine {
 
   static const Map<String, String> commonWords = {
     'sawatdee': 'สวัสดี',
+    'sawasdee': 'สวัสดี',
     'sawatdi': 'สวัสดี',
+    'sawasdi': 'สวัสดี',
     'khop khun': 'ขอบคุณ',
     'khob khun': 'ขอบคุณ',
     'sabai dee': 'สบายดี',

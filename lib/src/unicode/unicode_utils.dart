@@ -110,6 +110,12 @@ class UnicodeUtils {
         zeroRune = 0x0D66;
       } else if (code.contains('Thai')) {
         zeroRune = 0x0E50;
+      } else if (code.contains('Laoo')) {
+        zeroRune = 0x0ED0;
+      } else if (code.contains('Mymr')) {
+        zeroRune = 0x1040;
+      } else if (code.contains('Khmr')) {
+        zeroRune = 0x17E0;
       } else if (code.contains('fa') || code.contains('ur')) {
         zeroRune = 0x06F0;
       } else if (code.contains('ar') || code.contains('Arab')) {

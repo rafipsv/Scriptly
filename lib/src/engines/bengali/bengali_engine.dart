@@ -27,6 +27,13 @@ class BengaliEngine implements TransliteratorEngine {
     final fromScript = from.normalizedScript;
     final toScript = to.normalizedScript;
 
+    // Exclude Assamese
+    final fLang = from.normalizedLanguage;
+    final tLang = to.normalizedLanguage;
+    if (fLang == 'as' || tLang == 'as') {
+      return false;
+    }
+
     // Latin -> Bengali
     if (fromScript == 'Latn' && toScript == 'Beng') {
       return true;

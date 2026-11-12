@@ -111,8 +111,8 @@ class UkrainianEngine implements TransliteratorEngine {
     final fScript = from.normalizedScript;
     final tScript = to.normalizedScript;
 
-    return (f == 'en' && (t == 'uk' || (t == 'uk' && tScript == 'Cyrl'))) ||
-        ((f == 'uk' || fScript == 'Cyrl') && (t == 'en' || tScript == 'Latn'));
+    return (fScript == 'Latn' && t == 'uk' && tScript == 'Cyrl') ||
+        (f == 'uk' && fScript == 'Cyrl' && tScript == 'Latn');
   }
 
   @override

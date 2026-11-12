@@ -54,7 +54,7 @@ void main() {
     final transliterator = Transliterator();
 
     test('throws UnsupportedConversionException for unsupported pair', () {
-      const unsupported = LanguageScript('am', 'Ethi');
+      const unsupported = LanguageScript('xx', 'Xxxx');
       expect(
         () => transliterator.convert(
           'hello',
@@ -77,7 +77,7 @@ void main() {
       expect(
         transliterator.canConvert(
           LanguageScript.latin,
-          const LanguageScript('am', 'Ethi'),
+          const LanguageScript('xx', 'Xxxx'),
         ),
         isFalse,
       );

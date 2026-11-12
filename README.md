@@ -3,12 +3,12 @@
 [![pub package](https://img.shields.io/pub/v/scriptly.svg?logo=dart&logoColor=white)](https://pub.dev/packages/scriptly)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/platform-flutter%20%7C%20dart%20vm%20%7C%20web-blue.svg)](https://pub.dev/packages/scriptly)
-[![Test Suite](https://img.shields.io/badge/tests-144%20passed%20%7C%20100%25-brightgreen.svg)](test/)
+[![Test Suite](https://img.shields.io/badge/tests-170%20passed%20%7C%20100%25-brightgreen.svg)](test/)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github&logoColor=white)](https://rafipsv.github.io/Scriptly)
 
 > 🌐 **Try it Live in your Browser:** **[https://rafipsv.github.io/Scriptly](https://rafipsv.github.io/Scriptly)**
 
-An extensible, high-performance, offline-first multi-language transliteration engine for Flutter and Dart. Converts text seamlessly between **25+ writing systems (scripts)** with **625 auto-pivot conversion paths**, zero cloud dependencies, and sub-millisecond execution.
+An extensible, high-performance, offline-first multi-language transliteration engine for Flutter and Dart. Converts text seamlessly between **41 writing systems (scripts)** with **1,681 auto-pivot conversion paths**, zero cloud dependencies, and sub-millisecond execution.
 
 Includes an out-of-the-box responsive **Google Translate-style Web application** (`example/`) architected with **Clean Architecture**, **BLoC**, and real-time **Searchable Language Dropdown Pickers**.
 
@@ -27,17 +27,22 @@ Includes an out-of-the-box responsive **Google Translate-style Web application**
 ## Key Features
 
 - **100% Offline & Private**: Zero network requests, zero telemetry, zero API keys. Everything runs in-memory on the client.
-- **25+ Supported Languages & Scripts**: Covers South Asian (Brahmic), Southeast Asian, East Asian, Middle Eastern (Perso-Arabic), European/Slavic, and Caucasus/World families.
-- **Universal Auto-Pivot Routing**: Any-to-Any hub-and-spoke conversion routing through phonetic Latin bridges ($25 \times 25 = 625$ conversion routes).
+- **41 Supported Languages & Scripts**: Covers South Asian (Brahmic), Southeast Asian (Indochina), East Asian, Middle Eastern (Perso-Arabic), European/Slavic, African (Ge'ez Fidel), Caucasus, and Universal Phonetic (IPA) families.
+- **Universal Auto-Pivot Routing**: Any-to-Any hub-and-spoke conversion routing through phonetic Latin bridges ($41 \times 41 = 1,681$ conversion routes).
 - **Direct Brahmic Bridge**: Zero-latency direct cross-script alignment between Indic scripts (Devanagari, Bengali, Gurmukhi, Gujarati, Tamil, Telugu, Malayalam, Kannada, Odia, Sinhala) without intermediary romanization.
+- **Extended Indic & Sanskrit**: IAST (International Alphabet of Sanskrit Transliteration) and Harvard-Kyoto support, Marathi retroflex lateral Lla (`ळ`), Nepali orthography, and Assamese Ro (`ৰ`) / Wo (`ৱ`).
+- **South Slavic Vuk ↔ Gaj Bi-directional Engine**: Exact 1:1 bi-directional Serbian Cyrillic ↔ Latin mapping, Bulgarian Transliteration Act 2009, Macedonian Cyrillic, and Belarusian Lacinka.
+- **Indochina Writing Systems**: UNGEGN Lao, Myanmar / Burmese (MLC / ISO 11940 with tall aa normalization), and Khmer / Cambodian.
+- **Central Asian & Kurdish**: Hawar Latin ↔ Sorani Kurdish, Afghan Pashto, and official Kazakhstan 2021 Modern Latin standard.
+- **African Semitic & Universal IPA**: Ethiopian Semitic Ge'ez Fidel syllabary (`am-Ethi`) and bi-directional acoustic International Phonetic Alphabet (`und-Zyyy` / IPA).
 - **Vietnamese Telex Engine**: Full support for standard Telex typing (`aa` ➔ `â`, `w` ➔ `ư`, `dd` ➔ `đ`) and tone marks (`s, f, r, x, j`).
 - **Thai RTGS Transcription**: Phonetic Latin ↔ Thai script conversion based on the Royal Thai General System.
 - **Unique World Alphabets**: 1:1 deterministic phonetic mapping for Georgian (Mkhedruli National System 2002), Armenian (ISO 9985), and Ukrainian (Resolution 55).
 - **Searchable Language Selection**: Web demo includes real-time searchable modal sheets for instant language filtering by name, script code, or category.
 - **Unicode Grapheme Safe**: Grapheme cluster handling (`package:characters`), preserving emojis, symbols, whitespace, and combining diacritic marks.
-- **Configurable Digit Policies**: Easily keep ASCII numbers (`1, 2, 3`) or convert to native target script digits.
+- **Configurable Digit Policies**: Easily keep ASCII numbers (`1, 2, 3`) or convert to native target script digits across all numeral systems.
 - **Flutter TextField Integration**: Includes `TransliterationTextEditingController` for real-time transliteration with selection and cursor stability.
-- **Sub-millisecond Latency**: Optimized longest-match Trie algorithms and direct lookup maps benchmarked at `< 0.1ms` per operation.
+- **Sub-millisecond Latency**: Optimized longest-match Trie algorithms and direct lookup maps benchmarked at `< 0.05ms` per operation.
 
 ---
 
@@ -48,6 +53,10 @@ Includes an out-of-the-box responsive **Google Translate-style Web application**
 | **Global** | Latin / Roman | `en-Latn` | Phonetic Hub & Pivot Anchor |
 | **South Asian (Indic)** | Bengali | `bn-Beng` | Avro-style Phonetic Parser & Deterministic Romanizer |
 | **South Asian (Indic)** | Hindi (Devanagari) | `hi-Deva` | Hinglish Phonetic & Harvard-Kyoto Harmonizer |
+| **South Asian (Indic)** | Sanskrit | `sa-Deva` | IAST & Harvard-Kyoto Sanskrit Engine |
+| **South Asian (Indic)** | Marathi | `mr-Deva` | Devanagari Retroflex Lateral Lla Engine |
+| **South Asian (Indic)** | Nepali | `ne-Deva` | Nepali Devanagari Standard Engine |
+| **South Asian (Indic)** | Assamese | `as-Beng` | Eastern Indic Ro (`ৰ`) & Wo (`ৱ`) Engine |
 | **South Asian (Indic)** | Gujarati | `gu-Gujr` | Gujlish Phonetic & Brahmic Slot Matrix |
 | **South Asian (Indic)** | Punjabi (Gurmukhi) | `pa-Guru` | Roman Punjabi & Brahmic Slot Matrix |
 | **South Asian (Indic)** | Tamil | `ta-Taml` | Tanglish Phonetic & Brahmic Slot Matrix |
@@ -58,18 +67,30 @@ Includes an out-of-the-box responsive **Google Translate-style Web application**
 | **South Asian (Indic)** | Sinhala | `si-Sinh` | Sinhala Phonetic & Brahmic Slot Matrix |
 | **Southeast Asian** | Vietnamese | `vi-Latn` | Standard Telex Input Method & Accent Stripper |
 | **Southeast Asian** | Thai | `th-Thai` | RTGS (Royal Thai General System) Engine |
+| **Southeast Asian** | Lao | `lo-Laoo` | UNGEGN Lao Phonetic Engine |
+| **Southeast Asian** | Burmese / Myanmar | `my-Mymr` | MLC / ISO 11940 Tall Aa Normalized Engine |
+| **Southeast Asian** | Khmer / Cambodian | `km-Khmr` | UNGEGN Khmer Geographic Names Engine |
 | **Middle Eastern** | Arabic | `ar-Arab` | Arabizi / Roman Arabic Phonetic Engine |
 | **Middle Eastern** | Urdu | `ur-Arab` | Roman Urdu Phonetic Engine |
 | **Middle Eastern** | Persian (Farsi) | `fa-Arab` | Finglish Phonetic & Perso-Arabic Harmonizer |
 | **Middle Eastern** | Hebrew | `he-Hebr` | Roman Hebrew ↔ Square Hebrew Script |
+| **Middle Eastern** | Kurdish | `ku-Arab` | Hawar Latin ↔ Sorani Arabic Engine |
+| **Middle Eastern** | Pashto | `ps-Arab` | Afghan Perso-Arabic Extended Engine |
+| **Middle Eastern** | Kazakh | `kk-Cyrl` | Kazakhstan 2021 Modern Latin Standard Engine |
 | **East Asian** | Japanese | `ja-Jpan` | Modified Hepburn Romaji ↔ Hiragana / Katakana |
 | **East Asian** | Korean | `ko-Hang` | Revised Romanization ↔ Hangul Syllables |
 | **East Asian** | Chinese Pinyin | `zh-Latn` | Numeric Pinyin Tones ➔ Diacritics (`ni3 hao3` ➔ `nǐ hǎo`) |
 | **European / Slavic** | Russian | `ru-Cyrl` | Latin ↔ Cyrillic (ISO 9 standard) |
 | **European / Slavic** | Ukrainian | `uk-Cyrl` | Ukrainian Cyrillic (Resolution 55 / ISO 9) |
+| **European / Slavic** | Serbian | `sr-Cyrl` | Vuk's Cyrillic ↔ Gaj's Latin 1:1 Bi-directional |
+| **European / Slavic** | Bulgarian | `bg-Cyrl` | Bulgarian Transliteration Act 2009 Engine |
+| **European / Slavic** | Macedonian | `mk-Cyrl` | Macedonian Cyrillic Standard Engine |
+| **European / Slavic** | Belarusian | `be-Cyrl` | Belarusian Lacinka Standard Engine |
 | **European / Slavic** | Greek | `el-Grek` | Greeklish ↔ Greek Alphabet (ISO 843 standard) |
 | **Caucasus & World** | Georgian | `ka-Geor` | Mkhedruli Script (National System 2002) |
 | **Caucasus & World** | Armenian | `hy-Armn` | Armenian Alphabet (ISO 9985 standard) |
+| **African** | Amharic / Ge'ez | `am-Ethi` | Ethiopian Semitic Fidel Syllabary Matrix |
+| **Phonetic & Academic** | IPA | `und-Zyyy` | International Phonetic Alphabet Bi-directional |
 
 ---
 
@@ -79,7 +100,7 @@ Add `scriptly` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  scriptly: ^0.2.0
+  scriptly: ^0.5.0
 ```
 
 Then fetch the dependencies:

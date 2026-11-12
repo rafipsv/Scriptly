@@ -39,7 +39,11 @@ class CyrillicEngine implements TransliteratorEngine {
   bool supports(LanguageScript from, LanguageScript to) {
     final fLang = from.normalizedLanguage;
     final tLang = to.normalizedLanguage;
-    if (fLang == 'uk' || tLang == 'uk') return false;
+    // Exclude Ukrainian, Serbian, Bulgarian, Macedonian, Belarusian, Kazakh
+    const nonRussianCyrillic = {'uk', 'sr', 'bg', 'mk', 'be', 'kk'};
+    if (nonRussianCyrillic.contains(fLang) || nonRussianCyrillic.contains(tLang)) {
+      return false;
+    }
 
     final f = from.normalizedScript;
     final t = to.normalizedScript;
