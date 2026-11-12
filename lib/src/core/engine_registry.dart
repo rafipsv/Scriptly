@@ -23,9 +23,26 @@ import '../engines/european/south_slavic_engine.dart';
 import 'language_script.dart';
 import 'transliterator_engine.dart';
 
-/// Registry holding registered transliteration engines.
+/// Internal descriptor for engines initialized on-demand.
+class _LazyEngineEntry {
+  final String id;
+  final TransliteratorEngine Function() factory;
+  final bool Function(LanguageScript from, LanguageScript to) supportsChecker;
+  TransliteratorEngine? instance;
+
+  _LazyEngineEntry({
+    required this.id,
+    required this.factory,
+    required this.supportsChecker,
+  });
+
+  TransliteratorEngine getOrCreate() => instance ??= factory();
+}
+
+/// Registry holding registered transliteration engines with eager and lazy loading support.
 class EngineRegistry {
   final Map<String, TransliteratorEngine> _engines = {};
+  final List<_LazyEngineEntry> _lazyEngines = [];
 
   /// Creates an empty [EngineRegistry].
   EngineRegistry();
@@ -82,21 +99,52 @@ class EngineRegistry {
     _engines[engine.id] = engine;
   }
 
+  /// Registers an engine to be lazily initialized upon the first conversion matching [supportsChecker].
+  void registerLazy(
+    String id,
+    TransliteratorEngine Function() factory,
+    bool Function(LanguageScript from, LanguageScript to) supportsChecker,
+  ) {
+    _lazyEngines.add(_LazyEngineEntry(
+      id: id,
+      factory: factory,
+      supportsChecker: supportsChecker,
+    ));
+  }
+
   /// Unregisters an engine by its [engineId].
   void unregister(String engineId) {
     _engines.remove(engineId);
+    _lazyEngines.removeWhere((e) => e.id == engineId);
   }
 
   /// Finds an engine that supports conversion from [from] to [to].
   TransliteratorEngine? findEngine(LanguageScript from, LanguageScript to) {
+    // 1. Check already materialized engines first
     for (final engine in _engines.values) {
       if (engine.supports(from, to)) {
+        return engine;
+      }
+    }
+    // 2. Check pending lazy engines in registered priority order
+    for (final entry in _lazyEngines) {
+      if (entry.supportsChecker(from, to)) {
+        final engine = entry.getOrCreate();
+        _engines[engine.id] = engine;
         return engine;
       }
     }
     return null;
   }
 
-  /// All currently registered engines.
-  List<TransliteratorEngine> get registeredEngines => List.unmodifiable(_engines.values);
+  /// All currently registered engines (materializes any pending lazy engines).
+  List<TransliteratorEngine> get registeredEngines {
+    for (final entry in _lazyEngines) {
+      if (!_engines.containsKey(entry.id)) {
+        final engine = entry.getOrCreate();
+        _engines[engine.id] = engine;
+      }
+    }
+    return List.unmodifiable(_engines.values);
+  }
 }

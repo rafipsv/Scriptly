@@ -27,6 +27,7 @@ jobs:
 
       - name: Verify formatting & lints
         run: |
+          dart format --output=none --set-exit-if-changed .
           flutter analyze --no-fatal-infos
           cd example && flutter analyze --no-fatal-infos
 

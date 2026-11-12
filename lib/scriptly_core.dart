@@ -42,4 +42,5 @@ export 'src/engines/southeast_asian/indochina_engine.dart';
 export 'src/engines/middle_eastern/central_asian_engine.dart';
 export 'src/engines/world/amharic_engine.dart';
 export 'src/engines/phonetic/ipa_engine.dart';
+export 'src/engines/custom/custom_json_engine.dart';
 export 'src/unicode/unicode_utils.dart';

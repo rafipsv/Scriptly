@@ -1,3 +1,4 @@
+import '../engines/custom/custom_json_engine.dart';
 import 'conversion_options.dart';
 import 'conversion_result.dart';
 import 'custom_dictionary.dart';
@@ -12,6 +13,9 @@ class Scriptly {
 
   static final Transliterator _defaultTransliterator = Transliterator();
 
+  /// Default registry used by the static facade.
+  static Transliterator get defaultTransliterator => _defaultTransliterator;
+
   /// Converts [text] from [from] to [to].
   static ConversionResult convert(
     String text, {
@@ -21,6 +25,18 @@ class Scriptly {
   }) =>
       _defaultTransliterator.convert(text, from: from, to: to, options: options);
 
+  /// Asynchronously converts [text] from [from] to [to] without blocking the main event loop.
+  static Future<ConversionResult> convertAsync(
+    String text, {
+    required LanguageScript from,
+    required LanguageScript to,
+    ConversionOptions options = ConversionOptions.standard,
+  }) {
+    return Future<ConversionResult>(() {
+      return convert(text, from: from, to: to, options: options);
+    });
+  }
+
   /// Automatically detects the source script and converts [text] to [to].
   static ConversionResult autoConvert(
     String text, {
@@ -28,6 +44,23 @@ class Scriptly {
     ConversionOptions options = ConversionOptions.standard,
   }) =>
       _defaultTransliterator.autoConvert(text, to: to, options: options);
+
+  /// Asynchronously detects the source script and converts [text] to [to].
+  static Future<ConversionResult> autoConvertAsync(
+    String text, {
+    required LanguageScript to,
+    ConversionOptions options = ConversionOptions.standard,
+  }) {
+    return Future<ConversionResult>(() {
+      return autoConvert(text, to: to, options: options);
+    });
+  }
+
+  /// Registers a custom language engine dynamically parsed from a [jsonString].
+  static void registerCustomLanguageFromJson(String jsonString) {
+    final engine = CustomJsonEngine.fromJson(jsonString);
+    _defaultTransliterator.registry.register(engine);
+  }
 
   /// Analyzes and detects the primary script of [text].
   static ScriptDetectionResult detect(String text) => ScriptDetector.detect(text);

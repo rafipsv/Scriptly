@@ -35,9 +35,12 @@ class Transliterator {
       );
     }
 
+    // Canonical Unicode pre-normalization
+    final normalized = UnicodeUtils.normalizeCanonical(text);
+
     // Apply custom dictionary overrides (global + request-specific)
     final preprocessedText = CustomDictionary.apply(
-      text,
+      normalized,
       localOverrides: options.customDictionary,
     );
 
@@ -137,7 +140,10 @@ class Transliterator {
     }
     if (placeholders.isNotEmpty) {
       for (final entry in placeholders.entries) {
-        result = result.replaceAll(entry.key, entry.value);
+        final val = to.isRtl
+            ? UnicodeUtils.wrapBidiIsolates(entry.value, isRtlTarget: true)
+            : entry.value;
+        result = result.replaceAll(entry.key, val);
       }
     }
     return result;

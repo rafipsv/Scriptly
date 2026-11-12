@@ -252,6 +252,12 @@ class LanguageScript {
     }
   }
 
+  /// Whether this script is written Right-to-Left (e.g. Arabic, Hebrew, Urdu, Persian, Kurdish, Pashto).
+  bool get isRtl {
+    final s = normalizedScript;
+    return s == 'Arab' || s == 'Hebr';
+  }
+
   /// Parses a code string (e.g. 'bn-Beng', 'bn', or 'Beng') into a [LanguageScript].
   static LanguageScript fromCode(String code) {
     final clean = code.trim().toLowerCase();

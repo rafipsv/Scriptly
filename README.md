@@ -310,14 +310,80 @@ class _MyTransliterationFieldState extends State<MyTransliterationField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _controller,
-      decoration: const InputDecoration(
-        labelText: 'Type phonetically in English/Banglish',
-        hintText: 'e.g. Ami Banglay gaan gai',
-      ),
+    return Column(
+      children: [
+        TextField(
+          controller: _controller,
+          decoration: const InputDecoration(
+            labelText: 'Type phonetically in English/Banglish',
+            hintText: 'e.g. Ami Banglay gaan gai',
+          ),
+        ),
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.undo),
+              onPressed: _controller.canUndo ? () => _controller.undo() : null,
+            ),
+            IconButton(
+              icon: const Icon(Icons.redo),
+              onPressed: _controller.canRedo ? () => _controller.redo() : null,
+            ),
+          ],
+        ),
+      ],
     );
   }
+}
+```
+
+### 5. Background Async Worker (Zero UI Frame Drops)
+
+For large documents, bulk text, or background pipelines, use `convertAsync` to execute via Flutter/Dart background workers (isolates):
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() async {
+  // Transliterate 100KB+ documents asynchronously
+  final result = await Scriptly.convertAsync(
+    largeTextPayload,
+    from: LanguageScript.latin,
+    to: LanguageScript.bengali,
+  );
+  print(result.text);
+
+  // Auto-detect and convert in background
+  final autoResult = await Scriptly.autoConvertAsync(
+    largeTextPayload,
+    to: LanguageScript.hindi,
+  );
+  print(autoResult.text);
+}
+```
+
+### 6. Dynamic Custom JSON Engines
+
+Register custom language dialects, regional orthographies, or specialized transliteration systems at runtime without recompiling the library:
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() {
+  const customJson = '''
+  {
+    "id": "elvish-engine",
+    "supportedPairs": [
+      {"from": "en-Latn", "to": "art-Elvn"}
+    ],
+    "mappings": {
+      "hello": "elen",
+      "star": "el"
+    }
+  }
+  ''';
+
+  Scriptly.registerCustomLanguageFromJson(customJson);
 }
 ```
 

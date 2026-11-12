@@ -155,4 +155,65 @@ class UnicodeUtils {
   static Iterable<String> getGraphemes(String text) {
     return text.characters;
   }
+
+  /// Normalizes Unicode text into canonical precomposed form, reconciling decomposed
+  /// Nuktas, combining diacritics, and language-specific decomposed codepoints.
+  static String normalizeCanonical(String input) {
+    if (input.isEmpty) return input;
+
+    var s = input;
+
+    // 1. Indic Decomposed Nukta Precomposition
+    // Bengali: ড+় -> ড়, ঢ+় -> ঢ়, য+় -> য়
+    s = s.replaceAll('\u09A1\u09BC', '\u09DD');
+    s = s.replaceAll('\u09A2\u09BC', '\u09DE');
+    s = s.replaceAll('\u09AF\u09BC', '\u09DF');
+
+    // Devanagari: क़, ख़, ग़, ज़, ड़, ढ़, फ़, य़
+    s = s.replaceAll('\u0915\u093C', '\u0958');
+    s = s.replaceAll('\u0916\u093C', '\u0959');
+    s = s.replaceAll('\u0917\u093C', '\u095A');
+    s = s.replaceAll('\u091C\u093C', '\u095B');
+    s = s.replaceAll('\u0921\u093C', '\u095C');
+    s = s.replaceAll('\u0922\u093C', '\u095D');
+    s = s.replaceAll('\u092B\u093C', '\u095E');
+    s = s.replaceAll('\u092F\u093C', '\u095F');
+
+    // 2. Cyrillic Combining Breve / Diaeresis
+    // и + \u0306 -> й, И + \u0306 -> Й
+    s = s.replaceAll('\u0438\u0306', '\u0439');
+    s = s.replaceAll('\u0418\u0306', '\u0419');
+    // е + \u0308 -> ё, Е + \u0308 -> Ё
+    s = s.replaceAll('\u0435\u0308', '\u0451');
+    s = s.replaceAll('\u0415\u0308', '\u0401');
+    // у + \u0306 -> ў (Belarusian), У + \u0306 -> Ў
+    s = s.replaceAll('\u0443\u0306', '\u045E');
+    s = s.replaceAll('\u0423\u0306', '\u040E');
+
+    // 3. Arabic / Perso-Arabic Combining Diacritics Canonicalization
+    s = s.replaceAll('\u0627\u0653', '\u0622'); // Alif + Madda -> Alif Madda
+    s = s.replaceAll('\u0627\u0654', '\u0623'); // Alif + Hamza Above -> Alif Hamza Above
+    s = s.replaceAll('\u0627\u0655', '\u0625'); // Alif + Hamza Below -> Alif Hamza Below
+
+    // 4. Latin Decomposed Vowels with Combining Accents
+    s = s.replaceAll('a\u0300', 'à').replaceAll('a\u0301', 'á').replaceAll('a\u0303', 'ã');
+    s = s.replaceAll('e\u0300', 'è').replaceAll('e\u0301', 'é').replaceAll('e\u0302', 'ê');
+    s = s.replaceAll('i\u0300', 'ì').replaceAll('i\u0301', 'í');
+    s = s.replaceAll('o\u0300', 'ò').replaceAll('o\u0301', 'ó').replaceAll('o\u0303', 'õ');
+    s = s.replaceAll('u\u0300', 'ù').replaceAll('u\u0301', 'ú');
+
+    return s;
+  }
+
+  /// Wraps directional tokens (such as URLs, technical identifiers, or embedded LTR phrases)
+  /// with Unicode Directional Isolates (U+2066 LRI / U+2069 PDI) to prevent RTL layout distortion.
+  static String wrapBidiIsolates(String text, {required bool isRtlTarget}) {
+    if (!isRtlTarget || text.isEmpty) return text;
+
+    final ltrTokenRegex = RegExp(r'(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[a-zA-Z0-9_]{3,})');
+    return text.replaceAllMapped(ltrTokenRegex, (m) {
+      final token = m.group(0)!;
+      return '\u2066$token\u2069';
+    });
+  }
 }
