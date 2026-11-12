@@ -8,6 +8,9 @@ class TransliteratorState extends Equatable {
   final LanguageScript sourceLang;
   final LanguageScript targetLang;
   final bool convertDigits;
+  final bool shieldPii;
+  final bool harmonizePunctuation;
+  final bool markdownMode;
   final String activeScheme;
 
   const TransliteratorState({
@@ -16,6 +19,9 @@ class TransliteratorState extends Equatable {
     required this.sourceLang,
     required this.targetLang,
     this.convertDigits = false,
+    this.shieldPii = false,
+    this.harmonizePunctuation = false,
+    this.markdownMode = false,
     this.activeScheme = '',
   });
 
@@ -26,6 +32,9 @@ class TransliteratorState extends Equatable {
     sourceLang: LanguageScript.latin,
     targetLang: LanguageScript.bengali,
     convertDigits: false,
+    shieldPii: false,
+    harmonizePunctuation: false,
+    markdownMode: false,
     activeScheme: '',
   );
 
@@ -35,6 +44,9 @@ class TransliteratorState extends Equatable {
     LanguageScript? sourceLang,
     LanguageScript? targetLang,
     bool? convertDigits,
+    bool? shieldPii,
+    bool? harmonizePunctuation,
+    bool? markdownMode,
     String? activeScheme,
   }) {
     return TransliteratorState(
@@ -43,6 +55,9 @@ class TransliteratorState extends Equatable {
       sourceLang: sourceLang ?? this.sourceLang,
       targetLang: targetLang ?? this.targetLang,
       convertDigits: convertDigits ?? this.convertDigits,
+      shieldPii: shieldPii ?? this.shieldPii,
+      harmonizePunctuation: harmonizePunctuation ?? this.harmonizePunctuation,
+      markdownMode: markdownMode ?? this.markdownMode,
       activeScheme: activeScheme ?? this.activeScheme,
     );
   }
@@ -54,6 +69,9 @@ class TransliteratorState extends Equatable {
     sourceLang,
     targetLang,
     convertDigits,
+    shieldPii,
+    harmonizePunctuation,
+    markdownMode,
     activeScheme,
   ];
 }

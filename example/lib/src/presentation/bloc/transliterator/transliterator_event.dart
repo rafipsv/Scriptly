@@ -54,7 +54,37 @@ class TransliteratorDigitsToggled extends TransliteratorEvent {
   List<Object?> get props => [convertDigits];
 }
 
-/// Triggered to clear the source text.
+/// Triggered when the user toggles PII shielding.
+class TransliteratorPiiToggled extends TransliteratorEvent {
+  final bool shieldPii;
+
+  const TransliteratorPiiToggled(this.shieldPii);
+
+  @override
+  List<Object?> get props => [shieldPii];
+}
+
+/// Triggered when the user toggles regional punctuation harmonization.
+class TransliteratorPunctuationToggled extends TransliteratorEvent {
+  final bool harmonizePunctuation;
+
+  const TransliteratorPunctuationToggled(this.harmonizePunctuation);
+
+  @override
+  List<Object?> get props => [harmonizePunctuation];
+}
+
+/// Triggered when the user toggles Markdown document transliteration mode.
+class TransliteratorMarkdownToggled extends TransliteratorEvent {
+  final bool markdownMode;
+
+  const TransliteratorMarkdownToggled(this.markdownMode);
+
+  @override
+  List<Object?> get props => [markdownMode];
+}
+
+/// Triggered when text is cleared.
 class TransliteratorTextCleared extends TransliteratorEvent {
   const TransliteratorTextCleared();
 }
