@@ -51,10 +51,12 @@ class SanskritIndicExtensionEngine implements TransliteratorEngine {
     if (supportedLangs.contains(f) && tS == 'Latn') return true;
 
     // Cross-bridge with Indic
-    if (supportedLangs.contains(f) && (tS == 'Deva' || tS == 'Beng'))
+    if (supportedLangs.contains(f) && (tS == 'Deva' || tS == 'Beng')) {
       return true;
-    if ((fS == 'Deva' || fS == 'Beng') && supportedLangs.contains(t))
+    }
+    if ((fS == 'Deva' || fS == 'Beng') && supportedLangs.contains(t)) {
       return true;
+    }
 
     return false;
   }

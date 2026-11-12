@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/args.dart';
@@ -8,6 +9,8 @@ void main(List<String> arguments) {
     ..addCommand('convert')
     ..addCommand('detect')
     ..addCommand('file')
+    ..addCommand('i18n')
+    ..addCommand('markdown')
     ..addCommand('list');
 
   // Configure 'convert' command
@@ -50,6 +53,48 @@ void main(List<String> arguments) {
       defaultsTo: false,
     );
 
+  // Configure 'i18n' command
+  parser.commands['i18n']!
+    ..addOption(
+      'input',
+      abbr: 'i',
+      mandatory: true,
+      help: 'Input ARB or JSON file path',
+    )
+    ..addOption(
+      'output',
+      abbr: 'o',
+      mandatory: true,
+      help: 'Output ARB or JSON file path',
+    )
+    ..addOption('to', abbr: 't', mandatory: true, help: 'Target script code')
+    ..addOption(
+      'from',
+      abbr: 'f',
+      help: 'Source script code (defaults to en-Latn)',
+    );
+
+  // Configure 'markdown' command
+  parser.commands['markdown']!
+    ..addOption(
+      'input',
+      abbr: 'i',
+      mandatory: true,
+      help: 'Input Markdown file path',
+    )
+    ..addOption(
+      'output',
+      abbr: 'o',
+      mandatory: true,
+      help: 'Output Markdown file path',
+    )
+    ..addOption('to', abbr: 't', mandatory: true, help: 'Target script code')
+    ..addOption(
+      'from',
+      abbr: 'f',
+      help: 'Source script code (defaults to en-Latn)',
+    );
+
   if (arguments.isEmpty) {
     _printUsage(parser);
     return;
@@ -76,6 +121,12 @@ void main(List<String> arguments) {
       case 'file':
         _handleFile(command, transliterator);
         break;
+      case 'i18n':
+        _handleI18n(command, transliterator);
+        break;
+      case 'markdown':
+        _handleMarkdown(command, transliterator);
+        break;
       case 'list':
         _handleList();
         break;
@@ -94,6 +145,10 @@ void _printUsage(ArgParser parser) {
   stdout.writeln('  scriptly convert -t <target> [-f <source>] "<text>"');
   stdout.writeln('  scriptly detect "<text>"');
   stdout.writeln('  scriptly file -i <input.txt> -o <output.txt> -t <target>');
+  stdout.writeln(
+    '  scriptly i18n -i <app_en.arb> -o <app_bn.arb> -t <bn-Beng>',
+  );
+  stdout.writeln('  scriptly markdown -i <doc.md> -o <doc_bn.md> -t <bn-Beng>');
   stdout.writeln('  scriptly list\n');
   stdout.writeln('Commands:');
   stdout.writeln(parser.usage);
@@ -181,6 +236,102 @@ void _handleFile(ArgResults command, Transliterator transliterator) {
   stdout.writeln(
     'Successfully converted $inputPath -> $outputPath (${result.scheme})',
   );
+}
+
+void _handleI18n(ArgResults command, Transliterator transliterator) {
+  final inputPath = command['input'] as String;
+  final outputPath = command['output'] as String;
+  final targetCode = command['to'] as String;
+  final fromCode = command['from'] as String? ?? 'en-Latn';
+
+  final fromScript = LanguageScript.fromCode(fromCode);
+  final targetScript = LanguageScript.fromCode(targetCode);
+
+  final file = File(inputPath);
+  if (!file.existsSync()) {
+    stderr.writeln('Error: i18n input file does not exist: $inputPath');
+    exitCode = 1;
+    return;
+  }
+
+  final jsonContent = jsonDecode(file.readAsStringSync());
+  if (jsonContent is! Map<String, dynamic>) {
+    stderr.writeln('Error: Expected JSON object map in $inputPath');
+    exitCode = 1;
+    return;
+  }
+
+  final placeholderRegex = RegExp(r'\{[a-zA-Z0-9_]+\}');
+  final translatedMap = <String, dynamic>{};
+
+  for (final entry in jsonContent.entries) {
+    // If it's ARB metadata (starts with '@'), retain unchanged
+    if (entry.key.startsWith('@')) {
+      translatedMap[entry.key] = entry.value;
+      continue;
+    }
+
+    if (entry.value is String) {
+      final original = entry.value as String;
+      final tokens = <String, String>{};
+      var counter = 0;
+
+      final shielded = original.replaceAllMapped(placeholderRegex, (m) {
+        final token = '[[__PH_${counter++}__]]';
+        tokens[token] = m[0]!;
+        return token;
+      });
+
+      final converted = transliterator.convert(
+        shielded,
+        from: fromScript,
+        to: targetScript,
+      );
+
+      var finalText = converted.text;
+      for (final ph in tokens.entries) {
+        finalText = finalText.replaceAll(ph.key, ph.value);
+      }
+
+      translatedMap[entry.key] = finalText;
+    } else {
+      translatedMap[entry.key] = entry.value;
+    }
+  }
+
+  final encoder = const JsonEncoder.withIndent('  ');
+  File(outputPath).writeAsStringSync(encoder.convert(translatedMap));
+  stdout.writeln('Successfully generated i18n translation: $outputPath');
+}
+
+void _handleMarkdown(ArgResults command, Transliterator transliterator) {
+  final inputPath = command['input'] as String;
+  final outputPath = command['output'] as String;
+  final targetCode = command['to'] as String;
+  final fromCode = command['from'] as String? ?? 'en-Latn';
+
+  final fromScript = LanguageScript.fromCode(fromCode);
+  final targetScript = LanguageScript.fromCode(targetCode);
+
+  final file = File(inputPath);
+  if (!file.existsSync()) {
+    stderr.writeln('Error: Markdown input file does not exist: $inputPath');
+    exitCode = 1;
+    return;
+  }
+
+  final content = file.readAsStringSync();
+  final mdTransliterator = MarkdownTransliterator(
+    transliterator: transliterator,
+  );
+  final result = mdTransliterator.convert(
+    content,
+    from: fromScript,
+    to: targetScript,
+  );
+
+  File(outputPath).writeAsStringSync(result);
+  stdout.writeln('Successfully transliterated markdown document: $outputPath');
 }
 
 void _handleList() {

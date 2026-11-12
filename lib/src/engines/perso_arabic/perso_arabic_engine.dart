@@ -59,17 +59,20 @@ class PersoArabicEngine implements TransliteratorEngine {
     // Latin <-> Arabic/Urdu/Persian
     if (fScript == 'Latn' &&
         (tLang == 'ar' || tLang == 'ur' || tLang == 'fa') &&
-        tScript == 'Arab')
+        tScript == 'Arab') {
       return true;
+    }
     if ((fLang == 'ar' || fLang == 'ur' || fLang == 'fa') &&
         fScript == 'Arab' &&
-        tScript == 'Latn')
+        tScript == 'Latn') {
       return true;
+    }
 
     // Direct Perso-Arabic cross mapping
     if ((fLang == 'ar' || fLang == 'ur' || fLang == 'fa') &&
-        (tLang == 'ar' || tLang == 'ur' || tLang == 'fa'))
+        (tLang == 'ar' || tLang == 'ur' || tLang == 'fa')) {
       return true;
+    }
 
     return false;
   }

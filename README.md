@@ -224,6 +224,12 @@ dart run scriptly detect "নমস্কার বাংলাদেশ"
 # Convert entire files:
 dart run scriptly file -i input.txt -o output.txt -t hi
 
+# Translate Flutter ARB / JSON localization files preserving variables:
+dart run scriptly i18n -i app_en.arb -o app_bn.arb -t bn-Beng
+
+# Transliterate entire Markdown docs preserving code blocks and links:
+dart run scriptly markdown -i README.md -o README_bn.md -t bn-Beng
+
 # List all supported scripts:
 dart run scriptly list
 ```
@@ -373,18 +379,82 @@ void main() {
   const customJson = '''
   {
     "id": "elvish-engine",
-    "supportedPairs": [
-      {"from": "en-Latn", "to": "art-Elvn"}
-    ],
-    "mappings": {
-      "hello": "elen",
-      "star": "el"
+    "scheme": "elvish-scheme",
+    "from": "en-Latn",
+    "to": "art-Elvn",
+    "words": {
+      "star": "el",
+      "friend": "mellon"
     }
   }
   ''';
 
   Scriptly.registerCustomLanguageFromJson(customJson);
 }
+```
+
+### 7. Fintech & Security: PII Shield & KYC Identity Hasher
+
+Protect sensitive information during transliteration and deduplicate user profiles across scripts:
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() {
+  // 1. PII Shield: Protects credit cards (Luhn valid), emails, phone numbers, and OTPs
+  final pii = Scriptly.shieldPii('My card is 4532-0150-1234-5671 and email is user@example.com');
+  final converted = Scriptly.convert(pii.text, from: LanguageScript.latin, to: LanguageScript.bengali);
+  final safeResult = Scriptly.restorePii(converted.text, pii.tokens);
+
+  // 2. KYC Phonetic Identity Hasher: Resolves cross-script name variations into matching canonical hashes
+  final hash1 = Scriptly.identityHash('Mohammad');
+  final hash2 = Scriptly.identityHash('Muhammad');
+  final hash3 = Scriptly.identityHash('Md. Mohammad');
+  print(hash1 == hash2); // true!
+  print(Scriptly.isSameIdentity('Mohammad', 'Muhammad')); // true!
+}
+```
+
+### 8. Markdown Transliterator & Real-Time Streams
+
+Transliterate rich technical documentation or process continuous text streams in constant memory:
+
+```dart
+import 'package:scriptly/scriptly.dart';
+
+void main() async {
+  // Markdown Document Transliteration (preserves code blocks, inline code, URLs, and HTML)
+  final translatedDoc = Scriptly.convertMarkdown(
+    markdownString,
+    from: LanguageScript.latin,
+    to: LanguageScript.bengali,
+  );
+
+  // Dart Stream Transformer for real-time WebSocket pipelines or big data files
+  fileStream
+    .transform(utf8.decoder)
+    .transform(Scriptly.streamTransformer(from: LanguageScript.latin, to: LanguageScript.bengali))
+    .pipe(outputSink);
+}
+```
+
+### 9. Premium Flutter Widgets: Virtual Keyboard & Diff Viewer
+
+Embed on-screen virtual touch keyboards or render visual diffs inside your Flutter apps:
+
+```dart
+// In-App Virtual QWERTY Phonetic Keyboard
+ScriptlyVirtualKeyboard(
+  controller: myTextController,
+  onKeyPressed: (char) => print('Key: $char'),
+);
+
+// Side-by-Side or Inline Visual Diff Viewer
+ScriptlyDiffViewer(
+  sourceText: 'Ami bhalo achi',
+  targetText: 'আমি ভালো আছি',
+  isInline: false, // or true for inline chip view
+);
 ```
 
 ---

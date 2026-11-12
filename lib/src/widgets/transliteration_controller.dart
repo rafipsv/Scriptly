@@ -35,8 +35,9 @@ class TransliterationTextEditingController extends TextEditingController {
 
   void _recordHistory(TextEditingValue val) {
     if (_historyIndex >= 0 && _history[_historyIndex].text == val.text) return;
-    if (_historyIndex < _history.length - 1)
+    if (_historyIndex < _history.length - 1) {
       _history.removeRange(_historyIndex + 1, _history.length);
+    }
     _history.add(val);
     if (_history.length > 25) _history.removeAt(0);
     _historyIndex = _history.length - 1;

@@ -1,3 +1,25 @@
+## 0.7.0
+
+- **Fintech & Security-Grade Compliance**:
+  - `PiiShield` (`Scriptly.shieldPii` / `Scriptly.restorePii`): Shields sensitive PII (credit cards with Luhn verification, emails, phone numbers, and OTP tokens) during transliteration pipelines using collision-immune Private Use Area tokens.
+  - `PhoneticIdentityHasher` (`Scriptly.identityHash` / `Scriptly.isSameIdentity`): Deterministic 64-bit FNV-1a phonetic identity hashing for KYC verification and cross-script database deduplication.
+- **Enterprise Pipelines & Document Transliterator**:
+  - `ScriptlyStreamTransformer` (`Scriptly.streamTransformer`): Low-memory Dart `StreamTransformer<String, String>` for real-time WebSocket streams, database dumps, and streaming text.
+  - `MarkdownTransliterator` (`Scriptly.convertMarkdown`): High-speed document transliterator preserving code blocks, inline code, URLs, markdown links, and HTML tags untouched.
+  - `LanguagePackManager`: Serialization, compression, and runtime registration of `.scriptly` binary packs (Gzip compressed custom dialects/engines).
+- **Linguistic Precision & Autocomplete**:
+  - `PunctuationHarmonizer` (`Scriptly.harmonizePunctuation`): Automatically adapts ASCII punctuation into native regional conventions (Indic Dari `।`, Arabic comma `،`, question mark `؟`, Greek `;`).
+  - `FrequencyTrie` (`Scriptly.defaultFrequencyTrie`): Trie-based homophone disambiguation and candidate frequency ranking for common conversational terms.
+- **Premium Flutter UI Kit**:
+  - `ScriptlyVirtualKeyboard`: On-screen customizable touch keyboard widget with QWERTY layout, backspace, and spacebar for kiosks, POS, and in-app keyboards.
+  - `ScriptlyAutocompleteTextField`: Inline predictive ghost-text field (GitHub Copilot style) with Tab and right-arrow acceptance.
+  - `ScriptlyDiffViewer`: Side-by-side and inline visual diff widget comparing Romanized source and Native transliterated text.
+- **CLI Upgrades**:
+  - Added `scriptly i18n` subcommand for Flutter ARB/JSON localization file translation with variable placeholder preservation.
+  - Added `scriptly markdown` subcommand for direct command-line document transliteration.
+- **SQA & Test Suite**:
+  - Test suite expanded to **191 automated tests (100% pass rate)**.
+
 ## 0.6.0
 
 - **Core Algorithmic & Unicode Robustness**:
